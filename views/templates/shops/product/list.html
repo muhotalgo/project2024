@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <style>
+        .lst_rt {
+            padding: 0 5%;
+        }
+
+        #pd_list_title_wrap .pd_list_hd_comp h2 {
+            color: rgba(51, 51, 51, 1);
+            font-weight: normal;
+            font-style: normal;
+            font-size: 36px;
+            line-height: 1.4em;
+        }
+
+        h2 {
+            text-align: center;
+            padding: 5% 0;
+        }
+
+        h3 {
+            padding: 2% 0;
+        }
+
+        img {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .pd_row {
+            display: grid;
+            width: 100%;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .product {
+            padding: 20px;
+            font-family: 'Graphik Web';
+            font-size: 12px;
+            font-weight: 300;
+            color: #333333;
+        }
+
+        .pd_fl {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pd_title {
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        .pd_exp {
+            /*font-weight: 400; */
+            /*letter-spacing: 1px;*/
+        }
+
+        a,
+        a:hover {
+            color: #333;
+            text-decoration: none;
+        }
+    </style>
+
+{% endblock %}
+
+{% block main %}
+    <!-- 정리 필요 -->
+    <div class="lst_rt">
+        <h2> Category 1 </h2>
+        <hr>
+        <h3> Category 1 - 1 </h3>
+        <div class="pd_row">
+            {% for pd in pdlist %}
+                <a href="/shops/product/view/{{ pd.prodno }}">
+                    <div class="product">
+                        <img src="{{ pd.tumbimg }}">
+                        <div class="pd_fl">
+                            <div class="pd_title">{{ pd.name }}</div>
+                            <div class="pd_price">{{ pd.price }} 부터</div>
+                        </div>
+                        <div class="pd_exp">{{ pd.exp }}</div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
