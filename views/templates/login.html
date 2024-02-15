@@ -1,31 +1,115 @@
 {% extends 'base.html' %}
 
 {% block style %}
-<style>
-    form { width: 500px; margin: 100px auto; }
-    form div { margin-bottom: 5px; }
-    form label { font-weight: bold; width: 110px; text-align: right; }
-    form button:first-child { margin-left: 135px; }
-</style>
+    <style>
+        기본으로 생기는 파란 라인 제거
+        input:focus{
+            outline:none;
+        }
+        textarea:focus {
+            outline: none;
+        }
+        button:focus {
+            outline: none;
+        }
+
+        .btn {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /*font-family: Arial, sans-serif;*/
+            font-family: "Orbit", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+
+            background-color: #E8E8E8;
+            /*margin: 240px;*/
+            /*padding: 0;*/
+        }
+
+        .container {
+            max-width: 400px;
+            /*border: 1px solid red;*/
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+            display: block;
+            justify-content: center; /* 수평 가운데 정렬 */
+        }
+        .form-group label {
+            padding-right: 200px;
+            margin-left: 3px;
+            margin-bottom: 10px;
+            display: block;
+            font-weight: bold;
+        }
+
+
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 1px;
+            box-sizing: border-box;
+        }
+
+
+        .form-control.btn-outline-primary {
+            margin-top: 10px;
+            width: 100% ;
+            background-color: #f4f4f4;
+            text-align: center;
+            font-size: 14px;
+            color: black;
+            border: 1px solid dimgrey ;
+            padding: 14px;
+            cursor: pointer;
+            border-radius: 0;
+        }
+
+        .form-control.btn-outline-primary:hover {
+            color: #FF6A94;
+            border: 1px solid transparent ;
+            background-color: #FFE2EA;
+        }
+    </style>
+
+
 {% endblock %}
 
 {% block main %}
-<main>
-    <h2>로그인</h2>
-    <form name="joinfrm">
-        <div class="row">
-            <div class="col-auto"><label for="userid" class="col-form-label">아이디</label></div>
-            <div class="col-auto"><input type="text" name="userid" id="userid" class="form-control" style="width: 200px"></div>
-        </div>
-        <div class="row">
-            <div class="col-auto"><label for="passwd" class="col-form-label">비밀번호</label></div>
-            <div class="col-auto"><input type="password" name="passwd" id="passwd" class="form-control" style="width: 200px"></div>
-        </div>
-        <div class="row">
-            <div class="col-auto">
-                <button type="button" class="btn btn-primary"><i class="bi bi-check-circle"></i> 로그인</button>
+    <main>
+        <form name="loginfrm">
+            <div class="container">
+                <div class="col-auto">
+                    <div class="form-group">
+                        <label for="userid">아이디</label>
+                        <input type="text" id="userid" name="userid" placeholder="" required>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-group">
+                        <label for="passwd">비밀번호</label>
+                        <input type="password" id="passwd" name="passwd" placeholder="" required>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="header-actions-action header-actions-action--cta preFade fadeIn" data-animation-role="header-element" style="transition-timing-function: ease; transition-duration: 0.8s; transition-delay: 0.272727s; animation-duration: 0.8s;">
+                        <button class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" type="button">SIGN IN</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </form>
-</main>
+        </form>
+    </main>
 {% endblock %}

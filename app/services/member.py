@@ -9,8 +9,9 @@ class MemberService():
         # 클라이언트에서 전달받은 데이터를 dict형으로 변환
         data = mdto.model_dump()
         mb = Member(**data)
-        data = {'userid': mb.userid, 'passwd': mb.passwd, 'name': mb.name, 'email': mb.email,
-                'phone': mb.phone, 'zipcode': mb.zipcode, 'address1': mb.address1, 'address2': mb.address2, }
+        data = {'userid': mb.userid, 'passwd': mb.passwd, 'zipcode': mb.zipcode, 'address1': mb.address1, 'address2': mb.address2,
+                'name': mb.name, 'phone': mb.phone, 'email': mb.email}
+
         return data
 
     @staticmethod
