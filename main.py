@@ -1,11 +1,16 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.dbfactory import db_startup
-# from app.routes.board import board_router
+
+from app.routes.board import board_router
+from app.routes.cart import cart_router
 from app.routes.member import member_router
+from app.routes.product import product_router
 
 app = FastAPI()
 
@@ -16,6 +21,8 @@ app.mount('/static', StaticFiles(directory='views/static'), name='static')
 # 외부 route 파일 불러오기
 app.include_router(member_router)
 # app.include_router(board_router, prefix='/board')   # 경로를 줄여줌
+app.include_router(product_router, prefix='/shops/product')
+app.include_router(cart_router, prefix='/shops')
 
 # 서버시작시 디비 생성
 @app.on_event('startup')
