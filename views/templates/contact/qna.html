@@ -3,8 +3,9 @@
 
 {% block style %}
   <style>
-    #faq { margin-top: 300px; margin-right: 5px; margin-bottom: 150px;}
-    #qna { margin-top: 300px; margin-left: -50px; margin-bottom: 150px;}
+    #faq { margin-top: 300px; margin-left: -40px; margin-right: 5px; margin-bottom: 150px;}
+    #faq h3 { margin-left: 130px; }
+    #qna { margin-top: 300px; margin-left: 300px; margin-bottom: 150px;}
 
     form { width: 1200px; height: 500px; margin: 50px auto; }
     form div { margin-bottom: 10px;}
@@ -12,7 +13,7 @@
     form select { margin-left:0px; width: 50px; text-align: center }
     form button:first-child { margin-left: 120px;
       background-color: #dcdcdc; border: none;}
-    .col-form-label { font-weight: normal; text-align: left; }
+    .col-form-label { font-weight: normal; text-align: left; input-focus-border-color: none;}
     .form-control { border-radius: 0; }
 
     .dragup { vertical-align: top }
@@ -32,7 +33,7 @@
               <label for="category" class="col-form-label">구분</label>
             </div>
             <div class="col-auto">
-              <select name="category" id="category" class="form-control">
+              <select name="category" id="category" class="form-control border-bottom border-0 ">
                 <option value="선택">선택</option>
                 <option value="상품">상품</option>
                 <option value="재고">재고</option>
@@ -45,25 +46,26 @@
           </div>
           <div class="row">
             <div class="col-auto">
-              <label for="title" class="col-form-label">제목</label></div>
-            <div class="col-auto">
-              <input type="text" name="title" id="title" class="form-control"></div>
-          </div>
-          <div class="row">
-            <div class="col-auto">
               <label for="userid" class="col-form-label">작성자</label></div>
             <div class="col-auto">
-              <input type="text" name="userid" id="userid" value="abc123" readonly class="form-control border-bottom"> </div>
+              <input type="text" name="userid" id="userid" value="abc123" readonly class="form-control border-bottom border-0"> </div>
           </div>
           <div class="row">
             <div class="col-auto">
-              <label for="contents" class="col-form-label">본문</label></div>
+              <label for="title" class="col-form-label">제목</label></div>
             <div class="col-auto">
-              <textarea name="contents" id="contents" cols="45" rows="7" class="form-control"></textarea></div>
+              <input type="text" name="title" id="title" class="form-control border-bottom border-0"></div>
           </div>
           <div class="row">
             <div class="col-auto">
-              <label for="captcha" class="form-label">자동작성방지</label></div>
+              <label for="contents" class="col-form-label">문의내용</label></div>
+            <div class="col-auto">
+              <textarea name="contents" id="contents" placeholder="자주 묻는 질문(FAQ)을 확인 후 문의를 남겨주세요."
+                        cols="60" rows="7" class="form-control"></textarea></div>
+          </div>
+          <div class="row">
+            <div class="col-auto">
+              <label for="captcha" class="col-form-label">자동작성방지</label></div>
             <div class="col-auto">
               <div id="captcha"></div></div>
           </div>
@@ -79,7 +81,7 @@
       <div class="col-3 offset-1">
         <div id="faq">
           <h3>FAQ</h3>
-          <table class="table w-75 container mt-5">
+          <table class="table w-50 container mt-5">
             <tr class="border-bottom"><td><a href="/contact/faq">상품</a></td></tr>
             <tr class="border-bottom"><td><a href="/contact/faq">재고</a></td></tr>
             <tr class="border-bottom"><td><a href="/contact/faq">배송</a></td></tr>

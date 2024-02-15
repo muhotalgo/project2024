@@ -7,30 +7,11 @@ from sqlalchemy.orm import DeclarativeBase, mapped_column
 class Base(DeclarativeBase):
     pass
 
-class Gallery(Base):
-    __tablename__ = 'gallery'
-
-    gno = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String(18), nullable=False)
+class Qna(Base):
+    __tablename__ = 'qna'
+    qno = Column(Integer, primary_key=True, autoincrement=True)
     userid = Column(String(18), nullable=False)
-    regdate = Column(DateTime, default=datetime.now)
-    views = Column(Integer, default=0)
+    title = Column(String(18), nullable=False)
     contents = Column(Text, nullable=False)
-
-class GalAttach(Base):
-    __tablename__ = 'galattach'
-
-    gano = Column(Integer, primary_key=True, autoincrement=True)
-    gno = mapped_column(Integer, ForeignKey('gallery.gno'))
-    fname = Column(String(50), nullable=False)
-    fsize = Column(Integer, default=0)
-
-
-
-
-
-
-
-
-
+    regdate = Column(DateTime, default=datetime.now)
 
