@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block style %}
+
+<style>
+    form { width: 500px; margin: 150px auto; }
+    form div { margin-bottom: 5px; }
+    form label { font-weight: bold; width: 110px; text-align: right; }
+    form button:first-child { margin-left: 100px; }
+</style>
+{% endblock %}
+
+{% block main %}
+<main>
+    <h2>회원가입</h2>
+    <form name="joinfrm">
+        <div class="row">
+            <!-- 중복확인 버튼 만들기-->
+            <div class="col-auto"><label for="userid" class="col-form-label">아이디</label></div>
+            <div class="col-auto"><input type="text" name="userid" id="userid" class="form-control" style="width: 200px"></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label for="passwd" class="col-form-label">비밀번호</label></div>
+            <div class="col-auto"><input type="password" name="passwd" id="passwd" class="form-control" style="width: 200px"></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label for="repwd" class="col-form-label">비밀번호확인</label></div>
+            <div class="col-auto"><input type="password" name="repwd" id="repwd" class="form-control" style="width: 200px"></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label for="zipcode1" class="col-form-label"></label></div>
+            <div class="col-auto"><input type="button" class="btn btn-outline-info" onclick="execDaumPostcode()" value="우편번호 찾기"><br></div>
+        </div>
+            <!-- zipcode 검색 나오는 위치 -->
+        <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+        </div>
+        <div class="row">
+            <div class="col-auto"><label for="zipcode2" class="col-form-label">우편번호</label></div>
+            <div class="col-auto"><input type="text" id="postcode" class="form-control" style="width: 100px" readonly></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label for="address" class="col-form-label">주소</label></div>
+            <div class="col-auto"><input type="text" id="address" placeholder="" class="form-control" style="width: 200px"></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label for="xt_Address" class="col-form-label"></label></div>
+            <div class="col-auto"><input type="text" id="extraAddress" placeholder="참고주소" class="form-control" style="width: 130px" readonly></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label for="de_address" class="col-form-label">상세주소 입력</label></div>
+            <div class="col-auto"><input type="text" id="detailAddress" class="form-control" style="width: 200px"></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label for="name" class="col-form-label">이름</label></div>
+            <div class="col-auto"><input type="text" name="name" id="name" class="form-control" style="width: 200px"></div>
+        </div>
+        <div class="row">
+            <div class="col-auto" ><label for="phone" class="col-form-label">휴대전화</label></div>
+                <div class="col-auto"><select class="form-select form-select-sm rounded" aria-label="phone" id="mobile1" fw-filter="isNumber&amp;isFill" style="width: 73px; height: 38px; font-size: 16px">
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="016">016</option>
+                    <option value="017">017</option>
+                    <option value="018">018</option>
+                    <option value="019">019</option>
+                </select>
+                </div>
+            <div class="col-auto"><input id="mobile2" class="form-control" name="mobile[]" maxlength="8" fw-filter="isNumber&amp;isFill" type="text" style="width: 114px; margin-left: -12px"></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label for="email" class="col-form-label">이메일</label></div>
+            <div class="col-auto"><input type="text" name="email" id="email" class="form-control" style="width: 200px"></div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" id="joinbtn"><i class="bi bi-check"></i> 입력완료</button>
+                <button type="reset" class="btn btn-danger"><i class="bi bi-arrow-repeat"></i> 다시입력</button></div>
+        </div>
+
+    </form>
+</main>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    // 우편번호 찾기 찾기 화면을 넣을 element
+    var element_wrap = document.getElementById('wrap');
+
+    function foldDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_wrap.style.display = 'none';
+    }
+
+    function execDaumPostcode() {
+        // 현재 scroll 위치를 저장해놓는다.
+        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("extraAddress").value = extraAddr;
+
+                } else {
+                    document.getElementById("extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detailAddress").focus();
+
+                // iframe을 넣은 element를 안보이게 한다.
+                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                element_wrap.style.display = 'none';
+
+                // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+                document.body.scrollTop = currentScroll;
+            },
+            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+            onresize : function(size) {
+                element_wrap.style.height = size.height+'px';
+            },
+            width : '100%',
+            height : '100%'
+        }).embed(element_wrap);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_wrap.style.display = 'block';
+    }
+</script>
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+    let joinbtn = document.querySelector('#joinbtn');
+    let joinfrm = document.joinfrm;
+    joinbtn.addEventListener('click', () => {
+        // 폼에 입력된 데이터를 초기화함
+        const formData = new FormData(joinfrm);
+
+        // 서버에 보내기 위해 폼 데이터를 JSON 객체로 변환
+        let jsondata = {};
+        formData.forEach(function (val, key){
+            jsondata[key] = val;
+        });     // 작성된 데이터를 json 형태로 저장함
+        // ajax를 이용해서 서버로 전송하고 결과 받음
+        fetch('http://127.0.0.1:8000/join', {
+            method: 'POST',                     // 데이터 전송방식
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },                                  // 전송할 데이터 형식
+            body: JSON.stringify(jsondata)      // 서버로 전송할 데이터
+        })
+            // .then((res) => res.json())          // 서버로부터 응답받음
+            // .then((data) => console.log(data))  // 서버 데이터 콘솔에 출력
+            // 잘 나오는거 확인하여 주석처리
+            .then((res) => res.text())          // 서버로부터 응답받음 txt로 받음
+            .then((data) => {
+                if (parseInt(data) > 0) location.href = '/joinok' // 회원가입 성공시 페이지 출력
+                else location.href = '/error'           // 회원가입 실패시 페이지 출력
+            })
+            .catch((err) => console.log(err));  // 오류발생시 콘솔에 출력
+    });
+
+
+</script>
+
+{% endblock %}
+
+
