@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from app.dbfactory import db_startup
 
 from app.routes.board import board_router
+from app.routes.contact import qna_router
 from app.routes.cart import cart_router
 from app.routes.member import member_router
 from app.routes.product import product_router
@@ -30,9 +31,14 @@ async def on_startup():
     db_startup()
 
 
+app.include_router(qna_router, prefix='/contact')
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index(req: Request):
     return templates.TemplateResponse('index.html',{'request': req})    # 파일명과 넘길 데이터
+
+
 
 if __name__ == '__main__':
     import uvicorn
