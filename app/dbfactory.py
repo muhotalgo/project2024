@@ -14,7 +14,7 @@ Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # 서버시작시 테이블 생성
 def db_startup():
-    contact.Base.metadata.create_all(engine)0
+    contact.Base.metadata.create_all(engine)
     product.Base.metadata.create_all(engine)
     member.Base.metadata.create_all(engine)
     # board.Base.metadata.create_all(engine)
