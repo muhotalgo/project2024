@@ -60,9 +60,13 @@ header .inner {
     background-color: white;
     min-width: 1900px;
     width: 100%;
-    height: 160px;
     position: relative;
 }
+
+header .inner, .headerback{
+    height: 160px;
+}
+
 header .top {
     position: absolute;
     min-width: 1900px;
