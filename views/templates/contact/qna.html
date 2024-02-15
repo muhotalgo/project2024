@@ -1,55 +1,38 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/mainPage.css') }}">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% extends 'base.html' %}
 
+
+{% block style %}
   <style>
+    #faq { margin-top: 300px; margin-right: 5px; margin-bottom: 150px;}
+    #qna { margin-top: 300px; margin-left: -50px; margin-bottom: 150px;}
+
     form { width: 1200px; height: 500px; margin: 50px auto; }
     form div { margin-bottom: 10px;}
     form label { font-weight: bold; width: 100px; text-align: right; border:none; }
     form select { margin-left:0px; width: 50px; text-align: center }
     form button:first-child { margin-left: 120px;
       background-color: #dcdcdc; border: none;}
+    .col-form-label { font-weight: normal; text-align: left; }
+    .form-control { border-radius: 0; }
+
     .dragup { vertical-align: top }
 
-
-    #faq {
-      margin-right: 5px; }
-    #qna {
-      margin-left: -50px; }
   </style>
+{% endblock %}
 
-  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-          async defer>
-  </script>
-
-  <script type="text/javascript">
-    var onloadCallback = () => {
-      grecaptcha.render('captcha', { 'sitekey' : '6LfM1XApAAAAAPxyHPXw8TO6LS2cUvSumWnKdi6f'
-      });
-    };
-  </script>
-
-</head>
-
-
+{% block main %}
   <main>
     <div class="row">
       <div class="col-7 offset-1">
         <div id="qna" >
-        <h2>QNA</h2>
+        <h3>QNA</h3>
         <form name="boardfrm">
           <div class="row">
             <div class="col-auto">
               <label for="category" class="col-form-label">구분</label>
             </div>
             <div class="col-auto">
-              <select name="category" id="category" class="form-control rounded-0 border-bottom">
+              <select name="category" id="category" class="form-control">
                 <option value="선택">선택</option>
                 <option value="상품">상품</option>
                 <option value="재고">재고</option>
@@ -64,23 +47,23 @@
             <div class="col-auto">
               <label for="title" class="col-form-label">제목</label></div>
             <div class="col-auto">
-              <input type="text" name="title" id="title" class="form-control rounded-0 border-bottom"></div>
+              <input type="text" name="title" id="title" class="form-control"></div>
           </div>
           <div class="row">
             <div class="col-auto">
               <label for="userid" class="col-form-label">작성자</label></div>
             <div class="col-auto">
-              <input type="text" name="userid" id="userid" value="abc123" readonly class="form-control rounded-0 border-bottom"> </div>
+              <input type="text" name="userid" id="userid" value="abc123" readonly class="form-control border-bottom"> </div>
           </div>
           <div class="row">
             <div class="col-auto">
               <label for="contents" class="col-form-label">본문</label></div>
             <div class="col-auto">
-              <textarea name="contents" id="contents" cols="45" rows="7" class="form-control rounded-0"></textarea></div>
+              <textarea name="contents" id="contents" cols="45" rows="7" class="form-control"></textarea></div>
           </div>
           <div class="row">
             <div class="col-auto">
-              <label for="captcha" class="col-form-label">자동작성방지</label></div>
+              <label for="captcha" class="form-label">자동작성방지</label></div>
             <div class="col-auto">
               <div id="captcha"></div></div>
           </div>
@@ -97,22 +80,32 @@
         <div id="faq">
           <h3>FAQ</h3>
           <table class="table w-75 container mt-5">
-            <tr class="border-bottom"><td><a href="../noblock/faq.html">상품</a></td></tr>
-            <tr class="border-bottom"><td><a href="../noblock/faq.html">재고</a></td></tr>
-            <tr class="border-bottom"><td><a href="../noblock/faq.html">배송</a></td></tr>
-            <tr class="border-bottom"><td><a href="../noblock/faq.html">결제</a></td></tr>
-            <tr class="border-bottom"><td><a href="../noblock/faq.html">방문예약</a></td></tr>
+            <tr class="border-bottom"><td><a href="/contact/faq">상품</a></td></tr>
+            <tr class="border-bottom"><td><a href="/contact/faq">재고</a></td></tr>
+            <tr class="border-bottom"><td><a href="/contact/faq">배송</a></td></tr>
+            <tr class="border-bottom"><td><a href="/contact/faq">결제</a></td></tr>
+            <tr class="border-bottom"><td><a href="/contact/faq">방문예약</a></td></tr>
           </table>
         </div>
       </div>
     </div>
-
-
-
-
   </main>
+{% endblock %}
 
-  <script>
+{% block script %}
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+            async defer>
+    </script>
+
+    <script type="text/javascript">
+        var onloadCallback = () => {
+            grecaptcha.render('captcha', { 'sitekey' : '6LfM1XApAAAAAPxyHPXw8TO6LS2cUvSumWnKdi6f'
+            });
+        };
+    </script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
     let writebtn = document.querySelector('#writebtn');
     let boardfrm = document.boardfrm;
     writebtn.addEventListener('click', () => {
@@ -151,4 +144,5 @@
               .catch((err) => console.log(err));
 
     })
-  </script>
+    </script>
+{% endblock %}

@@ -3,14 +3,22 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
-contact_router = APIRouter()
+qna_router = APIRouter()
 
 # jinja2 설정
 templates = Jinja2Templates(directory='views/templates')
-contact_router.mount('/static', StaticFiles(directory='views/static'), name='static')
+qna_router.mount('/static', StaticFiles(directory='views/static'), name='static')
 
-@contact_router.get('/qna', response_class=HTMLResponse)
+
+@qna_router.get('/qna', response_class=HTMLResponse)
 def qna(req: Request):
     return templates.TemplateResponse('contact/qna.html', {'request': req})
 
 
+@qna_router.get('/notice', response_class=HTMLResponse)
+def notice(req: Request):
+    return templates.TemplateResponse('contact/notice.html', {'request': req})
+
+@qna_router.get('/faq', response_class=HTMLResponse)
+def notice(req: Request):
+    return templates.TemplateResponse('contact/faq.html', {'request': req})
