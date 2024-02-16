@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class Product(BaseModel):
-    prodno: int
+    pno: int
     name: str
     exp: str
     detail: str
@@ -19,7 +19,7 @@ class Product(BaseModel):
     height: int
     color: str
     regdate: datetime
-    catnum: int
+    ctno: int
 
     class Config:
         from_attributes = True
@@ -38,4 +38,3 @@ class NewProduct(BaseModel):
     deps: int
     height: int
     color: str
-    catnum: int
