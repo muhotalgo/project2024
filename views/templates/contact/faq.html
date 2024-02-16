@@ -2,12 +2,17 @@
 
 {% block style %}
 <style>
-    #faq {  margin-top: 300px; margin-right: 5px; margin-bottom: 300px; }
+    #title { margin-left: 100px; }
+    #faq { padding-right: 1000px; margin-right: 20px; }
+    #spacer_top { margin-top: 10px; }
+    #spacer_bottom { margin-top: 70px; }
     .accordion {
+        margin-right: 100px; margin-left: 100px;
+
         --bs-accordion-color: #494949;
         /*--bs-accordion-bg: white;*/
         /*--bs-accordion-transition: #{$accordion-transition};*/
-        /*--bs-accordion-border-color: #{$accordion-border-color};*/
+        --bs-accordion-border-color: none;
         /*--bs-accordion-border-width: #{$accordion-border-width};*/
         --bs-accordion-border-radius: 0;
         --bs-accordion-inner-border-radius: 0;
@@ -28,16 +33,17 @@
         --bs-accordion-active-bg: #efefef;
     }
 
-    .accordion-button {
-        border-top: 1px solid #efefef;}
+    .accordion-button { border-top: 1px solid #dcdbdb; }
 
 </style>
 {% endblock %}
 
 {% block main %}
-
+    <div id="spacer_top">
+        <br>
+    </div>
 <body id="faq" class=" p-3 m-0 border-0 m-0 border-0">
-    <h2>FAQ</h2>
+    <h2 id="title">FAQ</h2>
     <div class="accordion arcodion-flush" id="faq_accordion">
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -94,6 +100,9 @@
                     방문예약을 원하실 경우 1:1 문의를 남겨주세요.</div>
             </div>
         </div>
+    </div>
+    <div id="spacer_bottom">
+        <br>
     </div>
 </body>
 {% endblock %}

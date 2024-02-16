@@ -1,30 +1,38 @@
+# from datetime import datetime
+#
+# from pydantic import BaseModel
+#
+#
+# class Notice(BaseModel):
+#     gno: int
+#     regdate: datetime
+#     title: str
+#     contents: str
+#     class Config:
+#         from_attributes = True
+
+
+
+
 from datetime import datetime
 
 from pydantic import BaseModel
 
 
-class Gallery(BaseModel):
-    gno: int
+class Notice(BaseModel):
+    nno: int
     title: str
-    userid: str
     regdate: datetime
     views: int
     contents: str
     class Config:
         from_attributes = True
 
-
-class NewGallery(BaseModel):
-    title: str
+class Qna(BaseModel):
+    qno: int
     userid: str
-    contents: str
-
-
-class GalAttach(BaseModel):
-    gano: int
-    gno: int
-    fname: str
-    fsize: int
-
-class Config:
-    from_attributes = True
+    title: str
+    contents: int
+    regdate: datetime
+    class Config:
+        from_attributes = True

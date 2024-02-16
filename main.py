@@ -32,6 +32,7 @@ async def on_startup():
 
 
 app.include_router(qna_router, prefix='/contact')
+app.include_router(board_router, prefix='/contact')
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -43,3 +44,5 @@ async def index(req: Request):
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run('main:app', reload=True)
+
+

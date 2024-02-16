@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 
 {% block style %}
-    <style>
-        table { table-layout: fixed; border-top-color: white !important; }
-        th, td { text-align: center; }
+  <style>
+    table {padding-left: 200px; }
+    td:first-child { text-align: left; white-space: nowrap; }
+    td:nth-child(2) { text-align: left; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis; }
 
-        tr:first-child td { border:none; padding: 10px 0 }
-        tr:first-child td:last-child { text-align: right }
+    #notice { margin-top: 0px; margin-right: 5px; margin-bottom: 150px; }
 
-        td:nth-child(2) { text-align: left; white-space: nowrap;
-            overflow: hidden; text-overflow: ellipsis }
 
-        .pagination a:link { color: #0dcaf0 }
-    </style>
+    /*페이지네이션pagenation 스타일*/
+    .pagination a:link { color: #3a3c43 }
+
+  </style>
 {% endblock %}
+
 
 {% block main %}
     <main>
@@ -45,44 +47,41 @@
                 </div></td>
 
                 <td colspan="3">
-                    {% if 'm' in request.session %}
                         <a href="/board/write" class="btn btn-dark text-white">글쓰기</a>
-                    {% endif %}
                 </td>
 
             </tr>
-            <tr><th>번호</th><th>제목</th><th>작성자</th>
-                <th>작성일</th><th>조회수</th></tr>
+            <tr><th>번호</th><th>제목</th><th>작성일</th></tr>
 
-            {% for bd in bdlist %}
-                <tr><td>{{ bd.bno }}</td>
-                    <td><a href="/board/view/{{ bd.bno }}">{{ bd.title }}</a></td>
-                    <td>{{ bd.userid }}</td>
-                    <td>{{ bd.regdate.strftime('%Y-%m-%d') }}</td>
-                    <td>{{ bd.views }}</td></tr>
-            {% endfor %}
+{#            {% for bd in bdlist %}#}
+{#                <tr><td>{{ bd.bno }}</td>#}
+{#                    <td><a href="/board/view/{{ bd.bno }}">{{ bd.title }}</a></td>#}
+{#                    <td>{{ bd.userid }}</td>#}
+{#                    <td>{{ bd.regdate.strftime('%Y-%m-%d') }}</td>#}
+{#                    <td>{{ bd.views }}</td></tr>#}
+{#            {% endfor %}#}
 
         </table>
-        <ul class="pagination justify-content-center m-4">
-            {# 현재페이지가 1이라면 이전버튼 비활성 #}
-            {% if cpg == 1 %} <li class="page-item disabled">
-                {% else %} <li class="page-item"> {% endif %}
-
-            <a class="page-link" href="{{ baseurl }}{{ cpg - 1 }}">이전</a></li>
-
-            {% for idx in range(stpg, stpg + 10) %}
-                {% if idx <= allpage  %}   {# idx가 allpage보다 같거나 작으면 페이지네이션 출력 #}
-                    {% if cpg == idx %} <li class="page-item active">
-                        {% else %} <li class="page-item"> {% endif %}
-                <a class="page-link" href="{{ baseurl }}{{ idx }}">{{ idx }}</a></li>
-                {% endif %}
-            {% endfor %}
-
-            {# 현재페이지가 마지막페이지라면 다음버튼 비활성 #}
-            {% if cpg == allpage %} <li class="page-item disabled">
-                {% else %} <li class="page-item"> {% endif %}
-            <a class="page-link" href="{{ baseurl }}{{ cpg + 1 }}">다음</a></li>
-        </ul>
+{#        <ul class="pagination justify-content-center m-4">#}
+{#             현재페이지가 1이라면 이전버튼 비활성#}
+{#            {% if cpg == 1 %} <li class="page-item disabled">#}
+{#                {% else %} <li class="page-item"> {% endif %}#}
+{##}
+{#            <a class="page-link" href="{{ baseurl }}{{ cpg - 1 }}">이전</a></li>#}
+{##}
+{#            {% for idx in range(stpg, stpg + 10) %}#}
+{#                {% if idx <= allpage  %}   {# idx가 allpage보다 같거나 작으면 페이지네이션 출력#}
+{#                    {% if cpg == idx %} <li class="page-item active">#}
+{#                        {% else %} <li class="page-item"> {% endif %}#}
+{#                <a class="page-link" href="{{ baseurl }}{{ idx }}">{{ idx }}</a></li>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+{##}
+{#             현재페이지가 마지막페이지라면 다음버튼 비활성#}
+{#            {% if cpg == allpage %} <li class="page-item disabled">#}
+{#                {% else %} <li class="page-item"> {% endif %}#}
+{#            <a class="page-link" href="{{ baseurl }}{{ cpg + 1 }}">다음</a></li>#}
+{#        </ul>#}
     </main>
 {% endblock %}
 
@@ -115,7 +114,6 @@
             switch (findurl[3]) {
                 case 'title': ftype.selectedIndex = 0; break;
                 case 'contents': ftype.selectedIndex = 1; break;
-                case 'userid': ftype.selectedIndex = 2; break;
                 case 'titconts': ftype.selectedIndex = 3; break;
                 case 'comments': ftype.selectedIndex = 4; break;
             }
@@ -124,4 +122,9 @@
 
     </script>
 {% endblock %}
+
+
+
+
+
 

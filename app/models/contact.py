@@ -15,3 +15,13 @@ class Qna(Base):
     contents = Column(Text, nullable=False)
     regdate = Column(DateTime, default=datetime.now)
 
+
+class Notice(Base):
+    __tablename__ = 'notice'
+    nno = Column(Integer, primary_key=True, autoincrement=True)
+    regdate = Column(DateTime)
+    title = Column(String(18), nullable=False)
+    contents = Column(Text, nullable=False)
+
+
+
