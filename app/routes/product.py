@@ -17,11 +17,11 @@ templates = Jinja2Templates(directory='views/templates')
 @product_router.get('/list', response_class=HTMLResponse)
 def list(req: Request):
     pdlist = ProductService.select_list()
-    return templates.TemplateResponse('shops/product/list.html', {'request': req,
+    return templates.TemplateResponse('shops/list.html', {'request': req,
                                               'pdlist': pdlist})
 
 
-@product_router.get('/view/{prodno}', response_class=HTMLResponse)
-def view(req: Request, prodno: str):
-    pd = ProductService.selectone_prod(prodno)[0]
-    return templates.TemplateResponse('shops/product/view.html', {'request': req, 'pd': pd})
+@product_router.get('/view/{pno}', response_class=HTMLResponse)
+def view(req: Request, pno: str):
+    pd = ProductService.selectone_prod(pno)[0]
+    return templates.TemplateResponse('shops/view.html', {'request': req, 'pd': pd})
