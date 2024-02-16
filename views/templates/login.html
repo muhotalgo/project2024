@@ -2,15 +2,9 @@
 
 {% block style %}
     <style>
-        기본으로 생기는 파란 라인 제거
-        input:focus{
+        /* 기본으로 생기는 파란 라인 제거*/
+        input:focus, textarea:focus, button:focus {
             outline:none;
-        }
-        textarea:focus {
-            outline: none;
-        }
-        button:focus {
-            outline: none;
         }
 
         .btn {
@@ -106,7 +100,7 @@
                 </div>
                 <div class="col-auto">
                     <div class="header-actions-action header-actions-action--cta preFade fadeIn" data-animation-role="header-element" style="transition-timing-function: ease; transition-duration: 0.8s; transition-delay: 0.272727s; animation-duration: 0.8s;">
-                        <button class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" type="button">SIGN IN</button>
+                        <button type="button" class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" data-animation-role="header-element" id="joinbtn" style="transition-timing-function: ease; transition-duration: 0.4s; transition-delay: 0.172727s; animation-duration: 0.4s;">SIGN IN</button>
                     </div>
                 </div>
             </div>
