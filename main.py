@@ -10,6 +10,7 @@ from app.dbfactory import db_startup
 from app.routes.board import board_router
 from app.routes.contact import qna_router
 from app.routes.cart import cart_router
+from app.routes.visit import visit_router
 from app.routes.member import member_router
 from app.routes.product import product_router
 
@@ -24,6 +25,7 @@ app.include_router(member_router)
 # app.include_router(board_router, prefix='/board')   # 경로를 줄여줌
 app.include_router(product_router, prefix='/shops/product')
 app.include_router(cart_router, prefix='/shops')
+app.include_router(visit_router, prefix='/visit')
 
 # 서버시작시 디비 생성
 @app.on_event('startup')
