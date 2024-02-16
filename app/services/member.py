@@ -25,3 +25,37 @@ class MemberService():
 
         return result
 
+
+    @staticmethod
+    def check_login(userid, passwd):
+        with Session() as sess:
+            # Member테이블에서 아이디로 회원 조회후
+            result = sess.query(Member).filter_by(userid=userid).scalar()
+            # 회원이 존재한다면
+            # 실제 회원이 존재하고 비밀번호가 일치한다면
+            if result and passwd == result.passwd:
+                return result
+        return None
+
+    @staticmethod
+    def selectone_member(userid):
+        with Session() as sess:
+            result = sess.query(Member).filter_by(userid=userid).scalar()
+            return result
+
+
+    # 아이디,전화번호,이메일 중복 체크
+    @staticmethod
+    def check_duplicate(field_name: str, value: str):
+        with Session() as sess:
+            if field_name == 'userid':
+                result = sess.query(Member).filter_by(userid=value).first()
+            elif field_name == 'phone':
+                result = sess.query(Member).filter_by(phone=value).first()
+            elif field_name == 'email':
+                result = sess.query(Member).filter_by(email=value).first()
+            else:
+                # 지원되지 않는 필드명에 대한 처리
+                return None
+            return result
+

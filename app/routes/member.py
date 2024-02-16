@@ -1,7 +1,10 @@
-from fastapi import APIRouter, Request
+
+from fastapi import APIRouter, Request, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
+from starlette import status
+
 
 from app.schemas.member import NewMember
 from app.services.member import MemberService
@@ -22,10 +25,6 @@ def join(req: Request):
 def joincheck(mdto: NewMember):
     result = MemberService.insert_member(mdto)
     return result.rowcount
-    # return templates.TemplateResponse('joinok.html',{'request': req})
-
-
-
 
 @member_router.get('/joinok', response_class=HTMLResponse)
 def joinok(req: Request):
@@ -35,6 +34,63 @@ def joinok(req: Request):
 def login(req: Request):
     return templates.TemplateResponse('login.html', {'request': req})
 
+# 회원가입시 아이디 중복확인
+# @member_router.get('/join')
+# def joincheck2(req: Request, userid: str = Form()):
+#     result = MemberService.check_userid(userid)
+#     if result:
+#         return JSONResponse(content={"exists": True})
+#     else:
+#         return JSONResponse(content={"exists": False})
+
+
+# 회원가입시 아이디, 전화번호, 이메일 중복확인
+@member_router.get('/check/{check_type}/{value}')
+def signupcheck(req: Request, check_type: str, value: str):
+    result = None
+
+    if check_type == 'uid':
+        result = MemberService.check_duplicate('userid', value)
+    elif check_type == 'phone':
+        result = MemberService.check_duplicate('phone', value)
+    elif check_type == 'email':
+        result = MemberService.check_duplicate('email', value)
+    else:
+        # 잘못된 유형의 중복 확인 요청에 대한 처리
+        return 'invalid'
+
+    if result:
+        return 'yes'
+    else:
+        return 'no'
+
+
+
+
+@member_router.post('/login', response_class=HTMLResponse)
+def login(req: Request, userid: str = Form(), passwd: str = Form()):
+    result = MemberService.check_login(userid, passwd)
+    if result:
+        # 세션처리 - 회원아이디를 세션에 등록
+        req.session['m'] = result.userid
+        return RedirectResponse(url='/myinfo', status_code=status.HTTP_303_SEE_OTHER)
+    else:
+        return HTMLResponse("""
+            <script>
+                alert('로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인하세요.');
+                window.location.href = '/login';
+            </script>
+        """)
+
+@member_router.get('/logout')
+def logout(req: Request):
+    req.session.clear()     # 생성된 세션객체 제거
+    return RedirectResponse(url='/', status_code=status.HTTP_303_SEE_OTHER)
+
 @member_router.get('/myinfo', response_class=HTMLResponse)
 def myinfo(req: Request):
-    return templates.TemplateResponse('myinfo.html', {'request': req})
+    if 'm' not in req.session:
+        return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
+
+    myinfo = MemberService.selectone_member(req.session['m'])
+    return templates.TemplateResponse('myinfo.html',{'request': req, 'my': myinfo})
