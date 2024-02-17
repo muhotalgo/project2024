@@ -21,12 +21,6 @@ class CartService():
             result = sess.execute(stmt)
             sess.commit()
 
-            # data = {'pno': pno}
-            # print(result.inserted_primary_key)
-            # stmt = insert(Product).values(data)
-            # result = sess.execute(stmt)
-            # sess.commit()
-
         return result
 
 
