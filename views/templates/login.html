@@ -73,9 +73,9 @@
         }
 
         .form-control.btn-outline-primary:hover {
-            color: #FF6A94;
+            color: white;
             border: 1px solid transparent ;
-            background-color: #FFE2EA;
+            background-color: black;
         }
     </style>
 
@@ -100,10 +100,26 @@
                 </div>
                 <div class="col-auto">
                     <div class="header-actions-action header-actions-action--cta preFade fadeIn" data-animation-role="header-element" style="transition-timing-function: ease; transition-duration: 0.8s; transition-delay: 0.272727s; animation-duration: 0.8s;">
-                        <button type="button" class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" data-animation-role="header-element" id="joinbtn" style="transition-timing-function: ease; transition-duration: 0.4s; transition-delay: 0.172727s; animation-duration: 0.4s;">SIGN IN</button>
+                        <button type="submit" id="loginbtn" class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" data-animation-role="header-element" style="transition-timing-function: ease; transition-duration: 0.4s; transition-delay: 0.172727s; animation-duration: 0.4s;">SIGN IN</button>
                     </div>
+                    <span id="msg1"></span>
                 </div>
             </div>
         </form>
     </main>
+{% endblock %}
+
+{% block script %}
+    <script>
+        let loginbtn = document.querySelector('#loginbtn');
+        let loginfrm = document.loginfrm;
+
+        loginbtn.addEventListener('click', () => {
+            loginfrm.method = 'post';
+            loginfrm.submit();
+        });
+    </script>
+
+
+
 {% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <style>
+        /* 기본으로 생기는 파란 라인 제거*/
+        input:focus, textarea:focus, button:focus {
+            outline:none;
+        }
+
+        .btn {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /*font-family: Arial, sans-serif;*/
+            font-family: "Orbit", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            {#padding-top : 500px;#}
+            {#margin: 240px;#}
+            background-color: #E8E8E8;
+            {#padding: 0;#}
+        }
+
+        .container {
+            max-width: 400px; /* 수정: 너비를 조금 더 넓게 설정 */
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+            display: block;
+            justify-content: center; /* 수평 가운데 정렬 */
+        }
+        .form-group label {
+            padding-right: 200px;
+            margin-left: 3px;
+            margin-top: -10px;
+            /* margin-bottom: 2px; /* login은 10px*/
+            {#display: block;#}
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: -5px;
+
+            border: 1px solid #ccc;
+            border-radius: 1px;
+            box-sizing: border-box;
+        }
+
+        .form-select {
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-control.btn-outline-primary {
+            margin-top: 10px;
+            width: 100% ;
+            background-color: #f4f4f4;
+            text-align: center;
+            font-size: 14px;
+            color: black;
+            border: 1px solid dimgrey ;
+            padding: 14px;
+            cursor: pointer;
+            border-radius: 0;
+        }
+
+        .form-control.btn-outline-primary:hover {
+            color: #FF6A94;
+            border: 1px solid transparent ;
+            background-color: #FFE2EA;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <main>
+        <div class="container w-25">
+            <table class="table table-bordered mt-5">
+                <tr><th>아이디</th><td>{{ my.userid }}</td></tr>
+                <tr><th>이름</th><td>{{ my.name }}</td></tr>
+                <tr><th>이메일</th><td>{{ my.email }}</td></tr>
+                <!-- <tr><th>가입일</th><td>{{ my.regdate.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr> -->
+                <tr><th>주문내역</th><td>{{ my.orders }}</td></tr>
+                <tr><th>고객센터</th><td>{{ my.contacts }}</td></tr>
+            </table>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script></script>
+{% endblock %}
+
+
