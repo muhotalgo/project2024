@@ -33,8 +33,8 @@
         font-weight: 300;
     }
 
-    a,
-    a:hover {
+    .blank,
+    .blank:hover {
         color: #333;
         text-decoration: none;
     }
@@ -50,7 +50,7 @@
     <h3> Category 1 - 1 </h3>
     <div class="pd_row">
         {% for pd in pdlist %}
-        <a href="/shops/view/{{ pd.pno }}">
+        <a href="/shops/view/{{ pd.pno }}" class="blank">
             <div class="product">
                 <img src="{{ pd.tumbimg }}" alert="{{ pd.name }} 썸네일 이미지">
                 <div class="pd_fl">

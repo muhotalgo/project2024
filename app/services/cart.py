@@ -1,4 +1,4 @@
-from sqlalchemy import insert, select
+from sqlalchemy import insert, select, delete
 
 from app.dbfactory import Session
 from app.models.cart import Cart
@@ -33,4 +33,13 @@ class CartService():
                 .order_by(Cart.cno.desc()) \
                 .offset(0).limit(20)
             result = sess.execute(stmt)
+        return result
+
+
+    @staticmethod
+    def delete_cart(cno):
+        with Session() as sess:
+            stmt = delete(Cart).filter_by(cno=cno)
+            result = sess.execute(stmt)
+            sess.commit()
         return result
