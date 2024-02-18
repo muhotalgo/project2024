@@ -1,4 +1,4 @@
-from sqlalchemy import insert, select, delete
+from sqlalchemy import insert, select, delete, update
 
 from app.dbfactory import Session
 from app.models.cart import Cart
@@ -17,8 +17,17 @@ class CartService():
     def insert_cart(cto):
         data = CartService.cart_convert(cto)
         with Session() as sess:
-            stmt = insert(Cart).values(data)
-            result = sess.execute(stmt)
+
+            existing_cart = sess.query(Cart).filter_by(pno=data['pno']).first()
+
+            if existing_cart:
+                new_quantity = existing_cart.quantity + 1  # 기존 수량에 1을 추가
+                stmt = update(Cart).where(Cart.pno == data['pno']).values(quantity=new_quantity)
+                result = sess.execute(stmt)
+            else:
+                stmt = insert(Cart).values(data)
+                result = sess.execute(stmt)
+
             sess.commit()
 
         return result
