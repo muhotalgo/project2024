@@ -17,7 +17,7 @@
 
 {% block main %}
     <main>
-        <h2>게시판 목록</h2>
+        <h2>NOTICE</h2>
         <table class="table table-bordered w-75 container mt-5">
             <colgroup><!-- table-fixed 속성이 설정된 경우,
                            각 컬럼에 대한 스타일 지정 -->
@@ -27,42 +27,8 @@
                 <col style="width: 15%">
                 <col style="width: 10%">
             </colgroup>
-
-            <tr><td colspan="2" class="searchbox">
-                <div class="row">
-                    <div class="col-auto"><select class="form-select" name="ftype" id="ftype">
-                        <option value="title">제목</option>
-                        <option value="contents">본문</option>
-                        <option value="userid">작성자</option>
-                        <option value="titconts">제목+본문</option>
-                        <option value="comments">댓글내용</option></select></div>
-
-                    <div class="col-auto">
-                        <input type="text" name="fkey" id="fkey" class="form-control"></div>
-
-                    <div class="col-auto"><button type="button" id="findbtn"
-                                                  class="btn btn-success">검색하기</button></div>
-                </div></td>
-
-                <td colspan="3">
-                    {% if 'm' in request.session %}
-                        <a href="/board/write" class="btn btn-dark text-white">글쓰기</a>
-                    {% endif %}
-                </td>
-
-            </tr>
-            <tr><th>번호</th><th>제목</th><th>작성자</th>
-                <th>작성일</th><th>조회수</th></tr>
-
-            {% for bd in bdlist %}
-                <tr><td>{{ bd.bno }}</td>
-                    <td><a href="/board/view/{{ bd.bno }}">{{ bd.title }}</a></td>
-                    <td>{{ bd.userid }}</td>
-                    <td>{{ bd.regdate.strftime('%Y-%m-%d') }}</td>
-                    <td>{{ bd.views }}</td></tr>
-            {% endfor %}
-
         </table>
+
         <ul class="pagination justify-content-center m-4">
             {# 현재페이지가 1이라면 이전버튼 비활성 #}
             {% if cpg == 1 %} <li class="page-item disabled">

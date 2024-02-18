@@ -18,6 +18,14 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+class Qna(BaseModel):
+    qno: int
+    userid: str
+    title: str
+    contents: int
+    regdate: datetime
+    class Config:
+        from_attributes = True
 
 class Notice(BaseModel):
     nno: int
@@ -28,11 +36,3 @@ class Notice(BaseModel):
     class Config:
         from_attributes = True
 
-class Qna(BaseModel):
-    qno: int
-    userid: str
-    title: str
-    contents: int
-    regdate: datetime
-    class Config:
-        from_attributes = True

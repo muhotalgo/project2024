@@ -2,9 +2,11 @@
 
 {% block style %}
   <style>
+    #title { margin-left: 250px; }
     table {padding-left: 200px; }
+    th:last-child { text-align: center; }
     td:first-child { text-align: left; white-space: nowrap; }
-    td:nth-child(2) { text-align: left; white-space: nowrap;
+        td:nth-child(2) { text-align: left; white-space: nowrap;
       overflow: hidden; text-overflow: ellipsis; }
 
     #notice { margin-top: 0px; margin-right: 5px; margin-bottom: 150px; }
@@ -19,43 +21,21 @@
 
 {% block main %}
     <main>
-        <h2>게시판 목록</h2>
+        <h2 id="title">NOTICE</h2>
         <table class="table table-bordered w-75 container mt-5">
             <colgroup><!-- table-fixed 속성이 설정된 경우,
                            각 컬럼에 대한 스타일 지정 -->
                 <col style="width: 10%">
-                <col style="">
-                <col style="width: 15%">
-                <col style="width: 15%">
+                <col style="width: 30%" >
                 <col style="width: 10%">
             </colgroup>
 
-            <tr><td colspan="2" class="searchbox">
-                <div class="row">
-                    <div class="col-auto"><select class="form-select" name="ftype" id="ftype">
-                        <option value="title">제목</option>
-                        <option value="contents">본문</option>
-                        <option value="userid">작성자</option>
-                        <option value="titconts">제목+본문</option>
-                        <option value="comments">댓글내용</option></select></div>
 
-                    <div class="col-auto">
-                        <input type="text" name="fkey" id="fkey" class="form-control"></div>
-
-                    <div class="col-auto"><button type="button" id="findbtn"
-                                                  class="btn btn-success">검색하기</button></div>
-                </div></td>
-
-                <td colspan="3">
-                        <a href="/board/write" class="btn btn-dark text-white">글쓰기</a>
-                </td>
-
-            </tr>
-            <tr><th>번호</th><th>제목</th><th>작성일</th></tr>
+            <tr><th>No.</th><th>Title</th><th>Date</th></tr>
 
 {#            {% for bd in bdlist %}#}
 {#                <tr><td>{{ bd.bno }}</td>#}
-{#                    <td><a href="/board/view/{{ bd.bno }}">{{ bd.title }}</a></td>#}
+{#                    <td><a href="/contact/notice_view/{{ bd.bno }}">{{ bd.title }}</a></td>#}
 {#                    <td>{{ bd.userid }}</td>#}
 {#                    <td>{{ bd.regdate.strftime('%Y-%m-%d') }}</td>#}
 {#                    <td>{{ bd.views }}</td></tr>#}
@@ -85,6 +65,7 @@
     </main>
 {% endblock %}
 
+
 {% block script %}
     <script>
         let findbtn = document.querySelector('#findbtn');
@@ -98,6 +79,7 @@
             location.href = findurl;
         });
     </script>
+
     <script>
         // url의 상태에 따라 검색 UI에 내용 채움
         let findurl = location.pathname.split('/');
