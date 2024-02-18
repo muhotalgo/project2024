@@ -52,10 +52,10 @@
         {% for pd in pdlist %}
         <a href="/shops/view/{{ pd.pno }}">
             <div class="product">
-                <img src="{{ pd.tumbimg }}">
+                <img src="{{ pd.tumbimg }}" alert="{{ pd.name }} 썸네일 이미지">
                 <div class="pd_fl">
                     <div class="pd_title">{{ pd.name }}</div>
-                    <div class="pd_price">{{ pd.price }} 부터</div>
+                    <div class="pd_price"><span id="pd_price">{{ pd.price }}</span> 원</div>
                 </div>
                 <div class="pd_exp">{{ pd.exp }}</div>
             </div>
@@ -63,4 +63,12 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        // , 설정
+        const reprice = document.querySelector('#pd_price').innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        document.querySelector('#pd_price').innerHTML = reprice;
+    </script>
 {% endblock %}
