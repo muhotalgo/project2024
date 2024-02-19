@@ -7,7 +7,7 @@
             padding-left: 20px;
         }
         .allbox {
-            min-width: 1400px;
+            min-width: 1620px;
             display: inline-block;
 
 
@@ -18,65 +18,74 @@
         }
         .flagship_img {
             float: left;
-            width: 53%;
+            position: static;
+        }
+
+        .service_text {
+            margin-top: 30px;
+            min-width: 500px;
+            height: 500px;
+            min-height: 500px;
+            float: left;
+            width: 45%;
+            padding: 0;
         }
         .text1_name1 {
-            width: 650px;
+
+            width: 100%;
             float: left;
             text-align: center;
         }
         .text1_main {
-            width: 650px;
+            width: 100%;
             padding: 50px 50px 50px 0;
             float: left;
             text-align: left;
         }
         .addr {
-            width: 650px;
+
+            width: 100%;
             padding: 40px 40px 40px 0 ;
             font-size: 14px;
             float: left;
             text-align: left;
         }
 
-        .clearfix { content: "";
-            display: block;
-            clear: both;
-        }
+
 
         .hours {
-            width: 650px;
-            height: 142px;
+            width: 100%;
+            height: 160px;
             font-size: 14px;
             float: left;
             text-align: left;
         }
         .hours1 {
-            width:320px;
+            width:50%;
             height: 55px;
             float: left;
             text-align: center;
         }
         .hours2 {
-            width:320px;
+            width:50%;
             height: 55px;
             float: left;
             text-align: center;
         }
         .hours3 {
-            width:320px;
-            height: 55px;
+            width:50%;
+            height: 50%;
             float: left;
             text-align: center;
         }
         .hours4 {
-            width:320px;
-            height: 55px;
+            width:50%;
+            height: 50%;
             float: left;
             text-align: center;
         }
         .hours_email {
-            width:640px;
+            width:100%;
             margin-top: 5px;
             float: left;
             text-align: center;
@@ -87,16 +96,26 @@
             height: 300px;
         }
 
-        .text2_main {
-            width: 650px;
+        .text2 {
+            width: 44%;
             float: left;
-            height: 580px;
-            padding-top: 220px;
+            height: 620px;
+        }
+        .text2_main {
+            width: 55%;
+            float: left;
+            margin: 200px;
+
         }
 
         .flagship_img {
             float: left;
             width: 55%;
+        }
+
+        .clearfix { content: "";
+            display: block;
+            clear: both;
         }
         </style>
 
@@ -107,58 +126,62 @@
     <div class="allbox">
         <div class="main_visit">
             <img class="flagship_img" src="{{ url_for('static', path='/img/visit_flagship.png') }}"
-            alt="flagship_img">
+                alt="flagship_img">
             <div class="service">
-                <h3 class="text1_name1">ET CETERA FLAGSHIP</h3>
-                <div class="text1_main">
-                Experience our handcrafted designs, discover our archive of exquisite materials and finishes, or meet with an in-house designer to bring your vision to life.
+                <div class="service_text">
+                    <h3 class="text1_name1">ET CETERA FLAGSHIP</h3>
+                    <div class="text1_main">
+                    Experience our handcrafted designs, discover our archive of exquisite materials and finishes, or meet with an in-house designer to bring your vision to life.
 
-                We welcome both walk-ins and private consultations.
-                </div>
+                    We welcome both walk-ins and private consultations.
+                    </div>
 
-                <div class="addr">
-                    address
-                    <br>
-                    6A, 6th floor, Egg Yellow, 1820 Nambusunhwan-ro, Gwanak-gu, Seoul
+                    <div class="addr">
+                        address
+                        <br>
+                        6A, 6th floor, Egg Yellow, 1820 Nambusunhwan-ro, Gwanak-gu, Seoul
+                    </div>
+                    <div class="hours">
+                        <div class="hours1">
+                            Monday - Thursday
+                            <br>
+                            10:00 AM - 6:00 PM
+                        </div>
+                        <div class="hours2">
+                            Friday
+                            <br>
+                            10:00 AM - 7:00 PM
+                        </div>
+                        <div class="hours3">
+                            Saturday
+                            <br>
+                            11:00 AM - 7:00 PM
+                        </div>
+                        <div class="hours4">
+                            Sunday
+                            <br>
+                            12:00 PM - 6:00 PM
+                        </div>
+                        <div class="hours_email">
+                            globalIT@etcetera.com
+                            010 - 2024 - 0223
+                        </div>
+                    </div>
                 </div>
-                <div class="hours">
-                    <div class="hours1">
-                        Monday - Thursday
-                        <br>
-                        10:00 AM - 6:00 PM
-                    </div>
-                    <div class="hours2">
-                        Friday
-                        <br>
-                        10:00 AM - 7:00 PM
-                    </div>
-                    <div class="hours3">
-                        Saturday
-                        <br>
-                        11:00 AM - 7:00 PM
-                    </div>
-                    <div class="hours4">
-                        Sunday
-                        <br>
-                        12:00 PM - 6:00 PM
-                    </div>
-                    <div class="hours_email">
-                        globalIT@etcetera.com
-                        010 - 2024 - 0223
-                    </div>
-                </div>
+            </div>
                 <div class="clearfix"></div>
                 <div class="white"></div>
-                <div class="text2_main">
-                  The ET CETERA flagship is a space in which to experience our evolving curation
-                  of new arrivals and beloved signatures, explore our archive of exquisite upholstery
-                  options and exclusive finishes, or meet with a dedicated interior designer to bring your
-                  home to life.
+                <div class="text2">
+                    <div class="text2_main">
+                      The ET CETERA flagship is a space in which to experience our evolving curation
+                      of new arrivals and beloved signatures, explore our archive of exquisite upholstery
+                      options and exclusive finishes, or meet with a dedicated interior designer to bring your
+                      home to life.
+                    </div>
                 </div>
-              <img class="flagship_img" src="{{ url_for('static', path='/img/visit_desk.png') }}">
-            </div>
+                <img class="flagship_img" src="{{ url_for('static', path='/img/visit_desk.png') }}"
+                    alt="desk">
             <div class="clearfix"></div>
-
         </div>
     </div>
 </main>
