@@ -1,7 +1,93 @@
 {% block style %}
+    <style>
+        main {
+            background: #333333;
+            height: 100%;
+        }
+        #change00:hover{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #change01:hover{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .change01, change02 {
+            color: white;
+        }
+    </style>
+
 {% endblock %}
 {% block main %}
     <main>
-    <h1>Hello,joju</h1>
+        <button type = "button" id= "change00" style="background: #333333; border: white; font-size: 16px; color: white; ">English</button>
+        <button type = "button" id= "change01" style="background: #333333; border: white; font-size: 16px; color: white; ">Korean</button>
+        <div>
+            <div class = "change01" style="background: #333333"></div>
+            <div class = "change02" style="background: #333333"></div>
+        </div>
+
+
     </main>
 {% endblock %}
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready( function(){
+            $("#change00").click(function() {
+                $('.change01').html(
+                    "<br>\"Et cetera Website Privacy Policy\"" +
+                    "<br>" +
+                    "<br>" +
+                    "Privacy Policy<br>" +
+                    "<br>" +
+                    "Collection of Personal Information: We may collect personal information from you when you visit our website, make a purchase, or interact with our services.<br>" +
+                    "<br>" +
+                    "Use of Personal Information: The personal information we collect may be used to improve our website, personalize your experience, process transactions, and provide customer service.<br>" +
+                    "<br>" +
+                    "Protection of Personal Information: We implement a variety of security measures to maintain the safety of your personal information when you access our website.<br>" +
+                    "<br>" +
+                    "Disclosure of Information to Third Parties: We do not sell, trade, or otherwise transfer your personal information to outside parties without your consent.<br>" +
+                    "<br>" +
+                    "Use of Cookies: We may use cookies to enhance your experience on our website and gather data about site traffic and interaction.<br>" +
+                    "<br>" +
+                    "Opt-Out: You can opt out of receiving future emails from us by following the instructions at the bottom of each email.<br>" +
+                    "<br>" +
+                    "Changes to Privacy Policy: We reserve the right to update or modify our privacy policy at any time. Any changes will be posted on this page.<br>" +
+                    "<br>" +
+                    "Contact Us: If you have any questions or concerns about our privacy policy, you may contact us using the information provided on our website.<br>" +
+                    "<br>" +
+                    "<br>" +
+                    "By using our website, you consent to our privacy policy.<br>")});
+        });
+
+        $(document).ready( function(){
+            $("#change01").click(function() {
+                $('.change01').html(
+                    "<br>\"Et cetera 웹사이트 개인정보 처리 방침\"<br>" +
+                    "<br>" +
+                    "개인정보 수집: 당사는 웹사이트 방문 시, 구매 시 또는 서비스 이용 시 개인정보를 수집할 수 있습니다.<br>" +
+                    "<br>" +
+                    "개인정보 이용: 수집한 개인정보는 웹사이트 개선, 이용자에 맞춘 개인화, 거래 처리, 고객 서비스 제공 등에 사용될 수 있습니다.<br>" +
+                    "<br>" +
+                    "개인정보 보호: 웹사이트 이용 시 개인정보의 안전을 유지하기 위해 다양한 보안 조치를 시행하고 있습니다.<br>" +
+                    "<br>" +
+                    "제3자에 대한 정보 공개: 사용자의 동의 없이 개인정보를 외부 제3자에게 판매, 교환, 제공하지 않습니다.<br>" +
+                    "<br>" +
+                    "쿠키 사용: 웹사이트 이용 경험을 향상시키고 사이트 트래픽과 상호 작용에 대한 데이터를 수집하기 위해 쿠키를 사용할 수 있습니다.<br>" +
+                    "<br>" +
+                    "수신 거부: 각 이메일 하단의 지침을 따라 당사로부터의 향후 이메일 수신을 거부할 수 있습니다.<br>" +
+                    "<br>" +
+                    "개인정보 처리 방침 변경: 당사는 개인정보 처리 방침을 언제든지 업데이트 또는 수정할 권리를 보유하고 있습니다. 변경 사항은 이 페이지에 게시됩니다.<br>" +
+                    "<br>" +
+                    "문의: 개인정보 처리 방침에 관한 질문이나 의견이 있으시면 당사 웹사이트에서 제공된 정보를 사용하여 연락하실 수 있습니다.<br>" +
+                    "<br>" +
+                    "<br>" +
+                    "<br>당사 웹사이트를 이용함으로써 당사의 개인정보 처리 방침에 동의하는 것으로 간주됩니다.<br>"
+
+                )});
+        });
+    </script>
+{% endblock %}
+

@@ -1,7 +1,8 @@
 {% block style %}
 <style>
     main {
-        background: gray;
+        background: #333333;
+        height: 100%;
     }
     #change00:hover{
         font-size: 20px;
@@ -11,17 +12,20 @@
         font-size: 20px;
         font-weight: bold;
     }
+    .change01, change02 {
+        color: white;
+    }
 </style>
 
 {% endblock %}
 {% block main %}
     <main>
-        <button type = "button" id= "change00" style="background: gray; border: white; font-size: 16px; ">English</button>
-        <button type = "button" id= "change01" style="background: gray; border: white; font-size: 16px; ">Korean</button>
+        <button type = "button" id= "change00" style="background: #333333; border: white; font-size: 16px; color: white; ">English</button>
+        <button type = "button" id= "change01" style="background: #333333; border: white; font-size: 16px; color: white; ">Korean</button>
         <div>
-        <div class = "change01" style="background: gray"></div>
-        <div class = "change02" style="background: gray"></div>
-
+            <div class = "change01" style="background: #333333"></div>
+            <div class = "change02" style="background: #333333"></div>
+        <div>
 
 
     </main>
@@ -33,7 +37,7 @@
     $(document).ready( function(){
         $("#change00").click(function() {
             $('.change01').html(
-                "\"Et cetera Furniture Website Terms and Conditions\"" +
+                "<br>\"Et cetera Furniture Website Terms and Conditions\"" +
                 "<br>" +
                 "<br>" +
                 "Terms and Conditions<br>" +
@@ -63,7 +67,7 @@
     $(document).ready( function(){
         $("#change01").click(function() {
             $('.change01').html(
-                "\"Et cetera Furniture Website Terms and Conditions\"<br>" +
+                "<br>\"Et cetera Furniture Website Terms and Conditions\"<br>" +
                 "<br>" +
                 "이용약관<br>" +
                 "<br>" +
