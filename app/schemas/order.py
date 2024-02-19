@@ -21,7 +21,16 @@ class NewOrder(BaseModel):
 
 class OrderItem(BaseModel):
     ino: int
+    pno: int
+    quantity: int
+    pdprice: int
     regdate: str
 
     class Config:
         from_attributes = True
+
+
+class NewOrderItem(BaseModel):
+    pno: int
+    quantity: int
+    pdprice: int

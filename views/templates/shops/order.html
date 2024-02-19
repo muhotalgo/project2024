@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/shop.css') }}">
+<style>
+</style>
+{% endblock %}
+
+{% block main %}
+<main>
+    <h2>주문/결제하기</h2>
+    {% if m %}
+    <form action="/order" method="post" name="oderfrm" id="oderfrm">
+        <!-- 더미 카트 데이터 row 1 -->
+        <h3> 배송 정보 </h3>
+        <div class="">이름 : {{ m.name }}</div>
+        <div class="">전화번호 : {{ m.phone }}</div>
+        <div class="">주소 : {{ m.zipcode }} {{ m.address1 }} {{ m.address2 }}</div>
+
+        <h3> 주문 상품 </h3>
+        {% set totals = [] %}
+        {% for c in clist %}
+        {% if totals.append(c.price * c.quantity) %}{% endif %}
+        <div class="cart_pd_img" style="background-image: url('{{ c.tumbimg }}')"></div>
+        <span class="cart_pd_title">{{ c.name }}</span>
+        <div class="cart_pd_info_wrap">
+            <div class="pd_exp">크기</div>
+            <div class="pd_exp">가로 {{ c.width }}, 세로 {{ c.deps }}, 높이 {{ c.height }}</div>
+            <div class="pd_exp">마감</div>
+            <div class="pd_exp">천연 오크</div>
+        </div>
+        <div>가격</div>
+        <div class="pd_price">{{ c.price }}</div>
+        <div>수량</div>
+        <div class="cart_qty">:
+            <input type="text" name="quantity" class="quantity" readonly value="{{ c.quantity }}"
+                   pattern="[0-9]?"
+                   disabled>
+            <div style="display:none;">
+                <input type="text" name="pno" class="pno" readonly value="{{ c.pno }}">
+                <input type="text" name="pdprice" class="pdprice" readonly value="{{ c.price * c.quantity }}">
+            </div>
+        </div>
+        <div>합계</div>
+        <div class="pd_price">{{ c.price * c.quantity }}</div>
+        <hr>
+        {% endfor %}
+
+
+        <!-- footer -->
+        <div class="footer">
+            <div class="footer_inner">
+                <div class="cart_notice">
+                    <p>이 구매를 진행함으로써 귀하는 당사의
+                        <a href="/visit/visit" title="Terms and Conditions">Terms and
+                            개인 정보 보호 정책</a>
+                        과
+                        <a href="/visit/visit" title="Privacy">
+                            약관
+                        </a>
+                        에 동의합니다.
+                    </p>
+                </div>
+                <div class="subtotal_wrapper">
+                    <div>총 가격</div>
+                    <div class="total_price pd_price">{{ totals | sum }} 원</div>
+                </div>
+                <div class="cart_btns box">
+                    <button type="button" class="btn" name="checkout">
+                        돌아가기
+                    </button>
+                    <a href="/shops/orderend" style="text-decoration: none;">
+                        <button type="button" class="btn" name="checkout" id="ckbtn">
+                            결제하기
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+</main>
+{% endblock %}
+
+{% block script %}
+<script>
+    // , 설정
+    const reprices = document.querySelectorAll('.pd_price');
+    for (const reprice of reprices) {
+        chval = reprice.innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        reprice.innerHTML = chval;
+    }
+
+    // 주문 추가
+    let ckbtn = document.querySelector('#ckbtn');
+    let oderfrm = document.oderfrm;
+    if (ckbtn){
+        ckbtn.addEventListener('click', () => {
+
+            const formData = new FormData(oderfrm);
+
+            let jsondata = {};
+            formData.forEach(function (val, key) {
+                jsondata[key] = val;
+            });
+
+            fetch('http://127.0.0.1:8000/shops/order', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsondata)
+            })
+                .then((res) => res.text())
+                .then((data) => {
+                    if (parseInt(data) > 0) {
+                        alert('주문이 완료되었습니다.');
+                        location.href='http://127.0.0.1:8000/shops/orderend';
+                    }
+                    else alert('주문이 완료되지 않았습니다. 관리자에게 문의하세요.')
+                })
+                .catch((err) => console.log(err));
+        });
+    }
+</script>
+{% endblock %}

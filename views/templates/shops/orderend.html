@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/shop.css') }}">
+<style>
+</style>
+{% endblock %}
+
+{% block main %}
+<!-- 정리 필요 -->
+<div class="lst_rt">
+    <h2> 주문 완료 </h2>
+    <h3> 주문번호 : 240219001 </h3>
+    <div class="">
+        고객님, 주문이 완료되었습니다.
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    // , 설정
+    const reprices = document.querySelectorAll('.pd_price');
+    for (const reprice of reprices) {
+        chval = reprice.innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        reprice.innerHTML = chval;
+    }
+</script>
+{% endblock %}
