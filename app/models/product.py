@@ -1,17 +1,13 @@
 from datetime import datetime
-
-from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import DeclarativeBase
-
-
-class Base(DeclarativeBase):
-    pass
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from app.models.base import Base
 
 
 class Product(Base):
     __tablename__ = 'product'
 
-    prodno = Column(Integer, primary_key=True, autoincrement=True)
+    pno = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(18), nullable=False)
     exp = Column(String(50), default=None)
     detail = Column(String(500), default=None)
@@ -26,4 +22,5 @@ class Product(Base):
     deps = Column(Integer, default=0)
     height = Column(Integer, default=0)
     color = Column(String(18), default=None)
-    catnum = Column(Integer, default=0)
+    ctno = Column(Integer, ForeignKey('category.ctno'))
+    carts = relationship("Cart", backref="product.pno")

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/shop.css') }}">
+<style>
+
+    img {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .pd_row {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .product {
+        padding: 20px;
+        font-family: 'Graphik Web';
+        font-size: 12px;
+        font-weight: 300;
+        color: #333333;
+    }
+
+    .pd_fl {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .pd_title {
+        font-size: 18px;
+        font-weight: 300;
+    }
+
+    .blank,
+    .blank:hover {
+        color: #333;
+        text-decoration: none;
+    }
+</style>
+
+{% endblock %}
+
+{% block main %}
+<!-- 정리 필요 -->
+<div class="lst_rt">
+    <h2> Category 1 </h2>
+    <hr>
+    <h3> Category 1 - 1 </h3>
+    <div class="pd_row">
+        {% for pd in pdlist %}
+        <a href="/shops/view/{{ pd.pno }}" class="blank">
+            <div class="product">
+                <img src="{{ pd.tumbimg }}" alert="{{ pd.name }} 썸네일 이미지">
+                <div class="pd_fl">
+                    <div class="pd_title">{{ pd.name }}</div>
+                    <div class="pd_price"><span id="pd_price">{{ pd.price }}</span> 원</div>
+                </div>
+                <div class="pd_exp">{{ pd.exp }}</div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        // , 설정
+        const reprice = document.querySelector('#pd_price').innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        document.querySelector('#pd_price').innerHTML = reprice;
+    </script>
+{% endblock %}
