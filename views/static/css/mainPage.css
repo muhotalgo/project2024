@@ -19,7 +19,7 @@ a:active { color: gray; }
 /* 폰트 스타일 */
 
 header, main {
-    font-family: "Aboreto", system-ui, "Orbit", sans-serif;
+    font-family: "Aboreto", "Orbit", system-ui;
     font-weight: 400;
     font-style: normal;
 }
