@@ -7,9 +7,11 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.dbfactory import db_startup
+from app.routes.TOS import TOS_router
 
 from app.routes.contact import qna_router
 from app.routes.cart import cart_router
+from app.routes.policy import policy_router
 from app.routes.visit import visit_router
 from app.routes.member import member_router
 from app.routes.product import product_router
@@ -37,6 +39,8 @@ app.include_router(product_router, prefix='/shops/product')
 app.include_router(product_router, prefix='/shops')
 app.include_router(cart_router, prefix='/shops')
 app.include_router(visit_router, prefix='/visit')
+app.include_router(policy_router)
+app.include_router(TOS_router)
 
 # 서버시작시 디비 생성
 @app.on_event('startup')
