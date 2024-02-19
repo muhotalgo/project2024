@@ -3,6 +3,23 @@
 
 {% block style %}
   <style>
+      .form-control.btn-outline-primary {
+          margin-top: 10px;
+          width: 100% ;
+          background-color: #f4f4f4;
+          text-align: center;
+          font-size: 14px;
+          color: black;
+          border: 1px solid dimgrey ;
+          padding: 14px;
+          cursor: pointer;
+          border-radius: 0;
+      }
+      .form-control.btn-outline-primary:hover {
+          color: white;
+          border: 1px solid transparent ;
+          background-color: black;
+      }
     #faq {  margin-left: -40px; margin-right: 5px; margin-bottom: 150px;}
     #faq h3 { margin-left: 130px; }
     #qna {  margin-left: 300px; margin-bottom: 150px;}
@@ -69,12 +86,12 @@
             <div class="col-auto">
               <div id="captcha"></div></div>
           </div>
-          <div class="row">
-            <div class="col-auto">
-              <button type="button" class="col-form-label" >입력완료</button></div>
-            <div class="col-auto">
-              <button type="button" class="col-form-label">다시입력</button></div>
-          </div>
+            <div class="row">
+              <div class="col-auto">
+                <button type="submit" class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" data-animation-role="header-element" style="transition-timing-function: ease; transition-duration: 0.4s; transition-delay: 0.172727s; animation-duration: 0.4s;" >입력완료</button></div>
+              <div class="col-auto">
+                <button type="submit" class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" data-animation-role="header-element" style="transition-timing-function: ease; transition-duration: 0.4s; transition-delay: 0.172727s; animation-duration: 0.4s;">다시입력</button></div>
+            </div>
         </form>
       </div>
       </div>
@@ -91,6 +108,7 @@
         </div>
       </div>
     </div>
+
   </main>
 {% endblock %}
 
