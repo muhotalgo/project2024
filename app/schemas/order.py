@@ -24,6 +24,7 @@ class OrderItem(BaseModel):
     pno: int
     quantity: int
     pdprice: int
+    unitno: int
     regdate: str
 
     class Config:
@@ -34,3 +35,4 @@ class NewOrderItem(BaseModel):
     pno: int
     quantity: int
     pdprice: int
+    unitno: int

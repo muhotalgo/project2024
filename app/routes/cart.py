@@ -21,7 +21,8 @@ def cart(req: Request):
 
     userid = muser
     clist = CartService.select_cart(userid)
-    return templates.TemplateResponse('shops/cart.html', {'request': req, 'clist': clist, 'm': muser})
+    row = CartService.select_cart(userid).fetchone()
+    return templates.TemplateResponse('shops/cart.html', {'request': req, 'clist': clist, 'm': muser, 'row':row})
 
 
 @cart_router.delete('/cart/{cno}')
@@ -48,8 +49,13 @@ def cartorder(req: Request):
     return templates.TemplateResponse('shops/order.html', {'request': req, 'clist': clist, 'm': muser})
 
 
-# orderitem, order 추가
-@cart_router.post('/orderend')
+# orderitem 추가
+@cart_router.post('/order')
 def orderitem(ito: NewOrderItem):
-    result = OrderService.orderitem_convert(ito)
+    result = OrderService.insert_orderitem(ito)
     return result.rowcount
+
+
+@cart_router.get('/orderend', response_class=HTMLResponse)
+def order(req: Request):
+    return templates.TemplateResponse('shops/orderend.html', {'request': req})

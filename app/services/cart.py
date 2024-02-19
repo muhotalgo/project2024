@@ -60,7 +60,7 @@ class OrderService():
     def orderitem_convert(oito):
         data = oito.model_dump()
         oi = OrderItem(**data)
-        data = {'pno': oi.pno, 'quantity': oi.quantity, 'pdprice': oi.pdprice}
+        data = {'pno': oi.pno, 'quantity': oi.quantity, 'pdprice': oi.pdprice, 'unitno': oi.unitno}
         return data
 
     # 장바구니 -> orderitem -> order

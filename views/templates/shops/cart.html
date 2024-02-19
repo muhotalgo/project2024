@@ -285,12 +285,10 @@
 <main>
     <h2>장바구니</h2>
     <div id="CartDrawer" class="drawtop" tabindex="-1">
-        {% if m %}
         <form action="/cart" method="post" name="cartfrm" class="cart" data-hs-cf-bound="true" id="cartfrm">
             <!-- 더미 카트 데이터 row 1 -->
-
             {% set totals = [] %}
-
+            {% if row %}{% else %}<div class="empt">장바구니가 비었습니다.</div>{% endif %}
             {% for c in clist %}
             {% if totals.append(c.price * c.quantity) %}{% endif %}
             <div class="cart_inner">
@@ -372,10 +370,6 @@
                 </div>
             </div>
         </form>
-        {% else %}
-        <div class="empt"><p>장바구니 항목이
-            없습니다.</p></div>
-        {% endif %}
     </div>
 </main>
 {% endblock %}

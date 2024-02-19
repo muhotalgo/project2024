@@ -26,4 +26,5 @@ class OrderItem(Base):
     pno = Column(Integer, default=0)
     quantity = Column(Integer, default=0)
     pdprice = Column(Integer, default=0)
+    unitno = Column(Integer, default=0)
     regdate = Column(DateTime, default=datetime.now)
