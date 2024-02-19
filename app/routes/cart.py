@@ -18,6 +18,12 @@ def cart(req: Request):
                                                           'clist': clist})
 
 
+@cart_router.delete('/cart/{cno}')
+def cart(cno: int):
+    CartService.delete_cart(cno)
+    return {"message": "success"}
+
+
 @cart_router.post('/view')
 def cartuser(cto: NewCart):
     result = CartService.insert_cart(cto)

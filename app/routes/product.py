@@ -6,6 +6,7 @@ from fastapi.templating import Jinja2Templates
 from app.services.product import ProductService
 
 product_router = APIRouter()
+category_router = APIRouter()
 
 templates = Jinja2Templates(directory='views/templates')
 
@@ -18,7 +19,15 @@ templates = Jinja2Templates(directory='views/templates')
 def list(req: Request):
     pdlist = ProductService.select_list()
     return templates.TemplateResponse('shops/list.html', {'request': req,
-                                              'pdlist': pdlist})
+                                                          'pdlist': pdlist})
+
+
+# 카테고리별 상품 조회
+@product_router.get('/list/{ctno}', response_class=HTMLResponse)
+def list(req: Request, ctno: int):
+    pdlist = ProductService.select_list_ctno(ctno)
+    return templates.TemplateResponse('shops/list.html', {'request': req,
+                                                          'pdlist': pdlist})
 
 
 @product_router.get('/view/{pno}', response_class=HTMLResponse)
