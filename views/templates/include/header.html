@@ -19,12 +19,21 @@
                                                         class="search material-symbols-outlined">search</button></div>
 
                     </li>
+                    {% if 'm' in request.session %}
                     <li>
                         <a href="/shops/cart">
                                 <span class="material-symbols-outlined">shopping_cart
                                 </span>
                         </a>
                     </li>
+                    {% else %}
+                    <li>
+                        <a href="/login">
+                                <span class="material-symbols-outlined">shopping_cart
+                                </span>
+                        </a>
+                    </li>
+                    {% endif %}
                     <li>
                         <a href="http://www.naver.com">
                                 <span class="material-symbols-outlined">person

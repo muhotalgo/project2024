@@ -54,9 +54,16 @@
                     <button type="button" class="btn" name="checkout" onclick="alert('공사중입니다.')">
                         구매
                     </button>
-                    <button type="button" class="btn" name="checkout" id="cartbtn">
+                    {% if m %}
+                    <input type="text" name="userid" id="userid" value="{{ m.userid }}" class="mada">
+                    <button type="button" class="btn" name="checkout" id="usercartbtn">
                         장바구니 넣기
                     </button>
+                    {% else %}
+                    <button type="button" class="btn" name="checkout" id="jstcartbtn">
+                        장바구니 (로그인 하러가기)
+                    </button>
+                    {% endif %}
                 </div>
             </div>
         </form>
@@ -69,32 +76,49 @@
 
 {% block script %}
     <script>
-        // 현재 회원 검증 없음 추후 추가 예정
-        let cartbtn = document.querySelector('#cartbtn');
+        // 회원 장바구니 추가
+        let usercartbtn = document.querySelector('#usercartbtn');
         let viewfrm = document.viewfrm;
-        cartbtn.addEventListener('click', () => {
-            const formData = new FormData(viewfrm);
+        if (usercartbtn){
+            usercartbtn.addEventListener('click', () => {
 
-            let jsondata = {};
-            formData.forEach(function (val, key) {
-                jsondata[key] = val;
-            });
+                const formData = new FormData(viewfrm);
 
-            fetch('http://127.0.0.1:8000/shops/view', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(jsondata)
-            })
-                .then((res) => res.text())
-                .then((data) => {
-                    if (parseInt(data) > 0) window.alert('장바구니가 추가되었습니다.')
-                    else alert('장바구니 오류. 관리자에게 문의하세요.')
+                let jsondata = {};
+                formData.forEach(function (val, key) {
+                    jsondata[key] = val;
+                });
+
+                fetch('http://127.0.0.1:8000/shops/view', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(jsondata)
                 })
-                .catch((err) => console.log(err));
-        });
+                    .then((res) => res.text())
+                    .then((data) => {
+                        if (parseInt(data) > 0) {
+                            if(confirm("장바구니가 추가되었습니다. \n장바구니로 이동하시겠습니까?")){
+                                location.href='http://127.0.0.1:8000/shops/cart';
+                            }else{}
+                        }
+                        else alert('장바구니 오류. 관리자에게 문의하세요.')
+                    })
+                    .catch((err) => console.log(err));
+            });
+        }
+
+        // 비회원 로그인 전환
+        let jstcartbtn = document.querySelector('#jstcartbtn');
+        if (jstcartbtn){
+            jstcartbtn.addEventListener('click', () => {
+                // alert('공사중입니다! 관리자에게 문의해주세요.');
+                if(confirm("로그인이 필요한 서비스입니다. \n로그인 화면으로 이동하시겠습니까?")){
+                }
+            });
+        }
 
         // , 설정
         const reprice = document.querySelector('#pd_price').innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
