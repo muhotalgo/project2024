@@ -28,3 +28,12 @@ class NewMember(BaseModel):
     name: str
     phone: str
     email: str
+
+class ModiMember(BaseModel):
+    userid: str
+    passwd: str
+    zipcode: str
+    address1: str
+    address2: str
+    email: str
+    response: str

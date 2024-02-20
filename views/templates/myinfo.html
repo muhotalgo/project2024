@@ -7,8 +7,9 @@
             outline:none;
         }
 
-        .btn {
-            -webkit-tap-highlight-color: transparent;
+        a:hover {
+            text-decoration: none;
+
         }
 
         body {
@@ -16,17 +17,46 @@
             font-family: "Orbit", sans-serif;
             font-weight: 400;
             font-style: normal;
-            {#padding-top : 500px;#}
-            {#margin: 240px;#}
+        {#padding-top : 500px;#}
+        {#margin: 240px;#}
             background-color: #E8E8E8;
-            {#padding: 0;#}
+        {#padding: 0;#}
+        }
+
+        .myaccount-menu {
+
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
+            margin: 30px 100px auto;
+            border: solid #fff 10px;
+
+            display:flex;
+            flex-basis:200px;
+            flex-shrink: 0;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        div ul {
+            list-style-type: none;
+            padding: 0;
+            margin-left: 30px;
+        }
+
+        h3 {
+            font-size: 15px;
+            line-height: 18px;
+            font-weight: 700;
+            margin-top: 15px;
+            padding-top:15px;
+
         }
 
         .container {
-            max-width: 400px; /* 수정: 너비를 조금 더 넓게 설정 */
+        {#max-width: 400px; /* 수정: 너비를 조금 더 넓게 설정 */#}
             margin: 50px auto;
             background-color: #fff;
-            padding: 50px;
+            padding: 70px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
         }
@@ -42,7 +72,7 @@
             margin-left: 3px;
             margin-top: -10px;
             /* margin-bottom: 2px; /* login은 10px*/
-            {#display: block;#}
+        {#display: block;#}
             font-weight: bold;
         }
 
@@ -87,15 +117,48 @@
 
 {% block main %}
     <main>
-        <div class="container w-25">
-            <table class="table table-bordered mt-5">
-                <tr><th>아이디</th><td>{{ my.userid }}</td></tr>
-                <tr><th>이름</th><td>{{ my.name }}</td></tr>
-                <tr><th>이메일</th><td>{{ my.email }}</td></tr>
-                <!-- <tr><th>가입일</th><td>{{ my.regdate.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr> -->
-                <tr><th>주문내역</th><td>{{ my.orders }}</td></tr>
-                <tr><th>고객센터</th><td>{{ my.contacts }}</td></tr>
-            </table>
+        <div class="row myaccount-container">
+            <div class="myaccount-menu">
+                <div class="col">
+                    <h3>
+                        <a href="/myinfo" style="color: #8B8B8B;">고객 정보</a>
+                    </h3>
+                    <ul>
+                        <li><a href="/myinfo/modify">회원정보 수정</a></li>
+                        <li><a href="#">배송지 정보</a></li>
+                        <li><a href="#">적립금</a></li>
+                        <li><a href="#">쿠폰</a></li>
+                        <li style="margin-top:10px;">
+                            <a href="/logout" class="xans-element- xans-layout xans-layout-statelogon ">로그아웃</a>
+                        </li>
+                    </ul>
+                    <h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:15px; padding-top:15px;">주문내역</h3>
+                    <ul>
+                        <li><a href="/myinfo/orders">주문내역</a></li>
+                        <li><a href="/#">교환/반품 내역</a></li>
+                    </ul>
+                    <h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:40px; padding-top:15px;">리뷰 및 질문</h3>
+                    <ul>
+                        <!-- <li><a href="/myshop/wish_list.html">Wish List</a></li> -->
+                        <li><a href="/myshop/board_list.html">리뷰 작성</a></li>
+                        <li><a href="/views/static#/faq.html">자주 묻는 질문</a></li>
+                        <li><a href="/#">내 질문 내역</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="container w-50">
+                <table class="table table-bordered">
+                    <tr><th>아이디</th><td>{{ my.userid }}</td></tr>
+                    <tr><th>이름</th><td>{{ my.name }}</td></tr>
+                    <tr><th>내 주소</th><td>{{ my.address1 }} {{ my.address2 }}</td></tr>
+                    <tr><th>사용중인 이메일</th><td>{{ my.email }}</td></tr>
+                    <tr><th>가입일</th><td>{{ my.regdate.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr>
+{#                    <tr><th>주문내역 보기</th><td>{{ my.orders }}</td></tr>#}
+{#                    <tr><th>고객센터</th><td>{{ my.contacts }}</td></tr>#}
+                </table>
+            </div>
         </div>
     </main>
 {% endblock %}
@@ -103,5 +166,4 @@
 {% block script %}
     <script></script>
 {% endblock %}
-
 

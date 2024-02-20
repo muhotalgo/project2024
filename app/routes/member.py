@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from starlette import status
 
 
-from app.schemas.member import NewMember
+from app.schemas.member import NewMember, ModiMember
 from app.services.member import MemberService
 
 member_router = APIRouter()
@@ -34,16 +34,6 @@ def joinok(req: Request):
 def login(req: Request):
     return templates.TemplateResponse('login.html', {'request': req})
 
-# 회원가입시 아이디 중복확인
-# @member_router.get('/join')
-# def joincheck2(req: Request, userid: str = Form()):
-#     result = MemberService.check_userid(userid)
-#     if result:
-#         return JSONResponse(content={"exists": True})
-#     else:
-#         return JSONResponse(content={"exists": False})
-
-
 # 회원가입시 아이디, 전화번호, 이메일 중복확인
 @member_router.get('/check/{check_type}/{value}')
 def signupcheck(req: Request, check_type: str, value: str):
@@ -63,8 +53,6 @@ def signupcheck(req: Request, check_type: str, value: str):
         return 'yes'
     else:
         return 'no'
-
-
 
 
 @member_router.post('/login', response_class=HTMLResponse)
@@ -87,6 +75,7 @@ def logout(req: Request):
     req.session.clear()     # 생성된 세션객체 제거
     return RedirectResponse(url='/', status_code=status.HTTP_303_SEE_OTHER)
 
+# 마이페이지
 @member_router.get('/myinfo', response_class=HTMLResponse)
 def myinfo(req: Request):
     if 'm' not in req.session:
@@ -94,3 +83,57 @@ def myinfo(req: Request):
 
     myinfo = MemberService.selectone_member(req.session['m'])
     return templates.TemplateResponse('myinfo.html',{'request': req, 'my': myinfo})
+
+
+# 마이페이지 항목 수정 페이지
+@member_router.get('/myinfo/modify', response_class=HTMLResponse)
+def checkmodify(req: Request):
+    if 'm' not in req.session:
+        return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
+
+    myinfo = MemberService.selectone_member(req.session['m'])
+    return templates.TemplateResponse('myinfo/modify.html',{'request': req, 'my': myinfo})
+
+
+# DB로 수정하기 / 수정 완료시키기
+@member_router.post('/myinfo/modify')
+def modify(mdto: ModiMember):
+    res_url = '/captcha_error'
+    if MemberService.check_captcha(mdto):    # captcha 체크가 true 라면 아래진행
+        result = MemberService.modify_member(mdto)
+        res_url = '/write_error'
+        if result.rowcount > 0: res_url = '/myinfo'
+    return RedirectResponse(res_url, status_code=status.HTTP_302_FOUND)
+
+    #     return HTMLResponse("""
+    #             <script>
+    #                 alert('회원정보수정에 성공했습니다.');
+    #                 window.location.href = '/myinfo';
+    #             </script>
+    #         """)
+    # else:
+    #     raise HTTPException(status_code=500, detail='회원정보 수정에 실패했습니다.')
+
+
+# 마이페이지 / 주문내역
+
+@member_router.get('/myinfo/orders', response_class=HTMLResponse)
+def orders(req: Request):
+    if 'm' not in req.session:
+        return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
+
+    myinfo = MemberService.selectone_member(req.session['m'])
+    # orders = MemberService.
+    return templates.TemplateResponse('myinfo/orders.html',{'request': req, 'my': myinfo, 'od': orders})
+
+
+
+# 마이페이지 / 내 질문 내역
+@member_router.get('/myinfo/contacts', response_class=HTMLResponse)
+def contacts(req: Request):
+    if 'm' not in req.session:
+        return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
+
+    myinfo = MemberService.selectone_member(req.session['m'])
+    return templates.TemplateResponse('myinfo/contacts.html',{'request': req, 'my': myinfo})
+

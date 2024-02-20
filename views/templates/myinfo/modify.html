@@ -1,0 +1,651 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <style>
+        /* 기본으로 생기는 파란 라인 제거*/
+        input:focus, textarea:focus, button:focus {
+            outline:none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        body {
+            /*font-family: Arial, sans-serif;*/
+            font-family: "Orbit", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            {#padding-top : 500px;#}
+            {#margin: 240px;#}
+            background-color: #E8E8E8;
+            {#padding: 0;#}
+        }
+
+        .myaccount-menu {
+
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
+            margin: 30px 100px auto;
+            border: solid #fff 10px;
+
+            display:flex;
+            flex-basis:200px;
+            flex-shrink: 0;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        div ul {
+            list-style-type: none;
+            padding: 0;
+            margin-left: 30px;
+        }
+
+        h3 {
+            font-size: 15px;
+            line-height: 18px;
+            font-weight: 700;
+            margin-top: 15px;
+            padding-top:15px;
+
+        }
+
+        .container {
+            {#max-width: 400px; /* 수정: 너비를 조금 더 넓게 설정 */#}
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 0 auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 10px;
+            justify-content: center; /* 수평 가운데 정렬 */
+        }
+
+        .form-group-check {
+            margin: 0;
+            text-align: left;
+            height: 67px;
+            padding-bottom: -10px;
+
+        }
+
+        .form-group label {
+            padding-right: 20px;
+            margin-left: 3px;
+            margin-top: -10px;
+            /* margin-bottom: 2px; /* login은 10px*/
+            {#display: block;#}
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group textarea {
+            width: 95%;
+            padding: 10px;
+            margin-top: -5px;
+
+            border: 1px solid #ccc;
+            border-radius: 1px;
+            box-sizing: border-box;
+        }
+
+        .form-control.btn-outline-primary {
+            margin: 0 auto ;
+            width: 60% ;
+            background-color: #f4f4f4;
+            text-align: center;
+            font-size: 14px;
+            color: black;
+            border: 1px solid dimgrey ;
+            padding: 14px;
+            cursor: pointer;
+            border-radius: 0;
+        }
+
+        .form-control.btn-outline-primary:hover {
+            color: white;
+            border: 1px solid transparent ;
+            background-color: black;
+        }
+    </style>
+
+    <script src="https://js.hcaptcha.com/1/api.js?hl=ko&onload=myFunction&render=explicit"
+            async defer>
+    </script>
+
+    <script type="text/javascript">
+        var myFunction = () => {
+            hcaptcha.render('captcha', {
+                sitekey: '19e7b44f-2dfa-4f43-9e48-f42f824a3ad6',
+                theme: 'light',
+                'error-callback': 'onError',
+            });
+        };
+
+    </script>
+
+
+{% endblock %}
+
+{% block main %}
+    <main>
+        <div class="row myaccount-container">
+            <div class="myaccount-menu">
+                <div class="col">
+                    <h3>
+                        <a href="/myinfo" style="color: #8B8B8B;">고객 정보</a>
+                    </h3>
+                    <ul><li><a href="/myinfo/modify">회원정보 수정</a></li>
+                        <li><a href="#">배송지 정보</a></li>
+                        <li><a href="#">적립금</a></li>
+                        <li><a href="#">쿠폰</a></li>
+                        <li style="margin-top:10px;">
+                            <a href="/logout" class="xans-element- xans-layout xans-layout-statelogon ">로그아웃</a>
+                        </li>
+                    </ul><h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:15px; padding-top:15px;">주문내역</h3>
+                    <ul><li><a href="/myinfo/orders">주문내역</a></li>
+                        <li><a href="/#">교환/반품 내역</a></li>
+                    </ul><h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:40px; padding-top:15px;">리뷰 및 질문</h3>
+                    <ul>
+                        <!--        <li><a href="/myshop/wish_list.html">Wish List</a></li> -->
+                        <li><a href="/myshop/board_list.html">리뷰 작성</a></li>
+                        <li><a href="/views/static#/faq.html">자주 묻는 질문</a></li>
+                        <li><a href="/#">내 질문 내역</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="container w-50">
+                <form name="modifyfrm">
+                    <div class="container text-center">
+                        <div class="container text-center">
+                            <div class="col form-group">
+                                <label for="userid" class="col-form-label">아이디</label>
+                                <input type="text" name="userid" id="userid" class="form-control" value="{{ my.userid }}" style="max-width: 250px" readonly><span id="msg1"></span><span id="code1"></span>
+                            </div>
+                        </div>
+                        <div class="container text-center">
+                            <div class="row align-items-center">
+                                <div class="col form-group">
+                                    <label for="passwd" class="col-form-label">비밀번호</label>
+                                    <input type="password" name="passwd" id="passwd" class="form-control" placeholder="영문과 숫자 5~15자" style="max-width: 250px"><span id="msg2"></span>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="repwd" class="col-form-label">비밀번호확인</label>
+                                    <input type="password" name="repwd" id="repwd" class="form-control" style="max-width: 250px"><span id="msg3"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container text-center">
+                            <div class="header-actions-action header-actions-action--cta preFade fadeIn" data-animation-role="header-element" style="transition-timing-function: ease; transition-duration: 0.8s; transition-delay: 0.272727s; animation-duration: 0.8s;">
+                                <button type="button" class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" onclick="execDaumPostcode()" value="우편번호 찾기" style="transition-timing-function: ease; transition-duration: 0.4s; transition-delay: 0.172727s; animation-duration: 0.4s;">FIND ADDRESS</button>
+                            </div>
+                        </div>
+                        <!-- zipcode 검색 나오는 위치 -->
+                        <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+                            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                        </div>
+                        <div class="container text-center">
+                            <div class="row align-items-center">
+                                <div class="form-group" style="margin-bottom: 0; ">
+                                    <label for="zipcode" class="col-form-label">우편번호</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" name="zipcode" id="zipcode" class="form-control" style="width: 50%" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="extraAddress" placeholder="참고주소" class="form-control" style="width: 90%" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="form-group">
+                                    <label for="address1" class="col-form-label">주소</label>
+                                    <input type="text" name="address1" id="address1" placeholder="" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-group">
+                                    <label for="address2" class="col-form-label">상세주소 입력</label>
+                                    <input type="text" name="address2" id="address2" class="form-control"><span id="msgAdd"></span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-group">
+                                    <label for="name" class="col-form-label">이름</label>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ my.name }}" disabled><span id="msg4"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">휴대전화</label>
+                                <input type="text" class="form-control rounded-0" pattern="[0-9]*" id="mobile2" value="{{ my.phone }}" minlength="7" maxlength="8" style="display: inline-block;" disabled><span id="msgNum"></span><span id="code2"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">이메일</label>
+                                <input type="text" name="email" id="email" placeholder="{{ my.email }}">
+                                <div id="msg5" style="text-align: left"></div><div id="code3" style="text-align: left"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="captcha" class="col-form-label"></label></div>
+                                <div id="captcha" style="text-align: left"></div>
+                            </div>
+
+
+{#                            <div class="container text-center">#}
+{#                                <div class="row align-items-center">#}
+{#                                <label for="email" class="col-form-label" style="text-align: left">이메일</label>#}
+{#                                    <div class="col form-group">#}
+{#                                        <input type="text" name="email" id="email" placeholder="{{ my.email }}">#}
+{#                                    </div>#}
+{#                                    <div class="col form-group-check">#}
+{#                                        <button type="button" class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" data-animation-role="header-element" name="echeckbtn" id="echeckbtn" style="transition-timing-function: ease; transition-duration: 0.4s; transition-delay: 0.172727s; animation-duration: 0.4s;"><i class="bi bi-check"></i> 이메일 중복확인&nbsp;</button>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <button type="button" class="form-control btn btn-outline-primary btn-lg theme-btn--primary-inverse sqs-button-element--primary" data-animation-role="header-element" id="modifybtn" style="transition-timing-function: ease; transition-duration: 0.4s; transition-delay: 0.172727s; animation-duration: 0.4s;">MODIFY</button>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="msgButton"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {##}
+            {#                <table class="table table-bordered">#}
+            {#                    <tr><th>아이디</th><td>{{ my.userid }}</td></tr>#}
+            {#                    <tr><th>이름</th><td>{{ my.name }}</td></tr>#}
+            {#                    <tr><th>이메일</th><td>{{ my.email }}</td></tr>#}
+            {#                    <!-- <tr><th>가입일</th><td>{{ my.regdate.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr> -->#}
+            {#                    <tr><th>주문내역 보기</th><td>{{ my.orders }}</td></tr>#}
+            {#                    <tr><th>고객센터</th><td>{{ my.contacts }}</td></tr>#}
+            {#                </table>#}
+        </div>
+    </main>
+{% endblock %}
+
+
+{% block script %}
+
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        // 우편번호 찾기 찾기 화면을 넣을 element
+        var element_wrap = document.getElementById('wrap');
+
+        function foldDaumPostcode() {
+            // iframe을 넣은 element를 안보이게 한다.
+            element_wrap.style.display = 'none';
+        }
+
+        function execDaumPostcode() {
+            // 현재 scroll 위치를 저장해놓는다.
+            var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var addr = ''; // 주소 변수
+                    var extraAddr = ''; // 참고항목 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+
+                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                    if(data.userSelectedType === 'R'){
+                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                            extraAddr += data.bname;
+                        }
+                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                        if(extraAddr !== ''){
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                        // 조합된 참고항목을 해당 필드에 넣는다.
+                        document.getElementById("extraAddress").value = extraAddr;
+
+                    } else {
+                        document.getElementById("extraAddress").value = '';
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('zipcode').value = data.zonecode;
+                    document.getElementById("address1").value = addr;
+                    // 커서를 상세주소 필드로 이동한다.
+                    // document.getElementById("address2").focus();
+
+                    // iframe을 넣은 element를 안보이게 한다.
+                    // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                    element_wrap.style.display = 'none';
+
+                    // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+                    document.body.scrollTop = currentScroll;
+                },
+                // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+                onresize : function(size) {
+                    element_wrap.style.height = size.height+'px';
+                },
+                width : '100%',
+                height : '100%'
+            }).embed(element_wrap);
+
+            // iframe을 넣은 element를 보이게 한다.
+            element_wrap.style.display = 'block';
+        }
+    </script>
+
+
+    <script>
+
+        let msg1 = document.querySelector('#msg1');
+        let msg2 = document.querySelector('#msg2');
+        let msg3 = document.querySelector('#msg3');
+        let msg4 = document.querySelector('#msg4');
+        let msg5 = document.querySelector('#msg5');
+        let msgAdd = document.querySelector('#msgAdd');
+        let msgNum = document.querySelector('#msgNum');
+
+        let echeckbtn = document.querySelector('#echeckbtn');
+
+        let useridInput = document.querySelector('#userid');
+
+        let passwdInput = document.querySelector('#passwd');
+        let repwdInput = document.querySelector('#repwd');
+        // let nameInput = document.querySelector('#name');
+        let emailInput = document.querySelector('#email');
+        let address1Input = document.querySelector('#address1');
+        let address2Input = document.querySelector('#address2');
+        let mobileInput = document.querySelector('#mobile2');
+        let modifyfrm = document.modifyfrm;
+
+
+        // phone 요소 가져오기
+        // let phoneInput = document.querySelector('#phone');
+
+
+        // mobile1과 mobile2 요소 가져오기
+        // let mobile1Input = document.querySelector('#mobile1');
+        // let mobile2Input = document.querySelector('#mobile2');
+
+        // mobile1과 mobile2의 값이 변경될 때마다 phone의 값을 업데이트하는 함수 정의
+        // let updatePhone = () => {
+        //    phoneInput.value = mobile1Input.value + mobile2Input.value;
+        //};
+
+        // mobile1과 mobile2의 값이 변경될 때마다 updatePhone 함수 호출
+        // mobile1Input.addEventListener('blur', updatePhone);
+        // mobile2Input.addEventListener('blur', updatePhone);
+
+        // 입력 필드와 메시지 요소 초기화 함수
+        let resetFieldAndMessage = (inputElement, messageElement) => {
+            inputElement.style.border = ''; // 입력 필드 초기화
+            messageElement.textContent = ''; // 메시지 초기화
+        };
+
+        // 메시지를 표시하고 입력 필드를 강조하는 함수
+        let showMessage = (inputElement, messageElement, message) => {
+            messageElement.textContent = message;
+            messageElement.style.color = 'red'; // 메시지를 빨간색으로 강조
+            inputElement.style.border = '1px solid red'; // 입력 필드 강조
+        };
+
+        // 메시지를 숨기고 입력 필드를 정상 상태로 돌리는 함수
+        let hideMessage = (inputElement, messageElement) => {
+            messageElement.textContent = ''; // 메시지 초기화
+            messageElement.style.color = ''; // 메시지 텍스트 색상 초기화
+            inputElement.style.border = ''; // 입력 필드 테두리를 기본값으로 설정
+        };
+
+        // 이벤트 핸들러 등록
+        useridInput.addEventListener('blur', () => { checkuid(); });
+        passwdInput.addEventListener('blur', () => { checkpwd(); });
+        repwdInput.addEventListener('blur', () => { checkrepwd(); });
+        // emailInput.addEventListener('blur', () => { checkemail(); });
+
+        // 폼 검증 함수
+        let checkForm = () => {
+            resetFieldAndMessage(useridInput, msg1);
+            resetFieldAndMessage(passwdInput, msg2);
+            resetFieldAndMessage(repwdInput, msg3);
+            resetFieldAndMessage(address2Input, msgAdd);
+            resetFieldAndMessage(emailInput, msg5);
+
+            if (useridInput.value === '') {
+                showMessage(useridInput, msg1, '아이디를 입력하세요');
+                useridInput.focus();
+                return false;
+            } else if (passwdInput.value === '') {
+                showMessage(passwdInput, msg2, '비밀번호를 입력하세요');
+                passwdInput.focus();
+                return false;
+            } else if (repwdInput.value !== passwdInput.value || repwdInput.value === '') {
+                showMessage(repwdInput, msg3, '비밀번호를 확인하세요');
+                repwdInput.focus();
+                return false;
+            } else if (address2Input.value === '' || address1Input.value === '') {
+                showMessage(address2Input, msgAdd, '주소를 입력해주세요.');
+                address2Input.focus();
+                return false;
+            } else if (checkpwd() === false ) {
+                document.getElementById("passwd").focus();
+                return false;
+            } else if (checkrepwd() === false ) {
+                document.getElementById("repwd").focus();
+                return false;
+            } else if (checkemail() === false) {
+                document.getElementById("email").focus();
+                return false;
+            } else {
+                return true;
+            }
+        };
+
+        // 아이디 유효성 검사 함수
+        let checkuid = () => {
+            let uid = useridInput.value;
+            let re = /^[a-z]+[a-z0-9]{4,15}$/g;
+            let result = re.test(uid) ? '' : '아이디를 다시 입력해주세요.';
+            if (result === '') {
+                hideMessage(useridInput, msg1);
+            } else {
+                showMessage(useridInput, msg1, result);
+                return false;
+            }
+        };
+
+        // 비밀번호 유효성 검사 함수
+        let checkpwd = () => {
+            let pwd = passwdInput.value;
+            let re = /^[a-z]+[a-z0-9]{4,15}$/g;
+            let result = re.test(pwd) ? '' : '비밀번호를 다시 입력해주세요.';
+            if (result === '') {
+                hideMessage(passwdInput, msg2);
+            } else {
+                showMessage(passwdInput, msg2, result);
+                return false;
+            }
+        };
+
+        // 비밀번호 확인 함수
+        let checkrepwd = () => {
+            let result = repwdInput.value === passwdInput.value ? '' : '비밀번호가 일치하지 않습니다.';
+            if (result === '') {
+                hideMessage(repwdInput, msg3);
+            } else {
+                showMessage(repwdInput, msg3, result);
+                return false;
+            }
+        };
+
+        // 이름 유효성 검사 함수
+        let checkname = () => {
+            let name = nameInput.value;
+            let re = /^[가-힣]{2,10}$/
+            let result = re.test(name) ? '' : '이름을 다시 입력해주세요.';
+            if (result === '') {
+                hideMessage(nameInput, msg4);
+            } else {
+                showMessage(nameInput, msg4, result);
+                return false;
+            }
+        };
+
+
+        // 이메일 유효성 검사 함수
+        let checkemail = () => {
+            let email = emailInput.value;
+            let re = /^(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+            let result = re.test(email) ? '' : '이메일을 다시 입력해주세요.';
+            if (result === '') {
+                hideMessage(emailInput, msg5);
+                return true;
+            } else {
+                showMessage(emailInput, msg5, result);
+                return false;
+            }
+        };
+
+        // 전화번호 유효성 검사 함수
+        let checkphone = () => {
+            let phone = mobileInput.value;
+            let re = /^\d{7,8}$/;
+            let result = re.test(phone) ? '' : '전화번호를 다시 입력해주세요.';
+            if (result === '') {
+                hideMessage(mobileInput, msgNum);
+                return true;
+            } else {
+                showMessage(mobileInput, msgNum, result);
+                return false;
+            }
+        };
+
+    </script>
+
+    <script>
+        let modifybtn = document.querySelector('#modifybtn');
+        modifybtn.addEventListener('click', () => {
+
+            if (!checkForm()) {return;}  // checkForm 에서 넘어온게 true 일 경우에 작동
+
+            if (hcaptcha.getResponse() === '') {
+                alert('자동가입방지를 확인하세요!!');
+                return;
+            }
+
+            // 폼에 입력된 데이터를 초기화함
+            const formData = new FormData(modifyfrm);
+            // 서버에 보내기 위해 폼 데이터를 JSON 객체로 변환
+            let jsondata = {};
+            formData.forEach(function (val, key){
+                jsondata[key] = val;
+            });     // 작성된 데이터를 json 형태로 저장함
+            // ajax를 이용해서 서버로 전송하고 결과 받음
+            // 캡챠 응답토큰을 jsondata에 추가
+            jsondata['response'] = hcaptcha.getResponse();
+
+            console.log(jsondata);
+
+            fetch('http://127.0.0.1:8000/myinfo/modify', {
+                method: 'POST',                     // 데이터 전송방식
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },                                  // 전송할 데이터 형식
+                body: JSON.stringify(jsondata)      // 서버로 전송할 데이터
+            })
+                .then((res) => {
+                    if (res.redirected) {
+                        // 서버에서 리디렉션을 수행했을 경우
+                        location.href = res.url; // 새로운 URL로 리디렉션
+                    } else {
+                        // 리디렉션이 아닌 경우, 즉 데이터를 반환하는 경우
+                        return res.text(); // 서버로부터 응답받음 txt로 받음
+                    }
+                })
+                .then((data) => {
+                    if (data) {
+                        // 서버로부터 반환된 데이터가 있는 경우
+                        if (parseInt(data) > 0) {
+                            location.href = '/myinfo'; // 회원정보 수정 성공시 페이지 출력
+                        } else {
+                            location.href = '/error'; // 회원정보 수정 실패시 페이지 출력
+                        }
+                    }
+                })
+                .catch((err) => console.log(err));  // 오류발생시 콘솔에 출력
+        });
+
+    </script>
+
+    <script>
+        userid = document.querySelector('#userid');
+        phone = document.querySelector('#phone');
+        let code1 = document.querySelector('#code1');
+        let code2 = document.querySelector('#code2');
+        let code3 = document.querySelector('#code3');
+
+
+
+
+
+        emailInput.addEventListener('blur', () => {
+            let isEmailValid = checkemail();
+
+            // ajax를 이용해서 서버로 전송하고 결과 받음
+            fetch(`http://127.0.0.1:8000/check/email/${modifyfrm.email.value}`, {
+                method: 'GET',                     // 데이터 전송방식
+            })
+                .then((res) => res.text())          // 서버로부터 응답받음 txt로 받음
+                .then((data) => {
+                    hideMessage(emailInput, code3);
+
+                    if (data === '"yes"' && isEmailValid === true) {
+                        showMessage(emailInput, code3, '사용중인 이메일입니다.');
+                        modifybtn.disabled = true;
+                        emailInput.focus();
+
+                    } else if (data === '"no"' && isEmailValid === true) {
+                        hideMessage(emailInput, code3);
+                        code3.textContent = '사용가능한 이메일입니다.';
+                        modifybtn.disabled = false;
+                    }
+                })
+                .catch((err) => console.log(err));  // 오류발생시 콘솔에 출력
+        });
+
+    </script>
+
+{% endblock %}
+
