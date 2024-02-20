@@ -9,12 +9,12 @@
             border-color: rgba(0,0,0,.125);
         }
 
+
         .accordion-button:focus {
             box-shadow: none;
+            z-index: 0;
             border-color: rgba(0,0,0,.125);
         }
-
-
 
         .btn {
             -webkit-tap-highlight-color: transparent;
@@ -100,7 +100,7 @@
         .form-check-input {
             border: solid black 1px;
             margin-bottom: 4px;
-            margin-right: 4px;
+            margin-right: 3px;
         }
 
         .accordion-button:not(.collapsed) {
@@ -444,7 +444,7 @@
                     </div>
                 </div>
                     <div class="col" style="margin-top: 10px ; margin-bottom: 3px">
-                        <input class="form-check-input" type="checkbox" name="checkAll" id="checkAll" style=" margin-left: 21px; !important;">
+                        <input class="form-check-input" type="checkbox" name="checkAll" id="checkAll" style=" margin-left: 21px;">
                         <span class="terms-agreement" style="margin-bottom: 2px; margin-left: 2px;">모두 동의하기 </span><span id="msgTerm"></span>
                     </div>
 
@@ -551,41 +551,6 @@
             element_wrap.style.display = 'block';
         }
     </script>
-{##}
-{#    <script>#}
-{#        const checkbox = document.querySelector('#flexRadioDefault1');#}
-{#        const accordionCollapse = document.querySelector('#flush-collapseOne');#}
-{##}
-{#        checkbox.addEventListener('change', () => {#}
-{#            // 체크박스 선택 시 아무 작업도 하지 않음#}
-{#        });#}
-{##}
-{#    </script>#}
-{##}
-{#    <script>#}
-{##}
-{#        var checkAll = document.querySelector('#checkALL');#}
-{#        var chkbox = document.querySelectorAll('.form-check-input');#}
-{##}
-{#        /* === 전체선택 클릭시 체크/해제 === */#}
-{#        checkAll.onclick = function(){#}
-{#            if(checkAll.checked == false){#}
-{#                for(var i=0; i<chkbox.length; i++){ chkbox[i].checked = false; }//for#}
-{#            }else{#}
-{#                for(var i=0; i<chkbox.length; i++){ chkbox[i].checked = true; }//for#}
-{#            }#}
-{#        };//onclick#}
-{##}
-{##}
-{#        /* === 하위요소 해제시 전체선택 해제 === */#}
-{#        for(var i=0; i<chkbox.length; i++){#}
-{#            chkbox[i].onclick = function(){#}
-{#                if( this.checked == false ){ checkAll.checked = false; }#}
-{#            }//onclick#}
-{#        }//for#}
-{##}
-{#    </script>#}
-{##}
 
     <script>
 
@@ -596,6 +561,8 @@
 
             // 전체 동의 체크박스 클릭 시
             ckTag.addEventListener('click', (event) => {
+                resetFieldAndMessage(tnaChecked1, msgTerm)
+                resetFieldAndMessage(tnaChecked2, msgTerm)
                 const chckValue = event.currentTarget.checked;
                 evtBtnTag1.checked = chckValue;
                 evtBtnTag2.checked = chckValue;
@@ -603,12 +570,15 @@
 
             // 개별 동의 체크박스 클릭 시
             evtBtnTag1.addEventListener('click', (event) => {
+                resetFieldAndMessage(tnaChecked1, msgTerm)
+
                 if (!event.currentTarget.checked) {
                     ckTag.checked = false;
                 }
             });
 
             evtBtnTag2.addEventListener('click', (event) => {
+                resetFieldAndMessage(tnaChecked2, msgTerm)
                 if (!event.currentTarget.checked) {
                     ckTag.checked = false;
                 }
@@ -658,8 +628,6 @@
         mobile1Input.addEventListener('blur', updatePhone);
         mobile2Input.addEventListener('blur', updatePhone);
 
-
-
         // 입력 필드와 메시지 요소 초기화 함수
         let resetFieldAndMessage = (inputElement, messageElement) => {
             inputElement.style.border = ''; // 입력 필드 초기화
@@ -687,14 +655,6 @@
         emailInput.addEventListener('blur', () => { checkemail(); });
         nameInput.addEventListener('blur', () => { checkname(); });
         mobileInput.addEventListener('blur', () => { checkphone(); });
-
-        if (tnaChecked1.checked) {
-            const value = tnaChecked1.value;
-            console.log('체크된 경우의 값:', value);
-        } else {
-            console.log('체크되지 않은 경우');
-        }
-
 
         // 폼 검증 함수
         let checkForm = () => {
