@@ -7,7 +7,15 @@
                 </a>
             </div>
             <div class="main_title">
-                <div class="inner_submenu_right"><a href="/login">Log in</a> or <a href="/join">SIGN-UP</a></div>
+                <div class="inner_submenu_right">
+                    {% if 'm' in request.session %}
+                        <a href="#">&nbsp;</a></li>
+                    {% else %}
+                        <a href="/login">LOGIN</a></li>
+                        OR
+                        <a href="/join">SIGN UP</a>
+                    {% endif %}
+                </div>
             </div>
             <div class="right">
                 <ul>
@@ -26,9 +34,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="http://www.naver.com">
-                                <span class="material-symbols-outlined">person
-                                </span>
+                        <a href=
+                    {% if 'm' in request.session %}
+                            "/myinfo">
+                    {% else %}
+                            "/login">
+                    {% endif %}
+                            <span class="material-symbols-outlined">person
+                            </span>
                         </a>
                     </li>
                 </ul>
@@ -73,9 +86,8 @@
                         <li>
                             <button class="dropbtn">contact</button>
                             <div class="dropdown-content">
-                                <a  href="/contact/notice">notice</a>
-                                <a  href="/contact/qna">about us</a>
-                                <a href="/contact/faq">FAQ</a>
+                                <a  href="#">notice</a>
+                                <a href="#">q&a</a>
                             </div>
                         </li>
                     </ul>

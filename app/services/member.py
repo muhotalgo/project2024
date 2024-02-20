@@ -120,7 +120,6 @@ class MemberService():
                    'response': data['response'] }
         res = requests.get(req_url, params=params)
         result = res.json()
-        print('check', result)
 
         return result['success']
         # return True
