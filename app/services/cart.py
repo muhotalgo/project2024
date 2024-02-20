@@ -2,7 +2,7 @@ from sqlalchemy import insert, select, delete, update
 
 from app.dbfactory import Session
 from app.models.cart import Cart
-from app.models.order import Order, OrderItem
+from app.models.order import Order
 from app.models.product import Product
 
 
@@ -56,21 +56,47 @@ class CartService():
 
 
 class OrderService():
+
     @staticmethod
-    def orderitem_convert(oito):
-        data = oito.model_dump()
-        oi = OrderItem(**data)
-        data = {'pno': oi.pno, 'quantity': oi.quantity, 'pdprice': oi.pdprice, 'unitno': oi.unitno}
+    def order_convert(oto):
+        data = oto.model_dump()
+        o = Order(**data)
+        data = {'mno': o.mno, 'status': o.status,
+                'unitprice': o.unitprice, 'pno': o.pno,
+                'quantity': o.quantity, 'pdprice': o.pdprice, 'ono': o.ono}
         return data
 
     # 장바구니 -> orderitem -> order
     @staticmethod
-    def insert_orderitem(oito):
-        data = OrderService.orderitem_convert(oito)
-        with Session() as sess:
-            stmt = insert(OrderItem).values(data)
-            result = sess.execute(stmt)
+    def insert_order(mno, unitprice, pnos, quantitys, pdprices):
+        pnos = pnos.split(",")
+        quantitys = quantitys.split(",")
+        pdprices = pdprices.split(",")
 
-            sess.commit()
+        with Session() as sess:
+            for idx, i in enumerate(pnos):
+                # 주문 등록
+                data = {'mno': mno, 'unitprice': unitprice,
+                        'pno': pnos[idx], 'quantity': quantitys[idx], 'pdprice': pdprices[idx]}
+                stmt = insert(Order).values(data)
+                result = sess.execute(stmt)
+                sess.commit()
+
+                # 장바구니 지우기
+                stmt = delete(Cart).filter_by(cno=Cart.cno)
+                result = sess.execute(stmt)
+                sess.commit()
 
         return result
+
+    # 주문정보 조회 - 아직!
+    # @staticmethod
+    # def select_order(mno):
+    #     with Session() as sess:
+    #         stmt = select(Order.ono, Order.quantity, Order.mno, Order.pno, Product.exp, Product.name,
+    #                       Product.height, Product.deps, Product.width, Product.price, Product.tumbimg, Product.ctno) \
+    #             .join_from(Order, Product).where(Order.pno == mno) \
+    #             .order_by(Order.ono.desc()) \
+    #             .offset(0).limit(20)
+    #         result = sess.execute(stmt)
+    #     return result

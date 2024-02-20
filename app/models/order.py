@@ -12,19 +12,12 @@ class Order(Base):
     __tablename__ = 'order'
 
     ono = Column(Integer, primary_key=True, autoincrement=True)
-    userid = Column(String(18), default=None)
+    mno = Column(Integer, default=0)
+    # mno = Column(Integer, ForeignKey('member.pno'))
     status = Column(String(18), default='주문완료')
     unitprice = Column(Integer, default=0)
-    regdate = Column(DateTime, default=datetime.now)
-    ino = Column(Integer, ForeignKey('orderitem.ino'))
-
-
-class OrderItem(Base):
-    __tablename__ = 'orderitem'
-
-    ino = Column(Integer, primary_key=True, autoincrement=True)
     pno = Column(Integer, default=0)
+    # pno = Column(Integer, ForeignKey('product.pno'))
     quantity = Column(Integer, default=0)
     pdprice = Column(Integer, default=0)
-    unitno = Column(Integer, default=0)
     regdate = Column(DateTime, default=datetime.now)

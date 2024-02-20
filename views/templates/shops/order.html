@@ -10,7 +10,7 @@
 <main>
     <h2>주문/결제하기</h2>
     {% if m %}
-    <form method="post" name="oderfrm">
+    <form name="oderfrm">
         <!-- 더미 카트 데이터 row 1 -->
         <h3> 배송 정보 </h3>
         <div class="">이름 : {{ m.name }}</div>
@@ -32,16 +32,17 @@
         <div>가격</div>
         <div class="pd_price">{{ c.price }}</div>
         <div>수량</div>
-        <div class="cart_qty">:
-            <input type="text" name="quantity" class="quantity" id="quantity{{ c.cno }}" readonly value="{{ c.quantity }}">
-            <div style="display:none;">
-                <input type="text" name="pno" class="pno" id="pno{{ c.pno }}" readonly value="{{ c.pno }}">
-                <input type="text" name="pdprice" class="pdprice" id="pdprice{{ c.pno }}" readonly value="{{ c.price * c.quantity }}">
-                <input type="text" name="unitno" class="unitno" id="unitno{{ c.pno }}" readonly value="30">
-            </div>
+        <div class="od_qty">:
+            <input type="text" name="quantity" class="quantity" readonly value="{{ c.quantity }}">
         </div>
         <div>합계</div>
         <div class="pd_price">{{ c.price * c.quantity }}</div>
+
+
+        <input type="hidden" name="pno" class="pno" readonly value="{{ c.pno }}">
+        <input type="hidden" name="pdprice" class="pdprice" readonly value="{{ c.price * c.quantity }}">
+
+
         <hr>
         {% endfor %}
 
@@ -62,16 +63,28 @@
                 </div>
                 <div class="subtotal_wrapper">
                     <div>총 가격</div>
-                    <div class="total_price pd_price">{{ totals | sum }} 원</div>
+                    <div class="total_price pd_price">
+                        {{ totals | sum }} 원
+                    </div>
                 </div>
                 <div class="cart_btns box">
-                    <button type="button" class="btn" name="checkout">
+                    <button type="button" class="btn" name="checkout" id="bbtn">
                         돌아가기
                     </button>
                     <button type="button" class="btn" name="checkout" id="ckbtn">
-                        결제하기
+                        결제하기{{ totals | sum }}
                     </button>
                 </div>
+
+
+                <input type="hidden" name="mno" id="mno" value="{{ m.mno }}">
+                <input type="hidden" name="unitprice" id="unitprice" class="unitprice" value="{{ totals | sum }}">
+
+                <input type="hidden" name="pnos" id="pnos">
+                <input type="hidden" name="quantitys" id="quantitys">
+                <input type="hidden" name="pdprices" id="pdprices">
+
+
             </div>
         </div>
     </form>
@@ -81,43 +94,51 @@
 
 {% block script %}
 <script>
+
+    // 주문 추가
+    let ckbtn = document.querySelector('#ckbtn');
+    let pnos = document.querySelector('#pnos');
+    let quantitys = document.querySelector('#quantitys');
+    let pdprices = document.querySelector('#pdprices');
+    let oderfrm = document.oderfrm;
+
+
+    ckbtn.addEventListener('click', () => {
+        // 1회성
+        mnoval = document.getElementsByName('mno');
+        unitprice = document.getElementsByName('unitprice');
+
+        // 반복
+        pnoval = document.getElementsByName('pno');
+        quanval = document.getElementsByName('quantity');
+        priceval = document.getElementsByName('pdprice');
+
+
+        for (i = 0; i < document.getElementsByName('pno').length; i++) {
+            if (i === 0) {
+                pnos.value = pnoval[i].value;
+                quantitys.value = quanval[i].value;
+                pdprices.value = priceval[i].value
+                continue
+            }
+            pnos.value +=  ',' + pnoval[i].value;
+            quantitys.value +=  ',' + quanval[i].value;
+            pdprices.value +=  ',' + priceval[i].value;
+        }
+        console.log(pdprices.value);
+        oderfrm.method = 'post';
+        oderfrm.submit();
+    });
+
+    // 이전으로 돌아가기
+    document.querySelector('#bbtn').addEventListener('click', () => {
+        history.back();
+    });
+
     // , 설정
     const reprices = document.querySelectorAll('.pd_price');
     for (const reprice of reprices) {
         reprice.innerHTML = reprice.innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
-
-    // 주문 추가
-    let ckbtn = document.querySelector('#ckbtn');
-    let oderfrm = document.oderfrm;
-    ckbtn.addEventListener('click', () => {
-
-        const formData = new FormData(oderfrm);
-
-        let jsondata = {};
-        formData.forEach(function (val, key) {
-            jsondata[key] = val;
-            alert(key);
-            alert(val);
-        });
-        fetch('http://127.0.0.1:8000/shops/order', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(jsondata)
-        })
-            .then((res) => res.text())
-            .then((data) => {
-                if (parseInt(data) > 0) {
-                    if(confirm("주문이 완료되었습니다.\n주문완료페이지로 이동합니다.")){
-                        location.href='http://127.0.0.1:8000/shops/orderend';
-                    }else{}
-                }
-                else alert("주문이 완료되지 않았습니다. 관리자에게 문의하세요.");
-            })
-            .catch((err) => console.log(err));
-    });
 </script>
 {% endblock %}

@@ -1,10 +1,9 @@
-from fastapi import APIRouter
-from fastapi.responses import HTMLResponse
+from fastapi import APIRouter, Form, status
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.requests import Request
 from fastapi.templating import Jinja2Templates
 
 from app.schemas.cart import NewCart
-from app.schemas.order import NewOrderItem
 from app.services.cart import CartService, OrderService
 from app.services.member import MemberService
 
@@ -22,7 +21,7 @@ def cart(req: Request):
     userid = muser
     clist = CartService.select_cart(userid)
     row = CartService.select_cart(userid).fetchone()
-    return templates.TemplateResponse('shops/cart.html', {'request': req, 'clist': clist, 'm': muser, 'row':row})
+    return templates.TemplateResponse('shops/cart.html', {'request': req, 'clist': clist, 'm': muser, 'row': row})
 
 
 @cart_router.delete('/cart/{cno}')
@@ -49,13 +48,21 @@ def cartorder(req: Request):
     return templates.TemplateResponse('shops/order.html', {'request': req, 'clist': clist, 'm': muser})
 
 
-# orderitem 추가
 @cart_router.post('/order')
-def orderitem(ito: NewOrderItem):
-    result = OrderService.insert_orderitem(ito)
-    return result.rowcount
+def orderitem(mno: int = Form(), unitprice: int = Form(),
+              pnos=Form(), quantitys=Form(), pdprices=Form()):
+    print(mno, unitprice, pnos, quantitys, pdprices)
+    result = OrderService.insert_order(mno, unitprice, pnos, quantitys, pdprices)
+    return RedirectResponse('/shops/orderend', status_code=status.HTTP_302_FOUND)
 
 
+# to orderend
 @cart_router.get('/orderend', response_class=HTMLResponse)
 def order(req: Request):
-    return templates.TemplateResponse('shops/orderend.html', {'request': req})
+    muser = 0
+    if 'm' in req.session:
+        muser = MemberService.selectone_member(req.session['m'])
+    # mno = muser.mno
+    # olist = OrderService.select_order(mno)
+
+    return templates.TemplateResponse('shops/orderend.html', {'request': req, 'm': muser})
