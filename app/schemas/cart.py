@@ -16,4 +16,5 @@ class Cart(BaseModel):
 
 class NewCart(BaseModel):
     quantity: int
+    userid: str
     pno: int

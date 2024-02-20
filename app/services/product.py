@@ -1,8 +1,8 @@
 from sqlalchemy import insert, select, update, func, or_
 
 from app.dbfactory import Session
-from app.models.category import Category
 from app.models.product import Product
+from app.models.member import Member
 
 
 class ProductService():

@@ -1,27 +1,31 @@
 from datetime import datetime
+from typing import List
 
 from pydantic import BaseModel
 
 
 class Order(BaseModel):
     ono: int
-    userid: str
+    mno: int
     status: str
     unitprice: int
+    pno: int
+    quantity: int
+    pdprice: int
     regdate: datetime
-    ino: int
 
     class Config:
         from_attributes = True
 
 
 class NewOrder(BaseModel):
-    pass
+    mno: int
+    status: str
+    unitprice: int
+    pno: int
+    quantity: int
+    pdprice: int
 
 
-class OrderItem(BaseModel):
-    ino: int
-    regdate: str
-
-    class Config:
-        from_attributes = True
+class NewOrders(BaseModel):
+    order: List[NewOrder]

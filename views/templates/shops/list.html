@@ -55,7 +55,7 @@
                 <img src="{{ pd.tumbimg }}" alert="{{ pd.name }} 썸네일 이미지">
                 <div class="pd_fl">
                     <div class="pd_title">{{ pd.name }}</div>
-                    <div class="pd_price"><span id="pd_price">{{ pd.price }}</span> 원</div>
+                    <div class="pd_price"><span class="pd_price">{{ pd.price }}</span> 원</div>
                 </div>
                 <div class="pd_exp">{{ pd.exp }}</div>
             </div>
@@ -68,7 +68,10 @@
 {% block script %}
     <script>
         // , 설정
-        const reprice = document.querySelector('#pd_price').innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-        document.querySelector('#pd_price').innerHTML = reprice;
+        const reprices = document.querySelectorAll('.pd_price');
+        for (const reprice of reprices) {
+            chval = reprice.innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+            reprice.innerHTML = chval;
+        }
     </script>
 {% endblock %}
