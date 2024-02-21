@@ -93,6 +93,9 @@ header .logo {
     min-width: 1300px;
     font-size: 60px;
 }
+header .logo:hover {
+    font-weight: normal;
+}
 header .inner_submenu_right {
     min-width: 1300px;
     list-style: none;
