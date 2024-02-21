@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
+from app.models import board
 from app.settings import config
 from app.models import contact
 from app.models import member, product, cart, category, order
@@ -20,7 +20,8 @@ def db_startup():
     product.Base.metadata.create_all(engine)
     cart.Base.metadata.create_all(engine)
     order.Base.metadata.create_all(engine)
-    # board.Base.metadata.create_all(engine)
+
+    board.Base.metadata.create_all(engine)
 
 # 테이블구조를 다시만들어주진않음
 
