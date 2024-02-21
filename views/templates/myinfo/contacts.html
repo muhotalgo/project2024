@@ -9,7 +9,6 @@
 
         a:hover {
             text-decoration: none;
-
         }
 
         body {
@@ -24,22 +23,17 @@
         }
 
         .myaccount-menu {
+
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
+            margin: 30px 100px auto;
             border: solid #fff 10px;
 
-            width: 20%;
-            /* max-width: 200px; /* 최대 너비를 200px로 설정하여 20% 이상으로 늘어나지 않도록 합니다. */
-            height: 500px;
-
-            /* margin: 30px 100px auto; */
-            margin-top: 30px;
-            margin-left: 30px;
-
-            display: flex;
-            flex-basis: 400px;
+            display:flex;
+            flex-basis:200px;
             flex-shrink: 0;
             flex-direction: column;
+            height: 500px;
         }
 
         div ul {
@@ -58,25 +52,31 @@
         }
 
         .container {
-            max-width: 400px;
+            {#max-width: 1000px; /* 수정: 너비를 조금 더 넓게 설정 */#}
             margin-top: 30px;
-            margin-left: 100px;
+            margin-left: 20px;
             background-color: #fff;
             padding: 0 10px;
             border-radius: 5px;
             border-right: solid #fff 10px;
             box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
         }
-
-
         .form-group {
             text-align: left;
-            margin-bottom: 20px;
-            display: block;
+            margin-bottom: 10px;
             justify-content: center; /* 수평 가운데 정렬 */
         }
+
+        .form-group-check {
+            margin: 0;
+            text-align: left;
+            height: 67px;
+            padding-bottom: -10px;
+
+        }
+
         .form-group label {
-            padding-right: 200px;
+            padding-right: 20px;
             margin-left: 3px;
             margin-top: -10px;
             /* margin-bottom: 2px; /* login은 10px*/
@@ -87,7 +87,7 @@
         .form-group input[type="text"],
         .form-group input[type="password"],
         .form-group textarea {
-            width: 100%;
+            width: 95%;
             padding: 10px;
             margin-top: -5px;
 
@@ -103,8 +103,8 @@
         }
 
         .form-control.btn-outline-primary {
-            margin-top: 10px;
-            width: 100% ;
+            margin: 0 auto ;
+            width: 60% ;
             background-color: #f4f4f4;
             text-align: center;
             font-size: 14px;
@@ -116,9 +116,9 @@
         }
 
         .form-control.btn-outline-primary:hover {
-            color: #FF6A94;
+            color: white;
             border: 1px solid transparent ;
-            background-color: #FFE2EA;
+            background-color: black;
         }
     </style>
 {% endblock %}
@@ -144,8 +144,8 @@
                     </ul><h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:40px; padding-top:15px;">리뷰 및 질문</h3>
                     <ul>
                         <!--        <li><a href="/myshop/wish_list.html">Wish List</a></li> -->
-                        <li><a href="/myshop/board_list.html">리뷰 작성</a></li>
-                        <li><a href="/views/static#/faq.html">자주 묻는 질문</a></li>
+                        <li><a href="/#">리뷰 작성</a></li>
+                        <li><a href="/#">자주 묻는 질문</a></li>
                         <li><a href="/myinfo/contacts">내 질문 내역</a></li>
                     </ul>
                 </div>
@@ -153,21 +153,41 @@
 
 
             <div class="container w-50">
-                <table class="table table-bordered">
-                    <tr><th>아이디</th><td>{{ my.userid }}</td></tr>
-                    <tr><th>이름</th><td>{{ my.name }}</td></tr>
-                    <tr><th>내 주소</th><td>{{ my.address1 }} {{ my.address2 }}</td></tr>
-                    <tr><th>사용중인 이메일</th><td>{{ my.email }}</td></tr>
-                    <tr><th>가입일</th><td>{{ my.regdate.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr>
-{#                    <tr><th>주문내역 보기</th><td>{{ my.orders }}</td></tr>#}
-{#                    <tr><th>고객센터</th><td>{{ my.contacts }}</td></tr>#}
+                <h3>{{ my.name }}님 1:1 문의 내역</h3>
+                <table class="table table-bordered table-hover container mt-5 w-80" >
+                    <colgroup> <!-- table-layout: fixed 속성의 설정된 경우, 각 컬럼에 대한 스타일을 지정 -->
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                        <col style="">
+                        <col style="width: 15%">
+                        <col style="width: 10%">
+                    </colgroup>
+
+                    <thead class="table-dark">
+                    <tr><th scope="col">문의번호</th><th scope="col">문의날짜</th><th scope="col">문의제목</th><th scope="col">ㅇㅇ</th><th scope="col">문의상태</th></tr>
+                    </thead>
+                    {% for bd in bdlist %}
+                        <tr><th scope="row">{{ od.ono }}</th>
+                            <td>{{ od.regdate.strftime('%Y-%m-%d') }}</td>
+                            <td>
+                                {% if 'm' in request.session %}
+                                    <a href="/board/view/{{ bd.ono }}만들어야함 상품정보">
+                                {% endif %}
+                                {{ od.title }}</a></td>
+
+                            <td>{{ od.unitprice }}</td>
+                            <td>{{ od.status }}</td>
+                        </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>
     </main>
 {% endblock %}
 
+
 {% block script %}
-    <script></script>
+
+
 {% endblock %}
 

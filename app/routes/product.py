@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.requests import Request
 from fastapi.templating import Jinja2Templates
 
+from app.services.member import MemberService
 from app.services.product import ProductService
 
 product_router = APIRouter()
@@ -10,10 +11,6 @@ category_router = APIRouter()
 
 templates = Jinja2Templates(directory='views/templates')
 
-
-# @product_router.get('/list', response_class=HTMLResponse)
-# def product(req: Request):
-#     return templates.TemplateResponse('shops/product/list.html', {'request': req})
 
 @product_router.get('/list', response_class=HTMLResponse)
 def list(req: Request):
@@ -32,5 +29,8 @@ def list(req: Request, ctno: int):
 
 @product_router.get('/view/{pno}', response_class=HTMLResponse)
 def view(req: Request, pno: str):
+    muser = 0
+    if 'm' in req.session:
+        muser = MemberService.selectone_member(req.session['m'])
     pd = ProductService.selectone_prod(pno)[0]
-    return templates.TemplateResponse('shops/view.html', {'request': req, 'pd': pd})
+    return templates.TemplateResponse('shops/view.html', {'request': req, 'pd': pd, 'm': muser})
