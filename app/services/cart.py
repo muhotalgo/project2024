@@ -91,12 +91,12 @@ class OrderService():
 
     # 주문정보 조회
     @staticmethod
-    def select_order(pno):
+    def select_order(mno):
         with Session() as sess:
             stmt = select(Order.ono, Order.mno, Order.status, Order.unitprice, Order.quantity,
-                          Order.pdprice, Order.regdate, Product.exp, Product.name,
+                          Order.pdprice, Order.regdate, Order.pno, Product.exp, Product.name,
                           Product.height, Product.deps, Product.width, Product.price, Product.tumbimg, Product.ctno) \
-                .join_from(Order, Product).where(Order.pno == pno) \
+                .join_from(Order, Product).where(mno == Order.mno) \
                 .order_by(Order.ono) \
                 .offset(0).limit(20)
             result = sess.execute(stmt)

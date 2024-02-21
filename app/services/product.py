@@ -44,7 +44,7 @@ class ProductService():
             result = sess.execute(stmt)
         return result
 
-    # 상품 검색 조회
+    # 상품명 검색 조회
     @staticmethod
     def find_select_list(skey):
         with Session() as sess:
@@ -54,7 +54,7 @@ class ProductService():
             myfilter = Product.name.like(skey)
 
             stmt = stmt.filter(myfilter) \
-                .order_by(Product.pno).offset(0).limit(25)
+                .order_by(Product.pno).offset(0).limit(20)
             result = sess.execute(stmt)
 
         return result

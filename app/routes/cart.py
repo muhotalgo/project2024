@@ -62,7 +62,6 @@ def order(req: Request):
     muser = 0
     if 'm' in req.session:
         muser = MemberService.selectone_member(req.session['m'])
-    # mno = muser.mno
-    # olist = OrderService.select_order(mno)
+    odlist = OrderService.select_order(muser.mno)
 
-    return templates.TemplateResponse('shops/orderend.html', {'request': req, 'm': muser})
+    return templates.TemplateResponse('shops/orderend.html', {'request': req, 'm': muser, 'odlist': odlist})
