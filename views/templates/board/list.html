@@ -2,6 +2,9 @@
 
 {% block style %}
 <style>
+    main {
+        {#background-color: #F2F2F2;#}
+    }
     table {table-layout: fixed; border-top-color: white !important;}
     th, td {text-align: center; }
     tr:first-child td { border: none; padding: 10px 0 }
@@ -14,9 +17,9 @@
 {% block main %}
 <main>
 
-    <h2>게시판 목록</h2>
+    <h2 style="margin-left: 285px">board list</h2>
 
-    <table class="table table-bordered w-75 container mt-5">
+    <table class="table table-bordered table-hover w-75 container mt-5">
         <colgroup><!-- table-fixed 속성이 설정된 경우, 각 컬럼에 대한 스타일 지정 -->
             <col style="width: 10%">
             <col style="">
@@ -24,7 +27,7 @@
             <col style="width: 15%">
             <col style="width: 15%">
         </colgroup>
-        <tr><td colspan="2" class="searchbox">
+        <tr><td colspan="2" class="searchbox" >
             <div class="row">
                 <div class="col-auto"><select class="form-select" name="ftype" id="ftype">
                     <option value="title">제목</option>
@@ -34,15 +37,20 @@
                     <option value="comments">댓글내용</option></select></div>
 
                 <div class="col-auto">
-                    <input type="text" name="fkey" id="fkey" class="form-control"></div>
+                    <input type="text" name="fkey" id="fkey" class="form-control" ></div>
 
                 <div class="col-auto"><button type="button" id="findbtn"
                                               class="btn btn-dark text-white">search</button></div>
 
             </div></td>
-            <td colspan="3"><a href="/board/write" class="btn btn-dark text-white" style="text-decoration-line: none">write</a>
+            <td colspan="3"><a href="/board/write" class="btn btn-dark text-white">write</a>
         </tr>
-        <tr><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th></tr>
+
+        <tr><th>no</th>
+            <th>title</th>
+            <th>writer</th>
+            <th>regdate</th>
+            <th>views</th></tr>
 
         {% for bd in bdlist %}
         <tr><td>{{ bd.bno }}</td>
@@ -56,7 +64,7 @@
         <!-- 현재페이지가 1이라면 이전버튼 비활성       -->
         {% if cpg == 1 %} <li class="page-item disabled">
         {% else %} <li class="page-item"> {% endif %}
-            <a class="page-link" href="{{ baseurl }} {{ cpg - 1 }}">이전</a></li>
+            <a class="page-link" href="{{ baseurl }}{{ cpg - 1 }}">before</a></li>
         {% for idx in range(stpg, stpg + 10) %}
 
             {% if idx <= allpage %}  <!--  idx 가 allpage보다 같거나 작으면 페이지네이션 출력 -->
@@ -69,7 +77,7 @@
         <!-- 현재페이지가 마지막페이지라면 다음버튼 비활성       -->
         {% if cpg == allpage %} <li class="page-item disabled">
         {% else %} <li class="page-item"> {% endif %}
-        <a class="page-link" href="{{ baseurl }}{{ cpg + 1 }}">다음</a></li>
+        <a class="page-link" href="{{ baseurl }}{{ cpg + 1 }}">next</a></li>
     </ul>
 </main>
 {% endblock %}

@@ -2,6 +2,9 @@
 
 {% block style %}
 <style>
+    main {
+        background-color: #F2F2F2;
+    }
     form { width: 520px; margin: 100px auto }
     form div { margin-bottom: 5px; }
     form label { font-weight: bold; width: 110px; text-align: right;}
@@ -20,31 +23,27 @@
 
 {% block main %}
 <main>
-    <h2>게시판 새글쓰기</h2>
+    <h2 style="margin-left: 100px;">New Write</h2>
     <form name="boardfrm">
         <div class="row">
-            <div class="col-auto"><label for="title" class="col-form-label">제목</label></div>
+            <div class="col-auto"><label for="title" class="col-form-label">title</label></div>
             <div class="col-auto"><input type="text" name="title" id="title" class="form-control"></div>
         </div>
         <div class="row">
-            <div class="col-auto"><label for="userid" class="col-form-label">작성자</label></div>
-            <div class="col-auto"><input type="text" name="userid" id="userid" value="{{ my.userid }}" readonly class="form-control"></div>
+            <div class="col-auto"><label for="userid" class="col-form-label">Writer</label></div>
+            <div class="col-auto"><input type="text" name="userid" id="userid" value="{{ request.session['m'] }}" readonly class="form-control"></div>
         </div>
         <div class="row">
-            <div class="col-auto"><label for="contents" class="dragup" class="col-form-label">본문</label></div>
+            <div class="col-auto"><label for="contents" class="dragup" class="col-form-label">main</label></div>
             <div class="col-auto"><textarea name="contents" id="contents"
                                             cols="45" rows="7" class="form-control"></textarea></div>
         </div>
         <div class="row">
-            <div class="col-auto"><label for="captcha" class="dragup" >자동작성방지</label></div>
-            <div class="col-auto"><div id="captcha" alt="캡챠" ></div></div>
-        </div>
-        <div class="row">
             <div class="col-auto">
-                <button type="button" class="btn btn-primary" id="writebtn">
-                    <i class="bi bi-check-all"></i> 입력완료</button>
-                <button type="reset" class="btn btn-danger">
-                    <i class="bi bi-arrow-repeat"></i> 다시입력</button></div>
+                <button type="button" class="btn btn-dark text-white" id="writebtn">
+                    <i class="bi bi-check-all"></i> complete</button>
+                <button type="reset" class="btn btn-dark text-white">
+                    <i class="bi bi-arrow-repeat"></i>again</button></div>
         </div>
     </form>
 </main>
@@ -87,7 +86,7 @@
                 if (res.redirected) location.href = res.url;
             })
             .catch((err) => console.log(err));
-    })
+    }})
 
 
 </script>

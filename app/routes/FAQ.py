@@ -8,7 +8,7 @@ FAQ_router = APIRouter()
 templates = Jinja2Templates(directory='views/templates')
 
 
-@FAQ_router.get('/vi'
+@FAQ_router.get('/faq'
                 '', response_class=HTMLResponse)
-def visit(req: Request):
-    return templates.TemplateResponse('FAQ.html', {'request': req})
+def contact(req: Request):
+    return templates.TemplateResponse('contact/FAQ.html', {'request': req})

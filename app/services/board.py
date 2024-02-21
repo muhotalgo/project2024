@@ -93,3 +93,28 @@ class BoardService():
 
         # return result['success']
         return True
+
+    # 회원정보수정
+    @staticmethod
+    def board_modify_convert(bdto):
+        # 클라이언트에서 전달받은 데이터를 dict형으로 변환
+        data = bdto.model_dump()
+        data.pop('response') # captcha 확인용변수 response는 제거 # 캡챠 사용시 주석처리 제거
+        bd = Board(**data)
+
+        data = {'title': bd.title, 'userid': bd.userid, 'regdate': bd.regdate, 'contents': bd.contents}
+
+        return data
+
+    @staticmethod
+    def modify_board(bdto):
+        # 변환된 회원정보를 member 테이블에 저장
+        data = BoardService.board_modify_convert(bdto)
+        # print('modify data > ', data)
+
+        with Session() as sess:
+            stmt = update(Board).where(Board.userid == data['userid']).values(data)
+            result = sess.execute(stmt)
+            sess.commit()
+
+        return result
