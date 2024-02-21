@@ -89,14 +89,15 @@ class OrderService():
 
         return result
 
-    # 주문정보 조회 - 아직!
-    # @staticmethod
-    # def select_order(mno):
-    #     with Session() as sess:
-    #         stmt = select(Order.ono, Order.quantity, Order.mno, Order.pno, Product.exp, Product.name,
-    #                       Product.height, Product.deps, Product.width, Product.price, Product.tumbimg, Product.ctno) \
-    #             .join_from(Order, Product).where(Order.pno == mno) \
-    #             .order_by(Order.ono.desc()) \
-    #             .offset(0).limit(20)
-    #         result = sess.execute(stmt)
-    #     return result
+    # 주문정보 조회
+    @staticmethod
+    def select_order(pno):
+        with Session() as sess:
+            stmt = select(Order.ono, Order.mno, Order.status, Order.unitprice, Order.quantity,
+                          Order.pdprice, Order.regdate, Product.exp, Product.name,
+                          Product.height, Product.deps, Product.width, Product.price, Product.tumbimg, Product.ctno) \
+                .join_from(Order, Product).where(Order.pno == pno) \
+                .order_by(Order.ono) \
+                .offset(0).limit(20)
+            result = sess.execute(stmt)
+        return result

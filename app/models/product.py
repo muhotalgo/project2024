@@ -24,3 +24,4 @@ class Product(Base):
     color = Column(String(18), default=None)
     ctno = Column(Integer, ForeignKey('category.ctno'))
     carts = relationship("Cart", backref="product.pno")
+    orders = relationship("Order", backref="product.pno")
