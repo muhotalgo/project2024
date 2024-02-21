@@ -22,11 +22,18 @@
 
         .name {
             font-weight: 400;
+            font-size: 20px;
+            margin:10px 0;
         }
 
         .box {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
+        }
+
+        .expobox {
+            min-height: 200px;
+            margin:10px 0;
         }
     </style>
 
@@ -38,24 +45,24 @@
             <img src="{{ pd.tumbimg }}" class="main" alt="{{ pd.name }} 썸네일 이미지">
             <div class="namebox main">
 
-                <div class="" style="display:none">
-                    <input type="text" name="pno" id="pno" value="{{ pd.pno }}">
-                    <input type="text" name="quantity" id="quantity" value="1">
-                </div>
+                <input type="hidden" name="pno" id="pno" value="{{ pd.pno }}">
+                <input type="hidden" name="quantity" id="quantity" value="1">
+                <input type="hidden" name="pdprice" id="pdprice" value="{{ pd.price }}">
 
                 <div class="name">{{ pd.name }}</div>
-                <div class="">{{ pd.exp }}</div>
-                {% if pd.pctoff != 0 %}
+                <div class="expobox">
+                    <div class="">{{ pd.exp }}</div>
+                    {% if pd.pctoff != 0 %}
                     <div class="">{{ pd.retail }} 원</div>
                     <div class="">{{ pd.pctoff }} % 할인</div>
-                {% endif %}
-                <div><span id="pd_price">{{ pd.price }}</span> 원</div>
+                    {% endif %}
+                    <div><span id="pd_price">{{ pd.price }}</span> 원</div>
+                </div>
                 <div class="box">
-                    <button type="button" class="btn" name="checkout" onclick="alert('공사중입니다.')">
-                        구매
-                    </button>
+<!--                    <button type="button" class="btn" name="checkout" id="ckbtn">-->
+<!--                        구매-->
+<!--                    </button>-->
                     {% if m %}
-                    <input type="text" name="userid" id="userid" value="{{ m.userid }}" class="mada">
                     <button type="button" class="btn" name="checkout" id="usercartbtn">
                         장바구니 넣기
                     </button>
@@ -66,6 +73,14 @@
                     {% endif %}
                 </div>
             </div>
+
+
+            <input type="hidden" name="mno" id="mno" value="{{ m.mno }}">
+            <input type="hidden" name="unitprice" id="unitprice" class="unitprice" value="{{ pd.price }}">
+
+            <input type="hidden" name="pnos" id="pnos">
+            <input type="hidden" name="quantitys" id="quantitys">
+            <input type="hidden" name="pdprices" id="pdprices">
         </form>
 
 
@@ -110,6 +125,7 @@
                     .catch((err) => console.log(err));
             });
         }
+
 
         // 비회원 로그인 전환
         let jstcartbtn = document.querySelector('#jstcartbtn');
