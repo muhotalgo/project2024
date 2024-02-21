@@ -8,10 +8,10 @@ class Base(DeclarativeBase):
     pass
 
 
-class Contact(Base):
-    __tablename__ = 'contact'
+class Board(Base):
+    __tablename__ = 'board'
 
-    cno = Column(Integer, primary_key=True, autoincrement=True)
+    bno = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(18), nullable=False)
     userid = Column(String(18), nullable=False)
     regdate = Column(DateTime, default=datetime.now)
