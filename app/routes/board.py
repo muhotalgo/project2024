@@ -42,7 +42,7 @@ def list(req: Request, cpg: int):
     bdlist, cnt = BoardService.select_board(cpg)
     allpage = ceil(cnt /25)     # 총 페이지 수
     return templates.TemplateResponse('board/list.html',
-                                      {'request': req, 'bdlist': bdlist, 'cpg': cpg, 'stpg': stpg, 'allpage': allpage, 'baseurl': '/board/list/'})
+            {'request': req, 'bdlist': bdlist, 'cpg': cpg, 'stpg': stpg, 'allpage': allpage, 'baseurl': '/board/list/'})
 
 @board_router.get('/list/{ftype}/{fkey}/{cpg}', response_class=HTMLResponse)
 def find(req: Request, ftype: str, fkey: str, cpg: int):
@@ -54,9 +54,16 @@ def find(req: Request, ftype: str, fkey: str, cpg: int):
                 'cpg': cpg, 'stpg': stpg, 'allpage': allpage, 'baseurl': f'/board/list/{ftype}/{fkey}/'})
 
 
-@board_router.get('/write',  response_class=HTMLResponse)
+# @board_router.get('/write',  response_class=HTMLResponse)
+# def write(req: Request):
+#     return templates.TemplateResponse('board/write.html', {'request': req})
+
+@board_router.get('/write', response_class=HTMLResponse)
 def write(req: Request):
-    return templates.TemplateResponse('board/write.html', {'request': req})
+    if 'm' not in req.session:
+        return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
+
+    return templates.TemplateResponse('board/write.html',{'request': req})
 
 
 @board_router.post('/write')
@@ -69,20 +76,23 @@ def writeok(bdto: NewBoard):
 
     return RedirectResponse(res_url, status_code=status.HTTP_302_FOUND)
 
-
-@board_router.get('/view/{bno}', response_class=HTMLResponse)
-def view(req: Request, bno: str):
-
-    bd=BoardService.selectone_board(bno)[0]
-    BoardService.update_count_board(bno)
-    return templates.TemplateResponse('board/view.html', {'request': req, 'bd': bd})
-
-
-# # 마이페이지
-# @board_router.get('/board/write', response_class=HTMLResponse)
-# def myinfo(req: Request):
+# # 마이페이지 항목 수정 페이지
+# @board_router.get('/board', response_class=HTMLResponse)
+# def checkmodify(req: Request):
 #     if 'm' not in req.session:
 #         return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
 #
-#     userid = BoardService.selectone_board(req.session['m'])
-#     return templates.TemplateResponse('board/write.html',{'request': req, 'my': userid})
+#     myinfo = BoardService.selectone_board(req.session['m'])
+#     return templates.TemplateResponse('board/modify.html',{'request': req, 'my': myinfo})
+#
+#
+# @board_router.get('/view/{bno}', response_class=HTMLResponse)
+# def view(req: Request, bno: str):
+#
+#     bd=BoardService.selectone_board(bno)[0]
+#     BoardService.update_count_board(bno)
+#     return templates.TemplateResponse('board/view.html', {'request': req, 'bd': bd})
+
+
+
+

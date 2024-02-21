@@ -210,8 +210,6 @@ footer {
     vertical-align: top;
     padding: 2vh;
     height: 240px;
-    /* footer 배경색 */
-    background-color: rgb(238, 238, 236, .4);
 }
 
 .footer_bottom {
