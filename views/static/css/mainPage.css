@@ -93,15 +93,15 @@ header .logo {
     min-width: 1300px;
     font-size: 60px;
 }
-header .logo:hover {
+header .logo:hover, footer .footer_main_logo:hover {
     font-weight: normal;
 }
 header .inner_submenu_right {
     min-width: 1300px;
     list-style: none;
     text-align: right;
-    padding-right: 100px;
     margin-top: 20px;
+    margin-right: 80px;
     font-size: 16px;
 }
 

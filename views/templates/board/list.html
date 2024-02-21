@@ -43,7 +43,10 @@
                                               class="btn btn-dark text-white">search</button></div>
 
             </div></td>
-            <td colspan="3"><a href="/board/write" class="btn btn-dark text-white">write</a>
+            <td colspan="3">
+                {% if 'm' in request.session %}
+                <a href="/board/write" class="btn btn-dark text-white">write</a>
+                {% endif %}
         </tr>
 
         <tr><th>no</th>
