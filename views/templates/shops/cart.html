@@ -382,16 +382,20 @@
     let test2 = document.querySelector('#test2');
 
     // -
-    mbtn.addEventListener('click', () => {
-        if (test2.value > 1) {
-            test2.value -= 1;
-        }
-    });
+    if (mbtn){
+        mbtn.addEventListener('click', () => {
+            if (test2.value > 1) {
+                test2.value -= 1;
+            }
+        });
+    }
 
     // +
-    pbtn.addEventListener('click', () => {
-        test2.value = Number(test2.value) + 1;
-    });
+    if (pbtn){
+        mbtn.addEventListener('click', () => {
+            test2.value = Number(test2.value) + 1;
+        });
+    }
 
     // , 설정
     const reprices = document.querySelectorAll('.pd_price');
