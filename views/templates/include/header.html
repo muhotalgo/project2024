@@ -119,29 +119,3 @@
 
 </header>
 <div class="headerback"></div>
-
-{% block script %}
-<script>
-    let schbtn = document.querySelector("#schbtn");
-    schbtn.addEventListener('click', () => {
-        let skey = document.querySelector('#skey').value;
-
-        if  (skey){
-            let params = `/search/${skey}`;
-            let findurl = 'http://127.0.0.1:8000/shops' + params;
-
-            location.href = findurl;
-        }
-        else {
-            alert('검색어를 입력해주세요.');
-        }
-    });
-
-    document.getElementById("skey")
-        .addEventListener("keyup", function(e) {
-            if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-                schbtn.click();
-            }
-        });
-</script>
-{% endblock %}
