@@ -97,7 +97,9 @@
                             <button class="dropbtn">contact</button>
                             <div class="dropdown-content">
                                 <a href="/board/list/1">notice</a>
-                                <a href="/contact/qna">about us</a>
+                                {% if 'm' in request.session %}
+                                    <a href="/myinfo/contacts/write">Contact Us</a>
+                                {% endif %}
                                 <a href="/contact/faq">FAQ</a>
 
                             </div>
