@@ -49,7 +49,6 @@ app.include_router(cart_router, prefix='/shops')
 app.include_router(visit_router, prefix='/visit')
 app.include_router(policy_router)
 app.include_router(TOS_router)
-app.include_router(qna_router, prefix='/contact')
 
 # 서버시작시 디비 생성
 @app.on_event('startup')
