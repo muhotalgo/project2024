@@ -405,25 +405,27 @@
     const btns = document.querySelectorAll('.xbtn');
     for (const btn of btns) {
         btn.addEventListener('click', () => {
-            const cartId = btn.id;
-            fetch(`http://127.0.0.1:8000/shops/cart/${cartId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    // 서버 응답에 따라 처리
-                    if (data.message === 'success') {
-                        window.alert('장바구니에서 상품이 삭제되었습니다.');
-                        location.reload(true);
-                    } else {
-                        window.alert('상품 삭제 중 오류가 발생했습니다. 관리자에게 문의하여 주십시오.');
+            if (confirm("상품을 장바구니에서 삭제하시겠습니까?")) {
+                const cartId = btn.id;
+                fetch(`http://127.0.0.1:8000/shops/cart/${cartId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                     }
                 })
-                .catch((err) => console.log(err));
+                    .then((res) => res.json())
+                    .then((data) => {
+                        // 서버 응답에 따라 처리
+                        if (data.message === 'success') {
+                            window.alert('장바구니에서 상품이 삭제되었습니다.');
+                            location.reload(true);
+                        } else {
+                            window.alert('상품 삭제 중 오류가 발생했습니다. 관리자에게 문의하여 주십시오.');
+                        }
+                    })
+                    .catch((err) => console.log(err));
+            }
         });
     }
 

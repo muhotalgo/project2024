@@ -67,7 +67,7 @@ class OrderService():
                 'quantity': o.quantity, 'pdprice': o.pdprice, 'gono': o.gono}
         return data
 
-    # 장바구니 -> orderitem -> order
+    # 장바구니 -> order
     @staticmethod
     def insert_order(mno, unitprice, pnos, quantitys, pdprices):
         pnos = pnos.split(",")

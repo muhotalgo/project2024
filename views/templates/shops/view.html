@@ -36,7 +36,7 @@
         margin: 10px 0;
     }
 
-    .detail {min-height:300px;}
+    .detail {min-height:300px; text-align:center;}
 </style>
 
 {% endblock %}
@@ -90,8 +90,8 @@
 
     <h3>상세페이지</h3>
     <div class="detail">
+        <h2>Discover the Design</h2>
         {{ pd.detail }}
-        <img src="{{ pd.detail }}" alt="상세페이지_이미지" style="display:none;">
     </div>
 </div>
 {% endblock %}
@@ -134,24 +134,22 @@
     }
 
 
-    // 비회원 로그인 전환
+    // 비회원이 구매나 장바구니 버튼 클릭 시 로그인 화면 이동 여부를 묻는 창을 출력
     let jstcartbtn = document.querySelector('#jstcartbtn');
+
+    function tologin() {
+        if (confirm("로그인이 필요한 서비스입니다. \n로그인 화면으로 이동하시겠습니까?")) {
+            location.href = 'http://127.0.0.1:8000/login';
+        }
+    }
+
     if (jstcartbtn) {
-        jstcartbtn.addEventListener('click', () => {
-            // alert('공사중입니다! 관리자에게 문의해주세요.');
-            if (confirm("로그인이 필요한 서비스입니다. \n로그인 화면으로 이동하시겠습니까?")) {
-                location.href = 'http://127.0.0.1:8000/login';
-            }
-        });
+        jstcartbtn.addEventListener('click', tologin);
     }
 
     let jstckbtn = document.querySelector('#jstckbtn');
     if (jstckbtn) {
-        jstckbtn.addEventListener('click', () => {
-            if (confirm("로그인이 필요한 서비스입니다. \n로그인 화면으로 이동하시겠습니까?")) {
-                location.href = 'http://127.0.0.1:8000/login';
-            }
-        });
+        jstckbtn.addEventListener('click', tologin);
     }
 
     // 상세페이지에서 바로 구매하는 기능
@@ -168,18 +166,6 @@
     let owidth = document.querySelector('.width').value;
     let odeps = document.querySelector('.deps').value;
     let oheight = document.querySelector('.height').value;
-
-    // sessionStorage.setItem("mno", mno);
-    // sessionStorage.setItem("unitprice", unitprice);
-    // sessionStorage.setItem("pnos", pnos);
-    // sessionStorage.setItem("quantitys", quantitys);
-    // sessionStorage.setItem("pdprices", pdprices);
-    //
-    // console.log(sessionStorage.getItem("mno"));
-    // console.log(sessionStorage.getItem("unitprice"));
-    // console.log(sessionStorage.getItem("pnos"));
-    // console.log(sessionStorage.getItem("quantitys"));
-    // console.log(sessionStorage.getItem("pdprices"));
 
     viewckbtn.addEventListener('click', ()=>{
         sessionStorage.setItem("mno", mno);
