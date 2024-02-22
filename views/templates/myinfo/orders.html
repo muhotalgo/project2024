@@ -52,11 +52,13 @@
         }
 
         .container {
-        {#max-width: 400px; /* 수정: 너비를 조금 더 넓게 설정 */#}
-            margin: 30px auto;
+        {#max-width: 1000px; /* 수정: 너비를 조금 더 넓게 설정 */#}
+            margin-top: 30px;
+            margin-left: 20px;
             background-color: #fff;
-            padding: 0 auto;
+            padding: 0 10px;
             border-radius: 5px;
+            border-right: solid #fff 10px;
             box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
         }
 
@@ -130,60 +132,87 @@
                     <h3>
                         <a href="/myinfo" style="color: #8B8B8B;">고객 정보</a>
                     </h3>
-                    <ul>
-                        <li><a href="/myinfo/modify">회원정보 수정</a></li>
+                    <ul><li><a href="/myinfo/modify">회원정보 수정</a></li>
                         <li><a href="#">배송지 정보</a></li>
                         <li><a href="#">적립금</a></li>
                         <li><a href="#">쿠폰</a></li>
                         <li style="margin-top:10px;">
                             <a href="/logout" class="xans-element- xans-layout xans-layout-statelogon ">로그아웃</a>
                         </li>
-                    </ul>
-                    <h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:15px; padding-top:15px;">주문내역</h3>
-                    <ul>
-                        <li><a href="/myinfo/orders">주문내역</a></li>
+                    </ul><h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:15px; padding-top:15px;">주문내역</h3>
+                    <ul><li><a href="/myinfo/orders">주문내역</a></li>
                         <li><a href="/#">교환/반품 내역</a></li>
-                    </ul>
-                    <h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:40px; padding-top:15px;">리뷰 및 질문</h3>
+                    </ul><h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:40px; padding-top:15px;">리뷰 및 질문</h3>
                     <ul>
-                        <!-- <li><a href="/myshop/wish_list.html">Wish List</a></li> -->
-                        <li><a href="/myshop/board_list.html">리뷰 작성</a></li>
-                        <li><a href="/views/static#/faq.html">자주 묻는 질문</a></li>
+                        <!--        <li><a href="/myshop/wish_list.html">Wish List</a></li> -->
+                        <li><a href="/#">리뷰 작성</a></li>
+                        <li><a href="/#">자주 묻는 질문</a></li>
                         <li><a href="/myinfo/contacts">내 질문 내역</a></li>
                     </ul>
                 </div>
             </div>
-        </div>
 
-        <div class="container w-50">
-            <h3>{{ my.name }}님 주문내역</h3>
-            <table class="table table-bordered table-hover container mt-5 w-80" >
-                <colgroup> <!-- table-layout: fixed 속성의 설정된 경우, 각 컬럼에 대한 스타일을 지정 -->
-                    <col style="width: 10%">
-                    <col style="width: 15%">
-                    <col style="">
-                    <col style="width: 15%">
-                    <col style="width: 10%">
-                </colgroup>
 
-                <thead class="table-dark">
-                <tr><th scope="col">주문번호</th><th scope="col">주문일</th><th scope="col">상품정보</th><th scope="col">결제금액</th><th scope="col">주문상태</th></tr>
-                </thead>
-                {% for bd in bdlist %}
-                    <tr><th scope="row">{{ od.ono }}</th>
-                        <td>{{ od.regdate.strftime('%Y-%m-%d') }}</td>
-                        <td>
-                            {% if 'm' in request.session %}
-                                <a href="/board/view/{{ bd.ono }}만들어야함 상품정보">
-                            {% endif %}
-                            {{ od.title }}</a></td>
+            <div class="container w-50">
+                <h3>{{ my.name }}님의 주문내역</h3>
+                <table class="table table-bordered table-hover container mt-5 w-80" >
 
-                        <td>{{ od.unitprice }}</td>
-                        <td>{{ od.status }}</td>
-                    </tr>
-                {% endfor %}
+                    <colgroup> <!-- table-layout: fixed 속성의 설정된 경우, 각 컬럼에 대한 스타일을 지정 -->
+                        <col style="width: 12%">
+                        <col style="width: 15%">
+                        <col style="">
+                        <col style="width: 8%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                    </colgroup>
 
-            </table>
+                    <thead class="table-dark">
+                    <tr><th scope="col">주문번호</th>
+                        <th scope="col">주문일</th>
+                        <th scope="col">상품정보</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">결제금액</th>
+                        <th scope="col">주문상태</th></tr>
+                    </thead>
+                    {% if 'm' in request.session %}
+                        {% for od in odlist %}
+                            <tr><th scope="row">{{ od.ono }}</th>
+                                <td>{{ od.regdate.strftime('%Y-%m-%d')  }}</td>
+                                <td><a href="/shops/view/{{ od.pno }}">
+                                        {{ od.name }}
+                                </a></td>
+                                <td>{{ od.quantity }}</td>
+                                <td>{{ od.pdprice }}</td>
+                                <td>{{ od.status }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+
+
+                </table>
+                <div>
+                    <div class="searchbox">
+                        <div class="row">
+                            <div class="col-auto">
+                                <select class="form-select" name="ftype" id="ftype">
+                                    <option value="title">제목</option>
+                                    <option value="contents">본문</option>
+                                    <!-- <option value="userid">작성자</option> -->
+                                    <option value="titconts">제목+본문</option>
+                                    <!-- <option value="comments">댓글내용</option>-->
+                                </select>
+                            </div>
+                        <div class="col-auto">
+                            <input type="text" name="fkey" id="fkey" class="form-control"></div>
+
+                        <div class="col-auto"><button type="button" id="findbtn"
+                                                      class="btn-btn-success">검색</button></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </main>
 

@@ -48,11 +48,27 @@ def cartorder(req: Request):
     return templates.TemplateResponse('shops/order.html', {'request': req, 'clist': clist, 'm': muser})
 
 
+# 상세페이지에서 주문서로
+@cart_router.get('/orderdr', response_class=HTMLResponse)
+def cartorder(req: Request):
+    muser = 0
+    if 'm' in req.session:
+        muser = MemberService.selectone_member(req.session['m'])
+
+    # clist = CartService.select_cart(muser.userid)
+    return templates.TemplateResponse('shops/orderdr.html', {'request': req, 'm': muser})
+
+
 @cart_router.post('/order')
 def orderitem(mno: int = Form(), unitprice: int = Form(),
               pnos=Form(), quantitys=Form(), pdprices=Form()):
-    print(mno, unitprice, pnos, quantitys, pdprices)
-    result = OrderService.insert_order(mno, unitprice, pnos, quantitys, pdprices)
+    OrderService.insert_order(mno, unitprice, pnos, quantitys, pdprices)
+    return RedirectResponse('/shops/orderend', status_code=status.HTTP_302_FOUND)
+
+@cart_router.post('/orderdr')
+def orderitem(mno: int = Form(), unitprice: int = Form(),
+              pnos=Form(), quantitys=Form(), pdprices=Form()):
+    OrderService.insert_order(mno, unitprice, pnos, quantitys, pdprices)
     return RedirectResponse('/shops/orderend', status_code=status.HTTP_302_FOUND)
 
 
@@ -62,7 +78,6 @@ def order(req: Request):
     muser = 0
     if 'm' in req.session:
         muser = MemberService.selectone_member(req.session['m'])
-    # mno = muser.mno
-    # olist = OrderService.select_order(mno)
+    odlist = OrderService.select_orderone(muser.mno)[0]
 
-    return templates.TemplateResponse('shops/orderend.html', {'request': req, 'm': muser})
+    return templates.TemplateResponse('shops/orderend.html', {'request': req, 'm': muser, 'ol': odlist})

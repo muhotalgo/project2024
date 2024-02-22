@@ -17,7 +17,6 @@
 
     .product {
         padding: 20px;
-        font-family: 'Graphik Web';
         font-size: 12px;
         font-weight: 300;
         color: #333333;
@@ -52,7 +51,7 @@
         {% for pd in pdlist %}
         <a href="/shops/view/{{ pd.pno }}" class="blank">
             <div class="product">
-                <img src="{{ pd.tumbimg }}" alert="{{ pd.name }} 썸네일 이미지">
+                <img src="{{ pd.tumbimg }}" alt="{{ pd.name }} 썸네일 이미지">
                 <div class="pd_fl">
                     <div class="pd_title">{{ pd.name }}</div>
                     <div class="pd_price"><span class="pd_price">{{ pd.price }}</span> 원</div>
