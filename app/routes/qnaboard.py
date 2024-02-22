@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Form
+from fastapi import APIRouter, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -137,6 +137,18 @@ def contacts_list(req: Request, cpg: int = 1):
         'baseurl': '/myinfo/contacts/',
         'my': myinfo
     })
+
+
+@myinfo_contacts_router.get('/myinfo/contacts/view/{qno}', response_class=HTMLResponse)
+def view(req: Request, qno:str):
+    if 'm' not in req.session:
+        return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
+
+    # A 회원이 B 회원 글을 보지 못하게 하는 명령문을 넣어야함.------------------------#
+
+    myinfo = MemberService.selectone_member(req.session['m'])
+    bd = QnaBoardService.selectone_board(qno)[0]
+    return templates.TemplateResponse('/myinfo/contacts/view.html',{'request': req, 'bd': bd, 'my': myinfo})
 
 
 #
