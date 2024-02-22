@@ -23,9 +23,9 @@ def list(req: Request):
 # 카테고리별 상품 조회
 @product_router.get('/list/{ctno}', response_class=HTMLResponse)
 def list(req: Request, ctno: int):
-    pdlist = ProductService.select_list_ctno(ctno)
+    pdlist, cate = ProductService.select_list_ctno(ctno)
     return templates.TemplateResponse('shops/list.html', {'request': req,
-                                                          'pdlist': pdlist})
+                                                          'pdlist': pdlist, 'cate': cate})
 
 
 # 상품명 검색 조회
@@ -36,6 +36,7 @@ def find(req: Request, skey: str):
                                       {'request': req, 'pdlist': pdlist, 'skey': skey})
 
 
+#  개별 상품 조회
 @product_router.get('/view/{pno}', response_class=HTMLResponse)
 def view(req: Request, pno: str):
     muser = 0
