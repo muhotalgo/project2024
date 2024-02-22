@@ -37,6 +37,10 @@
         color: #333;
         text-decoration: none;
     }
+
+    .empt {
+        width:100%;min-height:200px;text-align:center;font-size:30px;font-weight:300;margin:50px 0;
+    }
 </style>
 
 {% endblock %}
@@ -47,6 +51,8 @@
     <h2> {{ cate[7] }} </h2>
     <hr>
     <h3> {{ cate[8] }} </h3>
+    {% else %}
+    {% if row %}{% else %}<div class="empt">상품이 없습니다.</div>{% endif %}
     {% endif %}
     <div class="pd_row">
         {% for pd in pdlist %}

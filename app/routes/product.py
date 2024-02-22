@@ -32,8 +32,9 @@ def list(req: Request, ctno: int):
 @product_router.get('/search/{skey}', response_class=HTMLResponse)
 def find(req: Request, skey: str):
     pdlist = ProductService.find_select_list('%' + skey + '%')
+    row = ProductService.find_select_list('%' + skey + '%').fetchone()
     return templates.TemplateResponse('shops/list.html',
-                                      {'request': req, 'pdlist': pdlist, 'skey': skey})
+                                      {'request': req, 'pdlist': pdlist, 'skey': skey, 'row': row})
 
 
 #  개별 상품 조회
