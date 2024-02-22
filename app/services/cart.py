@@ -1,4 +1,5 @@
 from sqlalchemy import insert, select, delete, update
+from datetime import datetime
 
 from app.dbfactory import Session
 from app.models.cart import Cart
@@ -63,7 +64,7 @@ class OrderService():
         o = Order(**data)
         data = {'mno': o.mno, 'status': o.status,
                 'unitprice': o.unitprice, 'pno': o.pno,
-                'quantity': o.quantity, 'pdprice': o.pdprice, 'ono': o.ono}
+                'quantity': o.quantity, 'pdprice': o.pdprice, 'gono': o.gono}
         return data
 
     # 장바구니 -> orderitem -> order
@@ -72,12 +73,13 @@ class OrderService():
         pnos = pnos.split(",")
         quantitys = quantitys.split(",")
         pdprices = pdprices.split(",")
+        gono = datetime.today().strftime('%Y%m%d%H%M%S')
 
         with Session() as sess:
             for idx, i in enumerate(pnos):
                 # 주문 등록
                 data = {'mno': mno, 'unitprice': unitprice,
-                        'pno': pnos[idx], 'quantity': quantitys[idx], 'pdprice': pdprices[idx]}
+                        'pno': pnos[idx], 'quantity': quantitys[idx], 'pdprice': pdprices[idx], 'gono': gono}
                 stmt = insert(Order).values(data)
                 result = sess.execute(stmt)
                 sess.commit()
@@ -100,4 +102,12 @@ class OrderService():
                 .order_by(Order.ono) \
                 .offset(0).limit(20)
             result = sess.execute(stmt)
+        return result
+
+    # 주문정보 하나 조회
+    @staticmethod
+    def select_orderone(mno):
+        with Session() as sess:
+            stmt = select(Order).filter_by(mno=mno).order_by(Order.ono.desc())
+            result = sess.execute(stmt).first()
         return result

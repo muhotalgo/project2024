@@ -3,31 +3,43 @@
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', path='/css/shop.css') }}">
 <style>
+    .oewrap {
+        text-align:center;min-height:200px;
+        margin-bottom:20px;
+    }
+    .btnwrap {
+        text-align: center;
+        margin:30px 0;
+    }
 </style>
 {% endblock %}
-
 {% block main %}
 <!-- 정리 필요 -->
 <div class="lst_rt">
     <h2> 주문 완료 </h2>
-    <h3> 주문번호 : 123456789(dummy) </h3>
-    <div class="" style="text-align:center;min-height:200px;">
+    <h3> 주문번호 : {{ ol.gono }} </h3>
+    <div class="oewrap">
         {{ m.name }} 고객님, 주문이 완료되었습니다.
-        <div class="">주문상품 목록</div>
-        {{ odlist }}
-        {{ m.mno }}
-        {% for od in odlist %}
-        <a href="/shops/view/{{ od.pno }}" class="blank">
-            <div class="product">
-                <img src="{{ od.tumbimg }}" alt="{{ od.name }} 썸네일 이미지">
-                <div class="od_fl">
-                    <div class="od_title">{{ od.name }}</div>
-                    <div class="od_price"><span class="od_price">{{ od.price }}</span> 원</div>
-                </div>
-                <div class="od_exp">{{ od.exp }}</div>
-            </div>
-        </a>
-        {% endfor %}
+        <div class="btnwrap">
+            <a href="/myinfo"><button class="btn" id="tomyinfo">마이페이지로 가기</button></a>
+        </div>
+<!--        {% for od in odlist %}{{ od.ono }}{% endfor %}-->
+<!--        -->
+<!--        <div class="">주문상품 목록</div>-->
+<!--        {{ odlist }}-->
+<!--        {{ m.mno }}-->
+<!--        {% for od in odlist %}-->
+<!--        <a href="/shops/view/{{ od.pno }}" class="blank">-->
+<!--            <div class="product">-->
+<!--                <img src="{{ od.tumbimg }}" alt="{{ od.name }} 썸네일 이미지">-->
+<!--                <div class="od_fl">-->
+<!--                    <div class="od_title">{{ od.name }}</div>-->
+<!--                    <div class="od_price"><span class="od_price">{{ od.price }}</span> 원</div>-->
+<!--                </div>-->
+<!--                <div class="od_exp">{{ od.exp }}</div>-->
+<!--            </div>-->
+<!--        </a>-->
+<!--        {% endfor %}-->
     </div>
 </div>
 {% endblock %}

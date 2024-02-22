@@ -97,27 +97,26 @@
             </div>
             <!-- 주문 상품 -->
             <h3> 주문 상품 </h3>
-            {% set totals = [] %}
-            {% for c in clist %}
-            {% if totals.append(c.price * c.quantity) %}{% endif %}
             <div class="cbox orderitems">
-                <div class="cart_pd_img" style="background-image: url('{{ c.tumbimg }}')"></div>
+<!--                <div class="cart_pd_img" style="background-image: url('')"></div>-->
+                <div class="cart_pd_img"></div>
                 <div class="orderiteminfo">
-                    <span class="cart_pd_title">{{ c.name }}</span>
-                    <span class="sbinfo">w{{ c.width }}, d{{ c.deps }}, h{{ c.height }}</span>
+                    <span class="cart_pd_title"><span class="pdname"></span></span>
+                    <span class="sbinfo">
+                        w<span class="pdwidth"></span>, d<span class="pddepth"></span>, h<span class="pdheight"></span>
+                    </span>
                     <div class="infobox">
-                        <span class="sbinfo pd_price">{{ c.price }}</span>
+                        <span class="sbinfo pd_price"><span class="price"></span></span>
                         <span class="sbinfo">
-                        <input type="hidden" name="quantity" class="quantity" readonly value="{{ c.quantity }}">
-                        ( {{ c.quantity }} )
+                        <input type="hidden" name="quantity" class="quantity" readonly value="1">
+                        ( 1 )
                         </span>
                     </div>
-                    <div class="pd_price">{{ c.price * c.quantity }}</div>
+                    <div class="pd_price"><span class="total"></span></div>
                 </div>
-                <input type="hidden" name="pno" class="pno" readonly value="{{ c.pno }}">
-                <input type="hidden" name="pdprice" class="pdprice" readonly value="{{ c.price * c.quantity }}">
+                <input type="hidden" name="pno" id="pno" class="pno" readonly value="">
+                <input type="hidden" name="pdprice" id="pdprice" class="pdprice" readonly value="">
             </div>
-            {% endfor %}
         </div>
         <!-- aside -->
         <aside class="sidebar">
@@ -125,7 +124,7 @@
             <div class="cbox">
                 <div>총 가격</div>
                 <div class="total_price pd_price">
-                    {{ totals | sum }} 원
+                    <span class="altotal"></span> 원
                 </div>
             </div>
 
@@ -164,13 +163,41 @@
 
 {% block script %}
 <script>
-
     // 주문 추가
     let ckbtn = document.querySelector('#ckbtn');
     let pnos = document.querySelector('#pnos');
     let quantitys = document.querySelector('#quantitys');
     let pdprices = document.querySelector('#pdprices');
     let oderfrm = document.oderfrm;
+
+    // 값 변경
+    document.querySelector('#unitprice').value = sessionStorage.getItem("unitprice");
+    document.querySelector('#pnos').value = sessionStorage.getItem("pnos");
+    document.querySelector('#pno').value = sessionStorage.getItem("pnos");
+    document.querySelector('#quantitys').value = sessionStorage.getItem("quantitys");
+    document.querySelector('#pdprices').value = sessionStorage.getItem("pdprices");
+    document.querySelector('#pdprice').value = sessionStorage.getItem("pdprices");
+
+
+    // 출력용 값 변경
+    let thumbimg = sessionStorage.getItem("othumbimg");
+
+    document.querySelector('.cart_pd_img').style.backgroundImage = `url(${thumbimg})`;
+    document.querySelector('.pdname').innerHTML = sessionStorage.getItem("oname");
+
+    document.querySelector('.pdwidth').innerHTML = sessionStorage.getItem("owidth");
+    document.querySelector('.pddepth').innerHTML = sessionStorage.getItem("odeps");
+    document.querySelector('.pdheight').innerHTML = sessionStorage.getItem("oheight");
+
+    document.querySelector('.price').innerHTML = sessionStorage.getItem("pdprices");
+    document.querySelector('.total').innerHTML = sessionStorage.getItem("pdprices");
+    document.querySelector('.altotal').innerHTML = sessionStorage.getItem("pdprices");
+
+    sessionStorage.getItem("othumbimg");
+    sessionStorage.getItem("oname");
+    sessionStorage.getItem("owidth");
+    sessionStorage.getItem("odeps");
+    sessionStorage.getItem("oheight");
 
 
     ckbtn.addEventListener('click', () => {

@@ -28,13 +28,15 @@
 
     .box {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 
     .expobox {
         min-height: 200px;
         margin: 10px 0;
     }
+
+    .detail {min-height:300px;}
 </style>
 
 {% endblock %}
@@ -45,32 +47,40 @@
         <img src="{{ pd.tumbimg }}" class="main" alt="{{ pd.name }} 썸네일 이미지">
         <div class="namebox main">
 
-            <div class="" style="display:none">
-                <input type="text" name="pno" id="pno" value="{{ pd.pno }}">
-                <input type="text" name="quantity" id="quantity" value="1">
-            </div>
+            <input type="hidden" name="pno" id="pno" value="{{ pd.pno }}">
+            <input type="hidden" name="quantity" id="quantity" value="1">
+            <input type="hidden" name="userid" id="userid" value="{{ m.userid }}">
+            <input type="hidden" name="mno" id="mno" value="{{ m.mno }}">
+            <input type="hidden" name="pdprice" id="pdprice" value="{{ pd.price }}">
+            <input type="hidden" name="unitprice" id="unitprice" value="{{ pd.price }}">
+            <input type="hidden" class="thumbimg" value="{{ pd.tumbimg }}">
+            <input type="hidden" class="width" value="{{ pd.width }}">
+            <input type="hidden" class="deps" value="{{ pd.deps }}">
+            <input type="hidden" class="height" value="{{ pd.height }}">
 
             <div class="name">{{ pd.name }}</div>
             <div class="expobox">
-                <div class="">{{ pd.exp }}</div>
+                <div class="exp">{{ pd.exp }}</div>
                 {% if pd.pctoff != 0 %}
                 <div class="">{{ pd.retail }} 원</div>
                 <div class="">{{ pd.pctoff }} % 할인</div>
                 {% endif %}
-                <div><span id="pd_price">{{ pd.price }}</span> 원</div>
+                <div><span id="pd_price" class="price">{{ pd.price }}</span> 원</div>
             </div>
             <div class="box">
-<!--                <button type="button" class="btn" name="checkout" onclick="alert('공사중입니다.')">-->
-<!--                    구매-->
-<!--                </button>-->
                 {% if m %}
-                <input type="text" name="userid" id="userid" value="{{ m.userid }}" class="mada">
+                <button type="button" class="btn" name="checkout" id="viewckbtn">
+                    구매
+                </button>
                 <button type="button" class="btn" name="checkout" id="usercartbtn">
                     장바구니 넣기
                 </button>
                 {% else %}
+                <button type="button" class="btn" name="checkout" id="jstckbtn">
+                    구매
+                </button>
                 <button type="button" class="btn" name="checkout" id="jstcartbtn">
-                    장바구니 넣기 (로그인 하러가기)
+                    장바구니 넣기
                 </button>
                 {% endif %}
             </div>
@@ -79,7 +89,10 @@
 
 
     <h3>상세페이지</h3>
-    <div class="">{{ pd.detail }}</div>
+    <div class="detail">
+        {{ pd.detail }}
+        <img src="{{ pd.detail }}" alt="상세페이지_이미지" style="display:none;">
+    </div>
 </div>
 {% endblock %}
 
@@ -131,6 +144,63 @@
             }
         });
     }
+
+    let jstckbtn = document.querySelector('#jstckbtn');
+    if (jstckbtn) {
+        jstckbtn.addEventListener('click', () => {
+            if (confirm("로그인이 필요한 서비스입니다. \n로그인 화면으로 이동하시겠습니까?")) {
+                location.href = 'http://127.0.0.1:8000/login';
+            }
+        });
+    }
+
+    // 상세페이지에서 바로 구매하는 기능
+    let viewckbtn = document.querySelector('#viewckbtn');
+
+    let mno = document.querySelector('#mno').value;
+    let unitprice = document.querySelector('#unitprice').value;
+    let pnos = document.querySelector('#pno').value;
+    let quantitys = document.querySelector('#quantity').value;
+    let pdprices = document.querySelector('#pdprice').value;
+
+    let othumbimg = document.querySelector('.thumbimg').value;
+    let oname = document.querySelector('.name').innerHTML;
+    let owidth = document.querySelector('.width').value;
+    let odeps = document.querySelector('.deps').value;
+    let oheight = document.querySelector('.height').value;
+
+    // sessionStorage.setItem("mno", mno);
+    // sessionStorage.setItem("unitprice", unitprice);
+    // sessionStorage.setItem("pnos", pnos);
+    // sessionStorage.setItem("quantitys", quantitys);
+    // sessionStorage.setItem("pdprices", pdprices);
+    //
+    // console.log(sessionStorage.getItem("mno"));
+    // console.log(sessionStorage.getItem("unitprice"));
+    // console.log(sessionStorage.getItem("pnos"));
+    // console.log(sessionStorage.getItem("quantitys"));
+    // console.log(sessionStorage.getItem("pdprices"));
+
+    viewckbtn.addEventListener('click', ()=>{
+        sessionStorage.setItem("mno", mno);
+        sessionStorage.setItem("unitprice", unitprice);
+        sessionStorage.setItem("pnos", pnos);
+        sessionStorage.setItem("quantitys", quantitys);
+        sessionStorage.setItem("pdprices", pdprices);
+
+
+        sessionStorage.setItem("othumbimg", othumbimg);
+        sessionStorage.setItem("oname", oname);
+        sessionStorage.setItem("owidth", owidth);
+        sessionStorage.setItem("odeps", odeps);
+        sessionStorage.setItem("oheight", oheight);
+
+        location.href = 'http://127.0.0.1:8000/shops/orderdr';
+    });
+
+    console.log(sessionStorage.getItem("directpay"));
+    console.log(sessionStorage.key(0));
+
 
     // , 설정
     const reprice = document.querySelector('#pd_price').innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
