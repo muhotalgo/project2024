@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, Request, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -113,27 +112,3 @@ def modify(mdto: ModiMember):
     #         """)
     # else:
     #     raise HTTPException(status_code=500, detail='회원정보 수정에 실패했습니다.')
-
-
-# 마이페이지 / 주문내역
-
-@member_router.get('/myinfo/orders', response_class=HTMLResponse)
-def orders(req: Request):
-    if 'm' not in req.session:
-        return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
-
-    myinfo = MemberService.selectone_member(req.session['m'])
-    # orders = MemberService.
-    return templates.TemplateResponse('myinfo/orders.html',{'request': req, 'my': myinfo, 'od': orders})
-
-
-
-# 마이페이지 / 내 질문 내역
-@member_router.get('/myinfo/contacts', response_class=HTMLResponse)
-def contacts(req: Request):
-    if 'm' not in req.session:
-        return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
-
-    myinfo = MemberService.selectone_member(req.session['m'])
-    return templates.TemplateResponse('myinfo/contacts.html',{'request': req, 'my': myinfo})
-
