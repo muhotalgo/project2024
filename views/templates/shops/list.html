@@ -37,16 +37,23 @@
         color: #333;
         text-decoration: none;
     }
+
+    .empt {
+        width:100%;min-height:200px;text-align:center;font-size:30px;font-weight:300;margin:50px 0;
+    }
 </style>
 
 {% endblock %}
 
 {% block main %}
-<!-- 정리 필요 -->
 <div class="lst_rt">
-    <h2> <span id="keyct"></span> </h2>
+    {% if cate %}
+    <h2> {{ cate[7] }} </h2>
     <hr>
-    <h3> <span id="subct"></span></h3>
+    <h3> {{ cate[8] }} </h3>
+    {% else %}
+    {% if row %}{% else %}<div class="empt">상품이 없습니다.</div>{% endif %}
+    {% endif %}
     <div class="pd_row">
         {% for pd in pdlist %}
         <a href="/shops/view/{{ pd.pno }}" class="blank">
@@ -71,44 +78,6 @@
     for (const reprice of reprices) {
         chval = reprice.innerHTML.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         reprice.innerHTML = chval;
-    }
-
-    // 카테고리 표시
-    let findurl = location.pathname.split('/');
-    let keyct = document.querySelector('#keyct');
-    let subct = document.querySelector('#subct');
-
-    switch (findurl[3]) {
-        case '101':
-            keyct.innerText = "LIVING"
-            subct.innerText = "Sofas"
-            break;
-        case '102':
-            keyct.innerText = "LIVING"
-            subct.innerText = "Tables"
-            break;
-        case '103':
-            keyct.innerText = "LIVING"
-            subct.innerText = "Chairs"
-            break;
-        case '201':
-            keyct.innerText = "DINING"
-            subct.innerText = "Dining Tables"
-            break;
-        case '202':
-            keyct.innerText = "DINING"
-            subct.innerText = "Dining Chairs"
-            break;
-        case '301':
-            keyct.innerText = "BEDROOM"
-            subct.innerText = "Beds"
-            break;
-        case '302':
-            keyct.innerText = "BEDROOM"
-            subct.innerText = "Nightstands"
-            break;
-        default:
-            break;
     }
 </script>
 {% endblock %}

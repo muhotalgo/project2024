@@ -2,7 +2,7 @@ from sqlalchemy import insert, select, update, func, or_
 
 from app.dbfactory import Session
 from app.models.product import Product
-from app.models.member import Member
+from app.models.category import Category
 
 
 class ProductService():
@@ -27,7 +27,7 @@ class ProductService():
     def select_list():
         with Session() as sess:
             stmt = select(Product.pno, Product.name, Product.exp, Product.detail, Product.price, Product.tumbimg,
-                          Product.ctno) \
+                          Product.ctno)\
                 .order_by(Product.pno) \
                 .offset(0).limit(20)
             result = sess.execute(stmt)
@@ -38,20 +38,25 @@ class ProductService():
     def select_list_ctno(ctno):
         with Session() as sess:
             stmt = select(Product.pno, Product.name, Product.exp, Product.detail, Product.price, Product.tumbimg,
-                          Product.ctno) \
-                .order_by(Product.pno).filter_by(ctno=ctno) \
+                          Product.ctno, Category.kctname, Category.sctname, Category.catcod).join_from(Product,
+                                                                                                       Category) \
+                .order_by(Product.pno).where(Product.ctno == ctno) \
                 .offset(0).limit(20)
             result = sess.execute(stmt)
-        return result
+            cate = sess.execute(stmt).first()
+
+        return result, cate
 
     # 상품명 검색 조회 - 상품번호, 상품이름, 상품 간략정보, 상품 상세정보에서 조회
     @staticmethod
     def find_select_list(skey):
+        print('abc123')
         with Session() as sess:
             stmt = select(Product.pno, Product.name, Product.exp, Product.detail, Product.price, Product.tumbimg,
                           Product.ctno)
 
-            myfilter = or_(Product.pno.like(skey),Product.name.like(skey),Product.exp.like(skey),Product.detail.like(skey))
+            myfilter = or_(Product.pno.like(skey), Product.name.like(skey), Product.exp.like(skey),
+                           Product.detail.like(skey))
 
             stmt = stmt.filter(myfilter) \
                 .order_by(Product.pno).offset(0).limit(20)

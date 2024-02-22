@@ -14,11 +14,6 @@
         font-size: 15px
     }
 
-    .oderfrm h3 {
-        padding: 10% 0;
-    }
-
-
     .odfrmmain {
         width: 50%;
         margin-right: 20px;
@@ -201,29 +196,31 @@
 
 
     ckbtn.addEventListener('click', () => {
-        // 1회성
-        mnoval = document.getElementsByName('mno');
-        unitprice = document.getElementsByName('unitprice');
+        if (confirm("결제를 완료하시겠습니까?")) {
+            // 1회성
+            mnoval = document.getElementsByName('mno');
+            unitprice = document.getElementsByName('unitprice');
 
-        // 반복
-        pnoval = document.getElementsByName('pno');
-        quanval = document.getElementsByName('quantity');
-        priceval = document.getElementsByName('pdprice');
+            // 반복
+            pnoval = document.getElementsByName('pno');
+            quanval = document.getElementsByName('quantity');
+            priceval = document.getElementsByName('pdprice');
 
 
-        for (i = 0; i < document.getElementsByName('pno').length; i++) {
-            if (i === 0) {
-                pnos.value = pnoval[i].value;
-                quantitys.value = quanval[i].value;
-                pdprices.value = priceval[i].value
-                continue
+            for (i = 0; i < document.getElementsByName('pno').length; i++) {
+                if (i === 0) {
+                    pnos.value = pnoval[i].value;
+                    quantitys.value = quanval[i].value;
+                    pdprices.value = priceval[i].value
+                    continue
+                }
+                pnos.value += ',' + pnoval[i].value;
+                quantitys.value += ',' + quanval[i].value;
+                pdprices.value += ',' + priceval[i].value;
             }
-            pnos.value += ',' + pnoval[i].value;
-            quantitys.value += ',' + quanval[i].value;
-            pdprices.value += ',' + priceval[i].value;
+            oderfrm.method = 'post';
+            oderfrm.submit();
         }
-        oderfrm.method = 'post';
-        oderfrm.submit();
     });
 
     // 이전으로 돌아가기
