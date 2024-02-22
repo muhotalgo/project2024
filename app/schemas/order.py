@@ -12,6 +12,7 @@ class Order(BaseModel):
     pno: int
     quantity: int
     pdprice: int
+    gno: int
     regdate: datetime
 
     class Config:
@@ -24,6 +25,7 @@ class NewOrder(BaseModel):
     unitprice: int
     pno: int
     quantity: int
+    gno: int
     pdprice: int
 
 

@@ -7,9 +7,9 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.dbfactory import db_startup
+from app.routes.FAQ import FAQ_router
 from app.routes.TOS import TOS_router
-
-from app.routes.contact import qna_router
+from app.routes.board import board_router
 from app.routes.cart import cart_router
 from app.routes.policy import policy_router
 from app.routes.visit import visit_router
@@ -41,6 +41,9 @@ app.include_router(member_router)
 app.include_router(myinfo_contacts_router)
 app.include_router(myinfo_orders_router)
 app.include_router(product_router, prefix='/shops/product')
+app.include_router(FAQ_router, prefix='/contact')
+app.include_router(product_router, prefix='/shops/product')
+app.include_router(board_router, prefix='/board')
 app.include_router(product_router, prefix='/shops')
 app.include_router(cart_router, prefix='/shops')
 app.include_router(visit_router, prefix='/visit')

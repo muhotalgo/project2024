@@ -3,7 +3,7 @@
         <div class="footer_top">
             <div class="footer_logo">
                 <a href="#" style="text-decoration-line: none">
-                    <h2>ET CETERA</h2></a>
+                    <div class="footer_main_logo" style="font-size: 32px;">ET CETERA</div></a>
             </div>
         </div>
         <div class="footerline"></div>
@@ -46,3 +46,37 @@
         </div>
     </div>
 </footer>
+
+
+
+{% block script %}
+<script>
+    // 검색 기능
+    let schbtn = document.querySelector("#schbtn");
+    schbtn.addEventListener('click', () => {
+        let skey = document.querySelector('#skey').value;
+        if (skey) {
+            let params = `/search/${skey}`;
+            let findurl = 'http://127.0.0.1:8000/shops' + params;
+
+            location.href = findurl;
+        } else {
+            alert('검색어를 입력해주세요.');
+        }
+    });
+
+    // Enter, NumpadEnter to search
+    let skey = document.querySelector("#skey");
+    skey.addEventListener("keyup", function (e) {
+        if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+            schbtn.click();
+        }
+    });
+
+    // input 창에 현재 검색어 표시
+    let crurl = location.pathname.split('/');
+    if (crurl[2] === 'search') {
+        skey.value = decodeURI(crurl[3]);
+    }
+</script>
+{% endblock %}

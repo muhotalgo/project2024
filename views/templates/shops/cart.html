@@ -73,8 +73,6 @@
 
     .cart_pd_title {
         display: block;
-        /* 원본 사이트 폰트 - [ ] 비슷한 무료 폰트 찾기*/
-        /*font-family: BerlingskeSerif-Regular;*/
         font-weight: 400;
         font-size: 22px;
         line-height: normal
@@ -104,7 +102,6 @@
         -webkit-align-items: center;
         -ms-flex-align: center;
         align-items: center;
-        font-family: Graphik Web, sans-serif
     }
 
     .cart_pd_info_wrap div:nth-child(odd) {
@@ -382,16 +379,20 @@
     let test2 = document.querySelector('#test2');
 
     // -
-    mbtn.addEventListener('click', () => {
-        if (test2.value > 1) {
-            test2.value -= 1;
-        }
-    });
+    if (mbtn){
+        mbtn.addEventListener('click', () => {
+            if (test2.value > 1) {
+                test2.value -= 1;
+            }
+        });
+    }
 
     // +
-    pbtn.addEventListener('click', () => {
-        test2.value = Number(test2.value) + 1;
-    });
+    if (pbtn){
+        mbtn.addEventListener('click', () => {
+            test2.value = Number(test2.value) + 1;
+        });
+    }
 
     // , 설정
     const reprices = document.querySelectorAll('.pd_price');

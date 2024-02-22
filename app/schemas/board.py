@@ -3,8 +3,8 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class Contact(BaseModel):
-    cno: int
+class Board(BaseModel):
+    bno: int
     title: str
     userid: str
     regdate: datetime
@@ -15,12 +15,8 @@ class Contact(BaseModel):
         from_attributes = True
 
 
-class NewContact(BaseModel):
+class NewBoard(BaseModel):
     title: str
     userid: str
     contents: str
-    response: str
-
-
-
-
+    # response: str

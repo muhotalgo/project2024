@@ -12,6 +12,7 @@ category_router = APIRouter()
 templates = Jinja2Templates(directory='views/templates')
 
 
+# 전체 상품 조회
 @product_router.get('/list', response_class=HTMLResponse)
 def list(req: Request):
     pdlist = ProductService.select_list()
@@ -25,6 +26,14 @@ def list(req: Request, ctno: int):
     pdlist = ProductService.select_list_ctno(ctno)
     return templates.TemplateResponse('shops/list.html', {'request': req,
                                                           'pdlist': pdlist})
+
+
+# 상품명 검색 조회
+@product_router.get('/search/{skey}', response_class=HTMLResponse)
+def find(req: Request, skey: str):
+    pdlist = ProductService.find_select_list('%' + skey + '%')
+    return templates.TemplateResponse('shops/list.html',
+                                      {'request': req, 'pdlist': pdlist, 'skey': skey})
 
 
 @product_router.get('/view/{pno}', response_class=HTMLResponse)

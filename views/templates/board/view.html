@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+    main {
+        background-color: #F2F2F2;
+    }
+    #view div{ margin-bottom: 5px; }
+    #view label {width: 110px; text-align: right;
+        font-weight: bold;margin-right: 15px }
+    #cnts {
+        display: inline-block;
+        width: 750px;
+        height: 450px;
+        margin-left: 150px;
+        border: 1px solid black }
+    .dragup {vertical-align: top}
+    #view > div:last-child { text-align: right; margin-right: 10px; }
+</style>
+{% endblock %}
+
+{% block main %}
+<main>
+    <h2 style="margin-left: 200px;">main detail</h2>
+    <div id="view" class="w-50 container">
+        <div class="row">
+            <div class="col-auto"><label>title</label></div>
+            <div class="col-auto"><span>{{ bd.title }}</span></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label>writer</label></div>
+            <div class="col-auto"><span>{{ bd.userid }}</span></div>
+        </div>
+        <div class="row">
+            <div class="col-auto"><label>regdate</label></div>
+            <div class="col-auto"><span> {{ bd.regdate.strftime('%Y-%m-%d %H:%M:%S')}} ({{bd.views}})</span></div>
+        </div>
+        <div class="row">
+            <div class="col-auto" style="margin-top: 50px;"><label class="dragup">main</label></div>
+            <div class="col-auto">
+                    <span id="cnts" style="margin-top: 20px">{{ bd.contents }}</span></div>
+        </div>
+            <div class="row">
+            <div>
+                <button type="button" class="btn btn-dark text-white">
+                    <i class="bi bi-list"></i>to list</button>
+                <button type="button" class="btn btn-dark text-white">
+                    <i class="bi bi-pencil-square"></i>modify</button>
+                <button type="button" class="btn btn-dark text-white">
+                    <i class="bi bi-x-circle"></i> delete</button>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

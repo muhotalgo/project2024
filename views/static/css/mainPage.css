@@ -93,12 +93,15 @@ header .logo {
     min-width: 1300px;
     font-size: 60px;
 }
+header .logo:hover, footer .footer_main_logo:hover {
+    font-weight: normal;
+}
 header .inner_submenu_right {
     min-width: 1300px;
     list-style: none;
     text-align: right;
-    padding-right: 100px;
     margin-top: 20px;
+    margin-right: 80px;
     font-size: 16px;
 }
 
@@ -210,8 +213,6 @@ footer {
     vertical-align: top;
     padding: 2vh;
     height: 240px;
-    /* footer 배경색 */
-    background-color: rgb(238, 238, 236, .4);
 }
 
 .footer_bottom {

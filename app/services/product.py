@@ -44,6 +44,21 @@ class ProductService():
             result = sess.execute(stmt)
         return result
 
+    # 상품명 검색 조회 - 상품번호, 상품이름, 상품 간략정보, 상품 상세정보에서 조회
+    @staticmethod
+    def find_select_list(skey):
+        with Session() as sess:
+            stmt = select(Product.pno, Product.name, Product.exp, Product.detail, Product.price, Product.tumbimg,
+                          Product.ctno)
+
+            myfilter = or_(Product.pno.like(skey),Product.name.like(skey),Product.exp.like(skey),Product.detail.like(skey))
+
+            stmt = stmt.filter(myfilter) \
+                .order_by(Product.pno).offset(0).limit(20)
+            result = sess.execute(stmt)
+
+        return result
+
     # 상품 상세페이지 이동
     @staticmethod
     def selectone_prod(pno):

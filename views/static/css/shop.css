@@ -1,6 +1,5 @@
 .lst_rt {
     padding: 0 5%;
-    font-family: 'Graphik Web';
 }
 
 #pd_list_title_wrap .pd_list_hd_comp h2 {
@@ -17,25 +16,26 @@ h2 {
 }
 
 h3 {
+    text-align: center;
     padding: 2% 0;
 }
 
 
 .btn {
-    display: block;
+    /*display: block;*/
     padding: 20px 10px;
-    background: transparent;
+    background: #f4f4f4;
     border: 1px solid #4a4a4a;
     font-size: 13px;
     color: #4a4a4a;
     margin: 5px;
     border-radius: 0;
+    transition: all 0.5s;
 }
 
 .btn:hover {
     background: #4a4a4a;
-    border: 1px solid #4a4a4a;
-    color: #fff
+    color: #fff;
 }
 
 .mada {
