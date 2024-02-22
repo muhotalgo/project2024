@@ -156,8 +156,8 @@
                     </ul><h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:40px; padding-top:15px;">리뷰 및 질문</h3>
                     <ul>
                         <!--        <li><a href="/myshop/wish_list.html">Wish List</a></li> -->
-                        <li><a href="/myshop/board_list.html">리뷰 작성</a></li>
-                        <li><a href="/views/static#/faq.html">자주 묻는 질문</a></li>
+                        <li><a href="/#">리뷰 작성</a></li>
+                        <li><a href="/#">자주 묻는 질문</a></li>
                         <li><a href="/myinfo/contacts">내 질문 내역</a></li>
                     </ul>
                 </div>
@@ -564,7 +564,7 @@
             // 캡챠 응답토큰을 jsondata에 추가
             jsondata['response'] = hcaptcha.getResponse();
 
-            console.log(jsondata);
+            // console.log(jsondata);
 
             fetch('http://127.0.0.1:8000/myinfo/modify', {
                 method: 'POST',                     // 데이터 전송방식
@@ -587,6 +587,7 @@
                     if (data) {
                         // 서버로부터 반환된 데이터가 있는 경우
                         if (parseInt(data) > 0) {
+                            // 미작동 // alert('회원정보가 수정되었습니다.');
                             location.href = '/myinfo'; // 회원정보 수정 성공시 페이지 출력
                         } else {
                             location.href = '/error'; // 회원정보 수정 실패시 페이지 출력

@@ -121,6 +121,21 @@
             background-color: black;
         }
     </style>
+
+    <script src="https://js.hcaptcha.com/1/api.js?hl=ko&onload=myFunction&render=explicit"
+            async defer>
+    </script>
+
+    <script type="text/javascript">
+        var myFunction = () => {
+            hcaptcha.render('captcha', {
+                sitekey: '19e7b44f-2dfa-4f43-9e48-f42f824a3ad6',
+                theme: 'light',
+                'error-callback': 'onError',
+            });
+        };
+
+    </script>
 {% endblock %}
 
 {% block main %}
@@ -140,12 +155,12 @@
                         </li>
                     </ul><h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:15px; padding-top:15px;">주문내역</h3>
                     <ul><li><a href="/myinfo/orders">주문내역</a></li>
-                        <li><a href="/#">교환/반품 내역</a></li>
+                        <li><a href="/views/static#">교환/반품 내역</a></li>
                     </ul><h3 style="font-size: 15px; color: #8B8B8B; line-height: 18px; font-weight:700; border-top:1px solid #E1E1E1; margin-top:40px; padding-top:15px;">리뷰 및 질문</h3>
                     <ul>
                         <!--        <li><a href="/myshop/wish_list.html">Wish List</a></li> -->
-                        <li><a href="/#">리뷰 작성</a></li>
-                        <li><a href="/#">자주 묻는 질문</a></li>
+                        <li><a href="/views/static#">리뷰 작성</a></li>
+                        <li><a href="/views/static#">자주 묻는 질문</a></li>
                         <li><a href="/myinfo/contacts">내 질문 내역</a></li>
                     </ul>
                 </div>
@@ -155,6 +170,7 @@
             <div class="container w-50">
                 <h3>{{ my.name }}님 1:1 문의 내역</h3>
                 <table class="table table-bordered table-hover container mt-5 w-80" >
+
                     <colgroup> <!-- table-layout: fixed 속성의 설정된 경우, 각 컬럼에 대한 스타일을 지정 -->
                         <col style="width: 10%">
                         <col style="width: 15%">
@@ -172,14 +188,56 @@
                             <td>
                                 {% if 'm' in request.session %}
                                     <a href="/board/view/{{ bd.ono }}만들어야함 상품정보">
-                                {% endif %}
                                 {{ od.title }}</a></td>
 
                             <td>{{ od.unitprice }}</td>
                             <td>{{ od.status }}</td>
+                                {% endif %}
                         </tr>
                     {% endfor %}
+                    <tr><td colspan="4" class="searchbox">
+                    <div class="row">
+                        <div class="col-auto">
+                            <select class="form-select" name="ftype" id="ftype">
+                            <option value="title">제목</option>
+                            <option value="contents">본문</option>
+                            <!-- <option value="userid">작성자</option> -->
+                            <option value="titconts">제목+본문</option>
+                            <!-- <option value="comments">댓글내용</option>-->
+                            </select>
+                        </div>
+
+                        <div class="col-auto">
+                            <input type="text" name="fkey" id="fkey" class="form-control"></div>
+
+                        <div class="col-auto"><button type="button" id="findbtn"
+                                                      class="btn-btn-success">검색</button></div>
+
+                    </div></td>
+
+                    <td colspan="3"><a href="/board/write" class="btn btn-dark text-white">글쓰기</a></td>
+                    </tr>
                 </table>
+{#                <ul class="pagination justify-content-center m-3">#}
+{#                    <!--현재페이지가 1이라면 이전버튼 비활성-->#}
+{#                    {% if cpg == 1 %} <li class="page-item disabled">#}
+{#                        {% else %} <li class="page-item"> {% endif %}#}
+{##}
+{#                    <a class="page-link" href="{{ baseurl }}{{ cpg - 1 }}">이전</a></li>#}
+{##}
+{#                    {% for idx in range(stpg, stpg + 10) %}#}
+{#                        {% if idx <= allpage %}   <!--idx가 allpage보다 같거나 작으면 페이지네이션 출력-->#}
+{#                            {% if cpg == idx %} <li class="page-item disabled">#}
+{#                                {% else %} <li class="page-item"> {% endif %}#}
+{#                        <a class="page-link" href="{{ baseurl }}{{ idx }}">{{ idx }}</a></li>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{##}
+{#                    <!--현재페이지가 마지막 페이지라면 다음버튼 비활성-->#}
+{#                    {% if cpg == allpage %} <li class="page-item disabled">#}
+{#                        {% else %} <li class="page-item"> {% endif %}#}
+{#                    <a class="page-link" href="{{ baseurl }}{{ cpg + 1 }}">다음</a></li>#}
+{#                </ul>#}
             </div>
         </div>
     </main>
@@ -187,7 +245,41 @@
 
 
 {% block script %}
+    <script>
+    // 검색기능 수행 Javascript
+        let findbtn = document.querySelector('#findbtn');
+        findbtn.addEventListener('click', () => {
+            let ftype = document.querySelector('#ftype').value;
+            let fkey = document.querySelector('#fkey').value;
 
+            let params = `/${ftype}/${fkey}/1`;
+            let findurl = `http://127.0.0.1:8000/myinfo/contacts`+params;
 
+            location.href = findurl;
+        });
+    </script>
+
+    <script>
+        // 기본
+        // url의 상태에 따라 검색창 UI에 내용 채움
+        let findurl = location.pathname.split('/');
+        // console.log(findurl[3], findurl[4]);
+        if (findurl[4] !== undefined) {     //검색어가 입력되었다면
+            let classname = 'bg-warning text-white';
+            //검색어를 input 태그에 자동삽입
+            document.querySelector('#fkey').value = decodeURI(findurl[4]);
+            document.querySelector('#fkey').className = `form-control ${classname}`;
+
+            //검색유형을  select태그에 반영: selectedIndex 이용
+            let ftype = document.querySelector('#ftype');
+            ftype.className = `form-control ${classname}`;
+            switch (findurl[3]) {
+                case 'title': ftype.selectedIndex = 0; break;
+                case 'contents': ftype.selectedIndex = 1; break;
+                case 'userid': ftype.selectedIndex = 2; break;
+                case 'titconts': ftype.selectedIndex = 3; break;
+                case 'comments': ftype.selectedIndex = 4; break;
+            }
+        }
+    </script>
 {% endblock %}
-
