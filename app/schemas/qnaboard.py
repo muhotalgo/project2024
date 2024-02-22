@@ -8,7 +8,7 @@ class QnaBoard(BaseModel):
     title: str
     userid: str
     regdate: datetime
-    views: int
+    # views: int
     contents: str
 
     class Config:

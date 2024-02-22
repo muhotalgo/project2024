@@ -167,14 +167,14 @@
                     </colgroup>
 
                     <thead class="table-dark">
-                    <tr><th scope="col">번호</th><th scope="col">날짜</th><th scope="col">제목</th><th scope="col">비고</th></tr>
+                    <tr><th scope="col">번호</th><th scope="col">날짜</th><th scope="col">제목</th><th scope="col">답변여부</th></tr>
                     </thead>
                     {% if 'm' in request.session %}
                         {% for qa in qalist %}
                             <tr><th scope="row">{{ qa.qno }}</th>
                                 <td>{{ qa.regdate.strftime('%Y-%m-%d')  }}</td>
-                                <td><a href="/board/view/{{ qa.qno }}">{{ qa.title }}</a></td>
-    {#                            <td>{{ qa.unitprice }}</td>#}
+                                <td><a href="/myinfo/contacts/view/{{ qa.qno }}">{{ qa.title }}</a></td>
+                                <td>미답변</td>
     {#                            <td>{{ qa.status }}</td>#}
                             </tr>
                         {% endfor %}

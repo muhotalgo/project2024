@@ -1,7 +1,7 @@
 from app.models.contact import Qna
 from app.models.member import Member
 from app.dbfactory import Session
-from sqlalchemy import select, insert, update, func
+from sqlalchemy import select, insert, func
 import requests
 
 
@@ -102,3 +102,13 @@ class QnaBoardService():
             result = sess.execute(stmt)
 
         return result, cnt
+
+
+    @staticmethod
+    def selectone_board(qno):
+        with Session() as sess:
+
+            stmt = select(Qna).filter_by(qno=qno)
+            result = sess.execute(stmt).first()
+
+            return result
