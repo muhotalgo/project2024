@@ -18,7 +18,8 @@ class Member(Base):
     phone = Column(String(11), nullable=False, unique=True)
     email = Column(String(50), nullable=False, unique=True)
     regdate = Column(DateTime, default=datetime.now)
-    contacts = relationship("Qna", backref="member.userid")  # 수정: backref="member"
+    qna = relationship("Qna", backref="member.userid")  # 수정: backref="member"
+    contact = relationship("Contact", backref="member.userid")  # 수정: backref="member"
     boards = relationship("Board", backref="member.userid")
     orders = relationship("Order", backref="member.mno")
 
