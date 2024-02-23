@@ -7,6 +7,7 @@ class QnaBoard(BaseModel):
     bno: int
     title: str
     userid: str
+    # mno: int
     regdate: datetime
     # views: int
     contents: str
@@ -18,6 +19,7 @@ class QnaBoard(BaseModel):
 class NewQna(BaseModel):
     title: str
     userid: str
+    # mno: int
     contents: str
     response: str
 
