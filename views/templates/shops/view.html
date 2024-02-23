@@ -10,33 +10,50 @@
     .pd_row {
         display: grid;
         width: 100%;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 1.5fr 1fr;
     }
 
     .main {
-        padding: 20px;
+        padding: 20px 50px 20px 0;
         font-size: 15px;
         font-weight: 300;
         color: #333333;
     }
 
+    .namebox {
+        padding-right:15%;
+    }
     .name {
         font-weight: 400;
-        font-size: 20px;
-        margin: 10px 0;
+        font-size: 24px;
     }
 
     .box {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        margin-top:50px;
     }
 
     .expobox {
         min-height: 200px;
         margin: 10px 0;
     }
+    .prbox {
+        color:#8a6b28;
+        font-size:24px;
+        margin-top:20px;
+        text-align:right;
+    }
 
-    .detail {min-height:300px; text-align:center;}
+    .under {border-bottom:1px solid #ece9e6; padding:20px 0;color: #808080
+    }
+
+    .detail {min-height:300px; text-align:left;background:#faf9f7;padding:100px 0;}
+    .detail .text {
+        width: 50%;margin: 0 auto;letter-spacing:3px;color:#555;}
+    .dumimg{
+        width: 50%;margin: 50px auto;
+    }
 </style>
 
 {% endblock %}
@@ -60,12 +77,13 @@
 
             <div class="name">{{ pd.name }}</div>
             <div class="expobox">
-                <div class="exp">{{ pd.exp }}</div>
+                <div class="under">5-6주 안에 배송 준비 완료</div>
+                <div class="exp under">{{ pd.exp }}</div>
                 {% if pd.pctoff != 0 %}
                 <div class="">{{ pd.retail }} 원</div>
                 <div class="">{{ pd.pctoff }} % 할인</div>
                 {% endif %}
-                <div><span id="pd_price" class="price">{{ pd.price }}</span> 원</div>
+                <div class="prbox"><span id="pd_price" class="price">{{ pd.price }}</span> 원</div>
             </div>
             <div class="box">
                 {% if m %}
@@ -88,11 +106,16 @@
     </form>
 
 
-    <h3>상세페이지</h3>
+    <h3>디자인 발견</h3>
     <div class="detail">
-        <h2>Discover the Design</h2>
+        <div class="text">
         {{ pd.detail }}
+        </div>
     </div>
+    <div class="dumimg">
+        <img src="https://maidenhome.com/cdn/shop/files/Material_Laydown_5x3_d1cc295b-caaf-41b0-a8cd-644e65820585_800x.jpg?v=1655407970" alt="dumimg">
+    </div>
+
 </div>
 {% endblock %}
 
