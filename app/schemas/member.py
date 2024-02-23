@@ -29,6 +29,7 @@ class NewMember(BaseModel):
     phone: str
     email: str
 
+
 class ModiMember(BaseModel):
     userid: str
     passwd: str

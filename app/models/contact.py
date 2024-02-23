@@ -10,7 +10,7 @@ class Base(DeclarativeBase):
 class Qna(Base):
     __tablename__ = 'qna'
     qno = Column(Integer, primary_key=True, autoincrement=True)
-    userid = Column(String(18), nullable=False)
+    userid = Column(String(18), ForeignKey('product.userid'))
     title = Column(String(18), nullable=False)
     contents = Column(Text, nullable=False)
     regdate = Column(DateTime, default=datetime.now)
