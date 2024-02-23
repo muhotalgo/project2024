@@ -22,7 +22,9 @@ class CartService():
         with Session() as sess:
 
             # 장바구니 중복확인
-            existing_cart = sess.query(Cart).filter_by(pno=data['pno']).first()
+            existing_cart = None
+            if CartService.select_cart(data['userid']):
+                existing_cart = sess.query(Cart).filter_by(pno=data['pno']).first()
 
             if existing_cart:
                 new_quantity = existing_cart.quantity + 1  # 기존 수량에 1을 추가
