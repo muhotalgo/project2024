@@ -182,7 +182,7 @@
                                         {{ od.name }}
                                 </a></td>
                                 <td>{{ od.quantity }}</td>
-                                <td>{{ od.pdprice }}</td>
+                                <td>{{ "{:,.0f}".format(od.pdprice) }} 원</td>
                                 <td>{{ od.status }}</td>
                             </tr>
                         {% endfor %}
