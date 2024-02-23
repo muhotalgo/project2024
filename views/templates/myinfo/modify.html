@@ -23,7 +23,6 @@
         }
 
         .myaccount-menu {
-
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
             margin: 30px 100px auto;
@@ -138,7 +137,15 @@
 {% block main %}
     <main>
         <div class="row myaccount-container">
-            <div class="myaccount-menu">
+            <div class="myaccount-menu" style="
+            margin: 0 100px 0 100px;
+            height: 500px;
+            position: fixed;
+            top: 200px;
+            width: 200px;
+            z-index: 1;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+">
                 <div class="col">
                     <h3>
                         <a href="/myinfo" style="color: #8B8B8B;">고객 정보</a>
@@ -164,7 +171,7 @@
             </div>
 
 
-            <div class="container w-50">
+            <div class="container w-50" style="margin-left: 530px;">
                 <form name="modifyfrm">
                     <div class="container text-center">
                         <div class="container text-center">
