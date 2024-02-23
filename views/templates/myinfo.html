@@ -22,18 +22,26 @@
         {#padding: 0;#}
         }
 
+        .container {
+            width: 45%;
+
+        }
         .myaccount-menu {
 
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(210, 210, 210, 0.1);
-            margin: 30px 100px auto;
+            margin: 0 100px 0 100px;
             border: solid #fff 10px;
-
-            display:flex;
             flex-basis:200px;
             flex-shrink: 0;
             flex-direction: column;
             height: 500px;
+            position: fixed;
+            top: 200px;
+            width: 200px;
+            z-index: 1;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
+
         }
 
         div ul {
@@ -137,7 +145,7 @@
 
 {% block main %}
     <main>
-        <div class="row myaccount-container">
+        <div class="row myaccount-container" style="display: block;">
             <div class="myaccount-menu">
                 <div class="col">
                     <h3>
@@ -164,8 +172,8 @@
             </div>
 
 
-            <div class="container w-50">
-                <table class="table table-bordered table-hover w-80">
+            <div class="container"  style ='margin-left: 570px; height: 300px; box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5);'>
+                <table class="table table-bordered table-hover">
                     <tr><th>아이디</th><td>{{ my.userid }}</td></tr>
                     <tr><th>이름</th><td>{{ my.name }}</td></tr>
                     <tr><th>내 주소</th><td>{{ my.address1 }} {{ my.address2 }}</td></tr>
