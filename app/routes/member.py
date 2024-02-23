@@ -35,7 +35,7 @@ def login(req: Request):
 
 # 회원가입시 아이디, 전화번호, 이메일 중복확인
 @member_router.get('/check/{check_type}/{value}')
-def signupcheck(req: Request, check_type: str, value: str):
+def signupcheck(check_type: str, value: str):
     result = None
 
     if check_type == 'uid':
