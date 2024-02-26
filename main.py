@@ -34,7 +34,7 @@ app.add_middleware(SessionMiddleware, secret_key='02232024duedate')
 
 # jinja2 설정
 templates = Jinja2Templates(directory='views/templates')
-app.mount('/static', StaticFiles(directory='views/static'), name='static')
+# app.mount('/static', StaticFiles(directory='views/static'), name='static')
 
 # 외부 route 파일 불러오기
 app.include_router(member_router)

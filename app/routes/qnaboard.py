@@ -12,7 +12,7 @@ myinfo_contacts_router = APIRouter()
 
 # jinja2 설정
 templates = Jinja2Templates(directory='views/templates')
-myinfo_contacts_router.mount('/static', StaticFiles(directory='views/static'), name='static')
+# myinfo_contacts_router.mount('/static', StaticFiles(directory='views/static'), name='static')
 
 
 # 마이페이지 / 내 질문 내역 보기 (list)

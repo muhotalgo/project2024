@@ -11,7 +11,7 @@ myinfo_orders_router = APIRouter()
 
 # jinja2 설정
 templates = Jinja2Templates(directory='views/templates')
-myinfo_orders_router.mount('/static', StaticFiles(directory='views/static'), name='static')
+# myinfo_orders_router.mount('/static', StaticFiles(directory='views/static'), name='static')
 
 
 # 마이페이지 / 내 주문 내역 보기 (list)
