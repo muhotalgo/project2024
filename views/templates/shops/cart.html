@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', path='/css/shop.css') }}">
+<link rel="stylesheet" href="/static/css/shop.css">
 <style>
     body,
     input,
@@ -406,7 +406,7 @@
         btn.addEventListener('click', () => {
             if (confirm("상품을 장바구니에서 삭제하시겠습니까?")) {
                 const cartId = btn.id;
-                fetch(`http://127.0.0.1:8000/shops/cart/${cartId}`, {
+                fetch(`/shops/cart/${cartId}`, {
                     method: 'DELETE',
                     headers: {
                         'Accept': 'application/json',

@@ -50,7 +50,6 @@ class ProductService():
     # 상품명 검색 조회 - 상품번호, 상품이름, 상품 간략정보, 상품 상세정보에서 조회
     @staticmethod
     def find_select_list(skey):
-        print('abc123')
         with Session() as sess:
             stmt = select(Product.pno, Product.name, Product.exp, Product.detail, Product.price, Product.tumbimg,
                           Product.ctno)

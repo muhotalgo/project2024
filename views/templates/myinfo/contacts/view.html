@@ -125,7 +125,7 @@
             let fkey = document.querySelector('#fkey').value;
 
             let params = `/${ftype}/${fkey}/1`;
-            let findurl = `http://127.0.0.1:8000/myinfo/contacts`+params;
+            let findurl = `/myinfo/contacts`+params;
 
             location.href = findurl;
         });

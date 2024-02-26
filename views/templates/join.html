@@ -824,7 +824,7 @@
             // delete jsondata['mobile2']
             // console.log(jsondata);
 
-            fetch('http://127.0.0.1:8000/join', {
+            fetch('/join', {
                 method: 'POST',                     // 데이터 전송방식
                 headers: {
                     'Accept': 'application/json',
@@ -857,7 +857,7 @@
         userid.addEventListener('blur', () => {
 
             // ajax를 이용해서 서버로 전송하고 결과 받음
-            fetch(`http://127.0.0.1:8000/check/uid/${joinfrm.userid.value}`, {
+            fetch(`/check/uid/${joinfrm.userid.value}`, {
                 method: 'GET',                     // 데이터 전송방식
             })
                 // .then((res) => res.json())          // 서버로부터 응답받음
@@ -890,7 +890,7 @@
             // console.log('isPhoneValid:', isPhoneValid);
 
             // ajax를 이용해서 서버로 전송하고 결과 받음
-            fetch(`http://127.0.0.1:8000/check/phone/${joinfrm.phone.value}`, {
+            fetch(`/check/phone/${joinfrm.phone.value}`, {
                 method: 'GET',                     // 데이터 전송방식
             })
                 .then((res) => res.text())          // 서버로부터 응답받음 txt로 받음
@@ -915,7 +915,7 @@
             let isEmailValid = checkemail();
 
             // ajax를 이용해서 서버로 전송하고 결과 받음
-            fetch(`http://127.0.0.1:8000/check/email/${joinfrm.email.value}`, {
+            fetch(`/check/email/${joinfrm.email.value}`, {
                 method: 'GET',                     // 데이터 전송방식
             })
                 .then((res) => res.text())          // 서버로부터 응답받음 txt로 받음

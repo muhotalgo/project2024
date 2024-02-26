@@ -57,7 +57,7 @@
         let skey = document.querySelector('#skey').value;
         if (skey) {
             let params = `/search/${skey}`;
-            let findurl = 'http://127.0.0.1:8000/shops' + params;
+            let findurl = '/shops' + params;
 
             location.href = findurl;
         } else {

@@ -573,7 +573,7 @@
 
             // console.log(jsondata);
 
-            fetch('http://127.0.0.1:8000/myinfo/modify', {
+            fetch('/myinfo/modify', {
                 method: 'POST',                     // 데이터 전송방식
                 headers: {
                     'Accept': 'application/json',
@@ -621,7 +621,7 @@
             let isEmailValid = checkemail();
 
             // ajax를 이용해서 서버로 전송하고 결과 받음
-            fetch(`http://127.0.0.1:8000/check/email/${modifyfrm.email.value}`, {
+            fetch(`/check/email/${modifyfrm.email.value}`, {
                 method: 'GET',                     // 데이터 전송방식
             })
                 .then((res) => res.text())          // 서버로부터 응답받음 txt로 받음

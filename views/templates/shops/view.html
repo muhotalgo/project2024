@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', path='/css/shop.css') }}">
+<link rel="stylesheet" href="/static/css/shop.css">
 <style>
     img {
         width: 100%;
@@ -135,7 +135,7 @@
                 console.log(jsondata);
             });
 
-            fetch('http://127.0.0.1:8000/shops/view', {
+            fetch('/shops/view', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -147,7 +147,7 @@
                 .then((data) => {
                     if (parseInt(data) > 0) {
                         if (confirm("장바구니가 추가되었습니다. \n장바구니로 이동하시겠습니까?")) {
-                            location.href = 'http://127.0.0.1:8000/shops/cart';
+                            location.href = '/shops/cart';
                         } else {
                         }
                     } else alert('장바구니 오류. 관리자에게 문의하세요.')
@@ -162,7 +162,7 @@
 
     function tologin() {
         if (confirm("로그인이 필요한 서비스입니다. \n로그인 화면으로 이동하시겠습니까?")) {
-            location.href = 'http://127.0.0.1:8000/login';
+            location.href = '/login';
         }
     }
 
@@ -204,7 +204,7 @@
         sessionStorage.setItem("odeps", odeps);
         sessionStorage.setItem("oheight", oheight);
 
-        location.href = 'http://127.0.0.1:8000/shops/orderdr';
+        location.href = '/shops/orderdr';
     });
 
     console.log(sessionStorage.getItem("directpay"));
