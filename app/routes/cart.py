@@ -68,7 +68,7 @@ def orderitem(mno: int = Form(), unitprice: int = Form(),
 @cart_router.post('/orderdr')
 def orderitem(mno: int = Form(), unitprice: int = Form(),
               pnos=Form(), quantitys=Form(), pdprices=Form()):
-    OrderService.insert_order(mno, unitprice, pnos, quantitys, pdprices)
+    OrderService.insert_orderdr(mno, unitprice, pnos, quantitys, pdprices)
     return RedirectResponse('/shops/orderend', status_code=status.HTTP_302_FOUND)
 
 

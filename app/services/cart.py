@@ -93,6 +93,25 @@ class OrderService():
 
         return result
 
+    # 장바구니 -> orderdr
+    @staticmethod
+    def insert_orderdr(mno, unitprice, pnos, quantitys, pdprices):
+        pnos = pnos.split(",")
+        quantitys = quantitys.split(",")
+        pdprices = pdprices.split(",")
+        gono = datetime.today().strftime('%Y%m%d%H%M%S')
+
+        with Session() as sess:
+            for idx, i in enumerate(pnos):
+                # 주문 등록
+                data = {'mno': mno, 'unitprice': unitprice,
+                        'pno': pnos[idx], 'quantity': quantitys[idx], 'pdprice': pdprices[idx], 'gono': gono}
+                stmt = insert(Order).values(data)
+                result = sess.execute(stmt)
+                sess.commit()
+
+        return result
+
     # 주문정보 조회
     @staticmethod
     def select_order(mno):
